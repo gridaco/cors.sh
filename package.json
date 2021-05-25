@@ -1,0 +1,15 @@
+{
+  "name": "cors.sh",
+  "version": "0.0.0",
+  "description": "The only cors proxy service all you'll ever need.",
+  "repository": "https://github.com/bridgedxyz/cors.sh.git",
+  "author": "softmarshmallow <woojoo@softmarshmallow.com>",
+  "license": "Apache 2.0",
+  "private": true,
+  "workspaces": [
+    "homepage"
+  ],
+  "scripts": {
+    "homepage": "yarn workspace homepage run dev"
+  }
+}
