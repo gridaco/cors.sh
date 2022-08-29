@@ -41,6 +41,11 @@ const config = {
         destination: "https://console.grida.co/cors-proxy",
         permanent: true,
       },
+      {
+        source: "/docs",
+        destination: "/docs/intro",
+        permanent: true,
+      },
     ];
   },
 };
