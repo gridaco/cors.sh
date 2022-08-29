@@ -9,7 +9,7 @@ const config = {
   title: "CORS.SH | Docs",
   tagline: "Get started with CORS.SH",
   url: "https://docs.cors.sh",
-  baseUrl: "/docs",
+  baseUrl: "/docs/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
