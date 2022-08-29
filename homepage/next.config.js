@@ -12,19 +12,27 @@ const config = {
         source: "/playground/:path*",
         destination: "https://playground.cors.sh/:path*",
       },
+      {
+        source: "/docs",
+        destination: "https://docs.cors.sh",
+      },
+      {
+        source: "/docs/:path*",
+        destination: "https://docs.cors.sh/:path*",
+      },
     ];
   },
   redirects() {
     return [
       {
-        source: "/http\\:/:host/:path*",
-        destination: "https://cors.bridged.cc/http\\://:host/:path*",
+        source: "/http\\:\\/:host/:path*",
+        destination: "https://cors.bridged.cc/http\\::host/:path*",
         basePath: false,
         permanent: true,
       },
       {
-        source: "/https\\:/:host/:path*",
-        destination: "https://cors.bridged.cc/https\\://:host/:path*",
+        source: "/https\\:\\/:host/:path*",
+        destination: "https://cors.bridged.cc/https\\::host/:path*",
         basePath: false,
         permanent: true,
       },
