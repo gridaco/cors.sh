@@ -60,10 +60,10 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: "CORS.SH",
         logo: {
           alt: "CORS.SH By Grida",
           src: "img/logo.svg",
+          width: 100,
         },
         items: [
           {
