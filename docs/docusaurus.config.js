@@ -64,6 +64,7 @@ const config = {
           alt: "CORS.SH By Grida",
           src: "img/logo.svg",
           width: 100,
+          href: "https://cors.sh/",
         },
         items: [
           {
