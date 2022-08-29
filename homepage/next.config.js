@@ -14,7 +14,7 @@ const config = {
       },
       {
         source: "/docs",
-        destination: "https://docs.cors.sh",
+        destination: "https://docs.cors.sh/intro",
       },
       {
         source: "/docs/:path*",
