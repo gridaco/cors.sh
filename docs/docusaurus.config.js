@@ -6,7 +6,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "CORS.SH | Docs",
+  title: "cors.sh",
   tagline: "Get started with CORS.SH",
   url: "https://docs.cors.sh",
   // @ts-ignore
