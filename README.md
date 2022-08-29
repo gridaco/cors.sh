@@ -4,11 +4,9 @@ The only cors proxy service all you'll ever need.
 
 https://cors.sh
 
+## [`cors.sh/playground`](https://cors.sh/playground), The testing editor (forked from hoppscotch)
 
-## [`app.cors.sh`](https://app.cors.sh), The testing editor (forked from hoppscotch)
-
-- https://github.com/gridaco/app.cors.sh
-
+- https://github.com/gridaco/playground.cors.sh
 
 ## Disclaimer
 
