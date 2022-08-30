@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { Appbar, AppbarParentSite } from "../components";
 /**
  * `<AppbarGroup>` ('appbar-group')
  * - [Open in Figma](https://figma.com/file/aPfdtNb1aGFIN9p05cmmVY?node-id=15:1833)
@@ -39,71 +40,8 @@ import styled from "@emotion/styled";
 export function AppbarGroup() {
   return (
     <RootWrapperAppbarGroup>
-      <Frame565>
-        <Home>
-          <Logo64>
-            <LogoShapeOnly>
-              <Union
-                src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/752d2a06-1cc0-4880-9d0b-701640790dc5"
-                alt="image of Union"
-              />
-            </LogoShapeOnly>
-          </Logo64>
-          <GridaAppServices>Grida App Services</GridaAppServices>
-        </Home>
-      </Frame565>
-      <Appbar>
-        <Frame33>
-          <Leading>
-            <Home_0001>
-              <CorsSh>CORS.SH</CorsSh>
-            </Home_0001>
-            <Menus>
-              <BaseHeaderPrimaryMenu>
-                <BaseHeaderPrimaryMenu_0001>
-                  <Rectangle784 />
-                  <Frame281>
-                    <Menu>Docs</Menu>
-                  </Frame281>
-                  <Indicator />
-                </BaseHeaderPrimaryMenu_0001>
-              </BaseHeaderPrimaryMenu>
-              <BaseHeaderPrimaryMenu>
-                <BaseHeaderPrimaryMenu_0001>
-                  <Rectangle784 />
-                  <Frame281>
-                    <Menu>Playground</Menu>
-                  </Frame281>
-                  <Indicator />
-                </BaseHeaderPrimaryMenu_0001>
-              </BaseHeaderPrimaryMenu>
-              <BaseHeaderPrimaryMenu>
-                <BaseHeaderPrimaryMenu_0001>
-                  <Rectangle784 />
-                  <Frame281>
-                    <Menu>Pricing</Menu>
-                  </Frame281>
-                  <Indicator />
-                </BaseHeaderPrimaryMenu_0001>
-              </BaseHeaderPrimaryMenu>
-              <BaseHeaderPrimaryMenu>
-                <BaseHeaderPrimaryMenu_0001>
-                  <Rectangle784 />
-                  <Frame281>
-                    <Menu>Github</Menu>
-                  </Frame281>
-                  <Indicator />
-                </BaseHeaderPrimaryMenu_0001>
-              </BaseHeaderPrimaryMenu>
-            </Menus>
-          </Leading>
-          <HeaderCtaSignupPlain>
-            <HeaderCtaSignupPlain_0001>
-              <SignUp>Get started</SignUp>
-            </HeaderCtaSignupPlain_0001>
-          </HeaderCtaSignupPlain>
-        </Frame33>
-      </Appbar>
+      <AppbarParentSite />
+      <Appbar />
     </RootWrapperAppbarGroup>
   );
 }
@@ -112,7 +50,7 @@ const RootWrapperAppbarGroup = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   box-sizing: border-box;
 `;
 
@@ -171,150 +109,4 @@ const GridaAppServices = styled.span`
   font-weight: 700;
   letter-spacing: -1px;
   text-align: left;
-`;
-
-const Appbar = styled.div`
-  height: 80px;
-  background-color: white;
-  position: relative;
-  align-self: stretch;
-  flex-shrink: 0;
-`;
-
-const Frame33 = styled.div`
-  width: 1040px;
-  overflow: hidden;
-  position: absolute;
-  left: calc((calc((50% + 0px)) - 520px));
-  top: 0px;
-  bottom: 0px;
-`;
-
-const Leading = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: row;
-  align-items: center;
-  gap: 120px;
-  box-sizing: border-box;
-  position: absolute;
-  left: 0px;
-  top: calc((calc((50% + 0px)) - 30px));
-  width: 732px;
-  height: 60px;
-`;
-
-const Home_0001 = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: row;
-  align-items: center;
-  flex: none;
-  gap: 8px;
-  box-sizing: border-box;
-`;
-
-const CorsSh = styled.span`
-  color: black;
-  text-overflow: ellipsis;
-  font-size: 24px;
-  font-family: Inter, sans-serif;
-  font-weight: 900;
-  letter-spacing: -1px;
-  text-align: left;
-`;
-
-const Menus = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: row;
-  align-items: center;
-  flex: none;
-  gap: 36px;
-  height: 60px;
-  box-sizing: border-box;
-`;
-
-const BaseHeaderPrimaryMenu = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: row;
-  align-items: flex-start;
-  flex: none;
-  box-sizing: border-box;
-`;
-
-const BaseHeaderPrimaryMenu_0001 = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  align-items: flex-start;
-  flex: none;
-  gap: 16px;
-  box-sizing: border-box;
-`;
-
-const Rectangle784 = styled.div`
-  height: 2px;
-  background-color: white;
-  align-self: stretch;
-  flex-shrink: 0;
-  opacity: 0;
-`;
-
-const Frame281 = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  align-items: center;
-  flex: none;
-  box-sizing: border-box;
-`;
-
-const Menu = styled.span`
-  color: rgb(139, 139, 139);
-  text-overflow: ellipsis;
-  font-size: 16px;
-  font-family: "Helvetica Neue", sans-serif;
-  font-weight: 500;
-  text-align: left;
-`;
-
-const Indicator = styled.div`
-  height: 2px;
-  background-color: rgba(0, 0, 0, 0);
-  align-self: stretch;
-  flex-shrink: 0;
-  opacity: 0;
-`;
-
-const HeaderCtaSignupPlain = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: row;
-  align-items: center;
-  position: absolute;
-  top: calc((calc((50% + 0px)) - 16px));
-  right: 0px;
-  width: 80px;
-  height: 32px;
-`;
-
-const HeaderCtaSignupPlain_0001 = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-  border-radius: 35px;
-  box-sizing: border-box;
-`;
-
-const SignUp = styled.span`
-  color: black;
-  text-overflow: ellipsis;
-  font-size: 16px;
-  font-family: Roboto, sans-serif;
-  font-weight: 500;
-  text-align: right;
 `;
