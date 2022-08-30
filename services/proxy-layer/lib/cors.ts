@@ -23,13 +23,13 @@ function proxyRequest(req, res, proxy) {
       host: location.host,
     },
     buffer: {
-      pipe: function(proxyReq) {
+      pipe: function (proxyReq) {
         var proxyReqOn = proxyReq.on;
-        proxyReq.on = function(eventName, listener) {
+        proxyReq.on = function (eventName, listener) {
           if (eventName !== "response") {
             return proxyReqOn.call(this, eventName, listener);
           }
-          return proxyReqOn.call(this, "response", function(proxyRes) {
+          return proxyReqOn.call(this, "response", function (proxyRes) {
             if (onProxyResponse(proxy, proxyReq, proxyRes, req, res)) {
               try {
                 listener(proxyRes);
@@ -130,7 +130,7 @@ function getHandler(options, proxy) {
     helpFile: __dirname + "/help.txt",
   };
 
-  Object.keys(corsAnywhere).forEach(function(option) {
+  Object.keys(corsAnywhere).forEach(function (option) {
     if (Object.prototype.hasOwnProperty.call(options, option)) {
       corsAnywhere[option] = options[option];
     }
@@ -144,23 +144,23 @@ function getHandler(options, proxy) {
     ) {
       corsAnywhere.requireHeader = null;
     } else {
-      corsAnywhere.requireHeader = corsAnywhere.requireHeader.map(function(
+      corsAnywhere.requireHeader = corsAnywhere.requireHeader.map(function (
         headerName
       ) {
         return headerName.toLowerCase();
       });
     }
   }
-  var hasRequiredHeaders = function(headers) {
+  var hasRequiredHeaders = function (headers) {
     return (
       !corsAnywhere.requireHeader ||
-      corsAnywhere.requireHeader.some(function(headerName) {
+      corsAnywhere.requireHeader.some(function (headerName) {
         return Object.hasOwnProperty.call(headers, headerName);
       })
     );
   };
 
-  return function(req, res) {
+  return function (req, res) {
     req.corsAnywhereRequestState = {
       getProxyForUrl: corsAnywhere.getProxyForUrl,
       maxRedirects: corsAnywhere.maxRedirects,
@@ -198,7 +198,9 @@ function getHandler(options, proxy) {
       res.writeHead(400, "Header required", cors_headers);
       res.end(
         "Missing required request header. Must specify one of: " +
-          corsAnywhere.requireHeader
+          corsAnywhere.requireHeader +
+          "\n" +
+          "If you are testing out, you can try at https://cors.sh/playground"
       );
       return;
     }
@@ -260,11 +262,11 @@ function getHandler(options, proxy) {
     var proxyBaseUrl =
       (isRequestedOverHttps ? "https://" : "http://") + req.headers.host;
 
-    corsAnywhere.removeHeaders.forEach(function(header) {
+    corsAnywhere.removeHeaders.forEach(function (header) {
       delete req.headers[header];
     });
 
-    Object.keys(corsAnywhere.setHeaders).forEach(function(header) {
+    Object.keys(corsAnywhere.setHeaders).forEach(function (header) {
       req.headers[header] = corsAnywhere.setHeaders[header];
     });
 
@@ -284,7 +286,7 @@ export const createServer = (options: OptionParams) => {
   options = options || {};
 
   if (options.httpProxyOptions) {
-    Object.keys(options.httpProxyOptions).forEach(function(option) {
+    Object.keys(options.httpProxyOptions).forEach(function (option) {
       httpProxyOptions[option] = options.httpProxyOptions[option];
     });
   }
@@ -297,27 +299,26 @@ export const createServer = (options: OptionParams) => {
     server = http.createServer(requestHandler);
   }
 
-  proxy.on("error", function(
-    err: Error,
-    _: http.IncomingMessage,
-    res: http.ServerResponse
-  ) {
-    if (res.headersSent) {
-      if (res.writableEnded === false) {
-        res.end();
+  proxy.on(
+    "error",
+    function (err: Error, _: http.IncomingMessage, res: http.ServerResponse) {
+      if (res.headersSent) {
+        if (res.writableEnded === false) {
+          res.end();
+        }
+        return;
       }
-      return;
-    }
-    var headerNames = res.getHeaderNames
-      ? res.getHeaderNames()
-      : //@ts-ignore
-        Object.keys(res._headers || {});
-    headerNames.forEach(function(name) {
-      res.removeHeader(name);
-    });
+      var headerNames = res.getHeaderNames
+        ? res.getHeaderNames()
+        : //@ts-ignore
+          Object.keys(res._headers || {});
+      headerNames.forEach(function (name) {
+        res.removeHeader(name);
+      });
 
-    res.writeHead(404, { "Access-Control-Allow-Origin": "*" });
-    res.end("Not found because of proxy error: " + err);
-  });
+      res.writeHead(404, { "Access-Control-Allow-Origin": "*" });
+      res.end("Not found because of proxy error: " + err);
+    }
+  );
   return server;
 };

@@ -25,14 +25,14 @@ const config = {
   redirects() {
     return [
       {
-        source: "/http\\:\\/:host/:path*",
-        destination: "https://cors.bridged.cc/http\\::host/:path*",
+        source: "/http\\://:path*",
+        destination: "https://proxy.cors.sh/http\\://:path*",
         basePath: false,
         permanent: true,
       },
       {
-        source: "/https\\:\\/:host/:path*",
-        destination: "https://cors.bridged.cc/https\\::host/:path*",
+        source: "/https\\://:path*",
+        destination: "https://proxy.cors.sh/https\\://:path*",
         basePath: false,
         permanent: true,
       },
