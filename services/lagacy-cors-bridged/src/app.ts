@@ -5,7 +5,7 @@ import * as responsetime from "response-time";
 
 import { logRequest } from "./usage";
 import { blaklistoriginlimit, payloadlimit } from "./limit";
-import { unauthorizedAppBlocking } from "./auth";
+// import { unauthorizedAppBlocking } from "./auth";
 
 const app = express();
 
@@ -28,13 +28,14 @@ const cors_proxy = corsProxy.createServer({
   },
 });
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.redirect("https://app.cors.bridged.cc/");
 });
 
 app.use(blaklistoriginlimit); // 1
 app.use(payloadlimit); // 2
-app.use(unauthorizedAppBlocking); // 3
+// disabling due to cors.sh migration
+// app.use(unauthorizedAppBlocking); // 3
 
 app.use(
   responsetime({
