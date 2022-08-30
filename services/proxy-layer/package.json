@@ -3,7 +3,8 @@
     "description": "free cors service for everyone",
     "version": "0.1.0",
     "scripts": {
-        "deploy:prod": "sls deploy",
+        "clean": "rimraf .build .serverless",
+        "deploy:prod": "yarn clean && sls deploy",
         "dev": "sls offline start"
     },
     "dependencies": {

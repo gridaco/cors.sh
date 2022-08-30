@@ -1,14 +1,14 @@
 # Welcome to serverless. Read the docs
 # https://serverless.com/framework/docs/
 
-service: proxy.cors.sh
+service: cors-proxy
 useDotenv: true
 custom:
-  customDomain:
-    domainName: proxy.cors.sh
-    basePath: ""
-    stage: "production"
-    createRoute53Record: true
+  # customDomain:
+  #   domainName: proxy.cors.sh
+  #   basePath: ""
+  #   stage: "production"
+  #   createRoute53Record: false
 
   serverless-offline:
     httpPort: 4012
@@ -16,7 +16,7 @@ custom:
 provider:
   name: aws
   memorySize: 128
-  runtime: nodejs14.x
+  runtime: nodejs12.x
   apiGateway:
     shouldStartNameWithService: true
   region: us-west-1
@@ -83,4 +83,4 @@ plugins:
   - serverless-plugin-optimize
   - serverless-dynamodb-local
   - serverless-offline
-  - serverless-domain-manager
+  # - serverless-domain-manager
