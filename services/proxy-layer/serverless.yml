@@ -4,11 +4,11 @@
 service: cors-proxy
 useDotenv: true
 custom:
-  # customDomain:
-  #   domainName: proxy.cors.sh
-  #   basePath: ""
-  #   stage: "production"
-  #   createRoute53Record: false
+  customDomain:
+    domainName: proxy.cors.sh
+    basePath: ""
+    stage: "production"
+    createRoute53Record: false
 
   serverless-offline:
     httpPort: 4012
@@ -83,4 +83,4 @@ plugins:
   - serverless-plugin-optimize
   - serverless-dynamodb-local
   - serverless-offline
-  # - serverless-domain-manager
+  - serverless-domain-manager
