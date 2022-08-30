@@ -1,0 +1,92 @@
+# Welcome to serverless. Read the docs
+# https://serverless.com/framework/docs/
+
+service: cors
+useDotenv: true
+custom:
+  customDomain:
+    # legacy. won't support in the future
+    domainName: cors.bridged.cc
+    basePath: ""
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+    # - http:
+    #   domainName: cors.grida.cc
+    #   basePath: ""
+    #   stage: "production"
+    #   createRoute53Record: true
+
+  serverless-offline:
+    httpPort: 4012
+
+provider:
+  name: aws
+  memorySize: 128
+  runtime: nodejs12.x
+  apiGateway:
+    shouldStartNameWithService: true
+  region: us-west-1
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+    DYNAMODB_TABLE_USAGE_LOG: "${self:service}-usage-log-${opt:stage, self:provider.stage}"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:DescribeTable
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE_USAGE_LOG}"
+
+resources:
+  Resources:
+    usageLogTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "${self:provider.environment.DYNAMODB_TABLE_USAGE_LOG}"
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: app
+            AttributeType: S
+        GlobalSecondaryIndexes:
+          - IndexName: appIndex
+            KeySchema:
+              - AttributeName: app
+                KeyType: HASH
+            Projection:
+              ProjectionType: "ALL"
+            ProvisionedThroughput:
+              ReadCapacityUnits: 10
+              WriteCapacityUnits: 10 # no write is required
+        ProvisionedThroughput:
+          ReadCapacityUnits: 10 # no read is required
+          WriteCapacityUnits: 10
+
+# The `functions` block defines what code to deploy
+functions:
+  api:
+    handler: src/index.handler
+    maximumEventAge: 60
+    maximumRetryAttempts: 0
+    timeout: 12
+    events:
+      - http:
+          path: /{proxy+}
+          method: any
+      - http:
+          path: /
+          method: get
+
+plugins:
+  - "@hewmen/serverless-plugin-typescript"
+  - serverless-plugin-optimize
+  - serverless-dynamodb-local
+  - serverless-offline
+  - serverless-domain-manager
