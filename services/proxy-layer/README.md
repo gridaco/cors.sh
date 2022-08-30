@@ -1,18 +1,18 @@
 # CORS.BRIDGED.CC
-![cors.bridged.cc cover artwork](./docs/cors.bridged.cc-cover.png)
 
-
+![cors.sh cover artwork](./docs/artwork_cors.sh.jpg)
 
 ## The Web deployment
+
 app.cors.bridged.cc is linked to repositoy https://github.com/bridgedxyz/proxy-client, deployed via aws amplify on `proxy-client`'s `app.cors.bridged.xyz` branch
-
-
 
 **other cd options**
 using serverless-finch (dropped & not used)
+
 > this is an obsolete approach of deploying web to s3, which we are no longer using
 
 in serverless.yml
+
 ```
 custom:
   scripts:
@@ -27,7 +27,6 @@ custom:
 plugins:
     - serverless-finch
 ```
-
 
 ```
 yarn add --dev serverless-plugin-scripts serverless-finch
