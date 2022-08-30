@@ -28,13 +28,13 @@ const cors_proxy = corsProxy.createServer({
   },
 });
 
-app.get("/", function(req, res) {
-  res.redirect("https://app.cors.bridged.cc/");
+app.get("/", function (req, res) {
+  res.redirect("https://cors.sh/playground");
 });
 
 app.use(blaklistoriginlimit); // 1
 app.use(payloadlimit); // 2
-app.use(unauthorizedAppBlocking); // 3
+// app.use(unauthorizedAppBlocking); // 3
 
 app.use(
   responsetime({
