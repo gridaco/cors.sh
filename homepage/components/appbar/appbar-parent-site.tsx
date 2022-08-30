@@ -39,7 +39,7 @@ import Image from "next/image";
  */
 export function AppbarParentSite() {
   return (
-    <RootWrapperAppbarParentSite>
+    <RootWrapperAppbarParentSite href="https://grida.co" target="_blank">
       <Home>
         <Logo64>
           <Image src="/grida-logo-white-128.png" width={25} height={25} />
@@ -50,7 +50,8 @@ export function AppbarParentSite() {
   );
 }
 
-const RootWrapperAppbarParentSite = styled.div`
+const RootWrapperAppbarParentSite = styled.a`
+  cursor: pointer;
   background-color: black;
   position: relative;
   height: 50px;
