@@ -1,5 +1,7 @@
 # cors.sh
 
+![cors.sh](./branding/artwork_cors.sh.jpg)
+
 The only cors proxy service all you'll ever need.
 
 https://cors.sh
