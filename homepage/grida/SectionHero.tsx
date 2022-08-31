@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { TestitCta } from "../components";
 /**
  * `<SectionHero>` ('section-hero')
  * - [Open in Figma](https://figma.com/file/aPfdtNb1aGFIN9p05cmmVY?node-id=15:1784)
@@ -50,18 +51,7 @@ export function SectionHero() {
         </DescriptionAsP>
       </Headings>
       <Cta>
-        <RequestInputAsInput type="text" placeholder="https://example.com" />
-        <Button>
-          <ButtonContents>
-            <Type>
-              <Label>GET</Label>
-            </Type>
-            <Menu>
-              <Line />
-              <IconsMdiArrowDropDown src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/1021432c-7395-465c-a0c6-26b80afe3821" />
-            </Menu>
-          </ButtonContents>
-        </Button>
+        <TestitCta />
       </Cta>
       <FeatuersList>
         <Item>
@@ -158,123 +148,10 @@ const DescriptionAsP = styled.p`
 `;
 
 const Cta = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 14px;
-  box-sizing: border-box;
   position: absolute;
   left: calc((calc((50% + -184px)) - 337px));
   top: 517px;
-  width: 673px;
   height: 66px;
-`;
-
-const RequestInputAsInput = styled.input`
-  width: 508px;
-  box-shadow: 0px 4px 48px rgba(0, 0, 0, 0.12);
-  background-color: white;
-  border: solid 1px rgb(210, 210, 210);
-  border-radius: 4px;
-  padding: 24px;
-  box-sizing: border-box;
-  color: rgb(181, 181, 181);
-  font-size: 18px;
-  font-family: "Helvetica Neue", sans-serif;
-  font-weight: 400;
-  letter-spacing: -1px;
-  line-height: 98%;
-  text-align: start;
-
-  ::placeholder {
-    color: rgb(181, 181, 181);
-    font-size: 18px;
-    font-family: "Helvetica Neue", sans-serif;
-    font-weight: 400;
-  }
-`;
-
-const Button = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  flex: none;
-  gap: 10px;
-  box-shadow: 0px 4px 48px rgba(0, 0, 0, 0.12);
-  border: solid 1px rgb(210, 210, 210);
-  border-radius: 4px;
-  width: 151px;
-  height: 66px;
-  background-color: black;
-  box-sizing: border-box;
-  padding-left: 12px;
-  padding-right: 4px;
-`;
-
-const ButtonContents = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: row;
-  align-items: center;
-  flex: 1;
-  gap: 8px;
-  align-self: stretch;
-  height: 66px;
-  box-sizing: border-box;
-  flex-shrink: 0;
-`;
-
-const Type = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  align-items: center;
-  flex: 1;
-  gap: 10px;
-  align-self: stretch;
-  width: 99px;
-  box-sizing: border-box;
-  padding: 10px;
-  flex-shrink: 0;
-`;
-
-const Label = styled.span`
-  color: white;
-  text-overflow: ellipsis;
-  font-size: 18px;
-  font-family: "Helvetica Neue", sans-serif;
-  font-weight: 500;
-  letter-spacing: -1px;
-  line-height: 98%;
-  text-align: left;
-`;
-
-const Menu = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  align-items: center;
-  gap: 4px;
-  align-self: stretch;
-  box-sizing: border-box;
-  flex-shrink: 0;
-`;
-
-const Line = styled.div`
-  width: 66px;
-  border-top: solid 1px rgba(255, 255, 255, 0.37);
-  align-self: stretch;
-  flex-shrink: 0;
-  transform: rotate(-270deg);
-  transform-origin: top left;
-`;
-
-const IconsMdiArrowDropDown = styled.img`
-  width: 24px;
-  height: 24px;
-  object-fit: cover;
 `;
 
 const FeatuersList = styled.div`

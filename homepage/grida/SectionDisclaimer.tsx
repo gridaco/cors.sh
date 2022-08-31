@@ -79,6 +79,7 @@ const Text = styled.span`
   text-overflow: ellipsis;
   font-size: 14px;
   font-family: "Roboto Mono", sans-serif;
+  text-transform: uppercase;
   font-weight: 400;
   text-align: left;
   width: 400px;
