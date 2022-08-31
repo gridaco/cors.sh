@@ -24,7 +24,7 @@ import styled from "@emotion/styled";
  * @params {any} props - this widget does not requires props. you can pass custom dynamic props to the widget as you want (on typescript, it will raise type check issues).
  * ---
  * @preview
- * ![](https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/c919ecf4-0b2d-472a-b182-632cda7eebb6)
+ * ![](https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/3b4fded0-7047-4710-8959-6fbef3fccb2b)
  * ---
  * @remarks
  * @see {@link https://grida.co/docs} for more information.
@@ -38,7 +38,7 @@ import styled from "@emotion/styled";
  */
 export function SectionPricing() {
   return (
-    <RootWrapperSectionPricing id="pricing">
+    <RootWrapperSectionPricing>
       <Pricing>Pricing</Pricing>
       <Group484>
         <Frame497>
@@ -52,27 +52,27 @@ export function SectionPricing() {
             </Frame495>
             <Frame310>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/5b95ce4c-8416-4293-b27b-0894b8eeb38d" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/9a2fc443-2814-434d-b8bb-269544918ff4" />
                 <FeatureName>1,000,000 requests per month</FeatureName>
               </PricelistFeatureItem>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/6da6dbac-c995-419d-833b-4fc39e6fc08b" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/8ba53d22-7889-4fbb-90d1-e509dac62909" />
                 <FeatureName>500GB Bandwidth</FeatureName>
               </PricelistFeatureItem>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/879ddd76-d87a-4ec2-a72d-b88622ca7f47" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/375bd093-a621-4fbb-b1ca-1cb8f4d8f142" />
                 <FeatureName>Unlimited Sites</FeatureName>
               </PricelistFeatureItem>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/466b54f4-ff3b-4ebb-99cf-5919977e16de" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/8f74aa0c-ef80-4e7c-8e75-dc19ea478caa" />
                 <FeatureName>Max 6mb per request</FeatureName>
               </PricelistFeatureItem>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/25609e20-baff-40f7-bc79-e23c3a638713" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/fa4f525a-d96b-4afc-97d7-aefd4c0a6d60" />
                 <FeatureName>Unlimited requests per hour</FeatureName>
               </PricelistFeatureItem>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/b0527060-6b6f-4d6d-99fd-3928c2849a9e" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/256093de-7356-4ee0-ba9d-68e4d236d908" />
                 <FeatureName>No down time</FeatureName>
               </PricelistFeatureItem>
             </Frame310>
@@ -94,35 +94,35 @@ export function SectionPricing() {
             </Frame495>
             <Frame310>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/88fbca8c-0bcb-4d5e-be7c-46901efdfebb" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/09e15423-7689-4bec-8040-21c7a6661dba" />
                 <FeatureName_0006>
                   1,000,000 requests / month included
                 </FeatureName_0006>
               </PricelistFeatureItem>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/af9acf26-bff9-4c81-b2c3-54b38d1b26bb" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/fa245084-337b-4684-8aec-9fb564786e31" />
                 <FeatureName>Unlimited traffic</FeatureName>
               </PricelistFeatureItem>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/1f52620d-c7e9-489b-bff0-df220194d2d2" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/bef5240e-8cc7-457c-9b6c-7b4d7a9d8c00" />
                 <FeatureName_0006>
                   $1 per every next 100,000 requests
                 </FeatureName_0006>
               </PricelistFeatureItem>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/013a0725-eebc-434f-ae64-1d7721e84aa0" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/3a169bfd-2fff-4288-8ffb-ca09df1d761d" />
                 <FeatureName>Unlimited Applications</FeatureName>
               </PricelistFeatureItem>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/8baf41ba-01f8-4f81-8197-570f05bbc7a8" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/472b55aa-3ac3-43cf-a749-a9ce1327b9b4" />
                 <FeatureName>Max 6mb per request</FeatureName>
               </PricelistFeatureItem>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/e19e37b3-02a9-4d50-bd3e-6c74017b6255" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/e8982801-e68e-4f1e-a4d9-db5f13e519b2" />
                 <FeatureName>Unlimited requests per hour</FeatureName>
               </PricelistFeatureItem>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/b73dbc6e-bfd8-45c1-b440-e84e910b2b8c" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/448e0ac1-6b8c-4f36-873b-89fcae84c7fe" />
                 <FeatureName>No down time</FeatureName>
               </PricelistFeatureItem>
             </Frame310>
@@ -143,27 +143,27 @@ export function SectionPricing() {
             </Frame495>
             <Frame310>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/b5b73403-2c31-4777-83bf-0ca0694cc47a" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/72b9c9ac-699c-4a24-b330-107e26602d3c" />
                 <FeatureName>10,000 requests per month</FeatureName>
               </PricelistFeatureItem>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/2be675fe-c7e0-4de5-87d0-b20346aa0d1c" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/c179610a-49b7-46ba-862c-b12d016dc165" />
                 <FeatureName>5GB traffic per month</FeatureName>
               </PricelistFeatureItem>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/7fad6f28-b405-4b0f-afe7-5584f36b82c6" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/bcb384dd-69cb-48e0-9cee-fb60ee9b6bb8" />
                 <FeatureName>500 requests per hour</FeatureName>
               </PricelistFeatureItem>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/4154f0b3-4e9d-46e6-ad43-73ccaa991f2e" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/4267af60-4545-4bcc-8764-d1af0dca937e" />
                 <FeatureName>3 Applications</FeatureName>
               </PricelistFeatureItem>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/9fcc703e-5a44-4947-8dbd-1d98b924e0d5" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/5735c8b4-aa0a-4364-acf4-d26c5336cca3" />
                 <FeatureName>3mb per request</FeatureName>
               </PricelistFeatureItem>
               <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/546457c9-454f-4334-9b60-d7f8ef740491" />
+                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/516c40cc-dbef-45c2-9cdd-2fa67da73811" />
                 <FeatureName>No down time</FeatureName>
               </PricelistFeatureItem>
             </Frame310>
@@ -179,28 +179,28 @@ export function SectionPricing() {
             <Frame246>
               <PricelistFeatureItemFeatured>
                 <Frame245
-                  src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/0d3afb1b-f596-4387-b428-25ae569f192b"
+                  src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/4274d736-994a-45df-902c-cce0f898e5f8"
                   alt="icon"
                 />
                 <FeatureName_0019>1,000,000 requests / month</FeatureName_0019>
               </PricelistFeatureItemFeatured>
               <Component7>
                 <Frame245
-                  src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/8713ab82-1a06-4a53-bc0e-ac05ba836a4d"
+                  src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/20ed8c0e-3342-4b13-9326-cf317685e223"
                   alt="icon"
                 />
                 <FeatureName_0019>5mb per request</FeatureName_0019>
               </Component7>
               <PricelistFeatureItemFeatured>
                 <Frame245
-                  src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/b68ffa66-534c-4f6e-878e-36bcbe073050"
+                  src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/615810c9-5071-4ae3-8b76-86e6ab944f90"
                   alt="icon"
                 />
                 <FeatureName_0019>Unlimited requests per hour</FeatureName_0019>
               </PricelistFeatureItemFeatured>
               <Component7>
                 <Frame245
-                  src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/aad8b191-ea1a-424d-9f41-0efe9f94d434"
+                  src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/7fce7d83-d7ee-41ec-9397-6e4f9c545c39"
                   alt="icon"
                 />
                 <FeatureName_0019>No down time</FeatureName_0019>
@@ -226,12 +226,16 @@ export function SectionPricing() {
         </Frame315>
       </FreePricingHeroCardLarge>
       <Line35 />
+      <Frame587>
+        <Monthly>Monthly</Monthly>
+        <Yearly>Yearly</Yearly>
+      </Frame587>
     </RootWrapperSectionPricing>
   );
 }
 
 const RootWrapperSectionPricing = styled.div`
-  min-height: 100vh;
+  height: 1632px;
   background-color: white;
   position: relative;
 `;
@@ -246,7 +250,7 @@ const Pricing = styled.span`
   text-align: center;
   position: absolute;
   left: calc((calc((50% + 1px)) - 108px));
-  top: 58px;
+  top: 88px;
 `;
 
 const Group484 = styled.div`
@@ -261,8 +265,8 @@ const Group484 = styled.div`
   box-sizing: border-box;
   padding: 40px;
   position: absolute;
-  left: 530px;
-  top: 230px;
+  left: calc((calc((50% + 0px)) - 190px));
+  top: 320px;
   width: 380px;
   height: 673px;
 `;
@@ -417,8 +421,8 @@ const Group483 = styled.div`
   box-sizing: border-box;
   padding: 40px;
   position: absolute;
-  left: 936px;
-  top: 229px;
+  left: calc((calc((50% + 406px)) - 190px));
+  top: 319px;
   width: 380px;
   height: 713px;
 `;
@@ -490,8 +494,8 @@ const Group485 = styled.div`
   box-sizing: border-box;
   padding: 40px;
   position: absolute;
-  left: 124px;
-  top: 229px;
+  left: calc((calc((50% + -406px)) - 190px));
+  top: 319px;
   width: 380px;
   height: 673px;
 `;
@@ -519,8 +523,8 @@ const FreePricingHeroCardLarge = styled.div`
   background-color: white;
   box-sizing: border-box;
   position: absolute;
-  left: 201px;
-  top: 1094px;
+  left: calc((calc((50% + 1px)) - 520px));
+  top: 1184px;
   width: 1040px;
   height: 312px;
 `;
@@ -690,6 +694,40 @@ const Line35 = styled.div`
   height: 0px;
   border-top: solid 1px rgba(0, 0, 0, 0.1);
   position: absolute;
-  left: 201px;
-  top: 1018px;
+  left: calc((calc((50% + 1px)) - 520px));
+  top: 1108px;
+`;
+
+const Frame587 = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+  box-sizing: border-box;
+  position: absolute;
+  left: calc((calc((50% + 0px)) - 52px));
+  top: 229px;
+  width: 104px;
+  height: 14px;
+`;
+
+const Monthly = styled.span`
+  color: black;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  line-height: 98%;
+  text-align: left;
+`;
+
+const Yearly = styled.span`
+  color: black;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: 400;
+  line-height: 98%;
+  text-align: left;
 `;

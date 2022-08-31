@@ -4,13 +4,15 @@ import { SectionCtaLast } from "../grida/SectionCtaLast";
 import { SectionDisclaimer } from "../grida/SectionDisclaimer";
 import { SectionHero } from "../grida/SectionHero";
 import { SectionPricing } from "../grida/SectionPricing";
+import { SectionUsage } from "../grida/SectionUsage";
 
 export default function HomePage() {
   return (
     <>
       <AppbarGroup />
       <SectionHero />
-      {/* <SectionPricing /> */}
+      <SectionUsage />
+      <SectionPricing />
       <SectionCtaLast />
       <SectionDisclaimer />
     </>
