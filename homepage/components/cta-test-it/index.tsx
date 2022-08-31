@@ -172,7 +172,7 @@ const MethodSelect = styled.div`
 `;
 
 const RequestInputAsInput = styled.input`
-  width: 536px;
+  width: 400px;
   background-color: white;
   border-top-left-radius: 0px;
   border-top-right-radius: 4px;
