@@ -119,6 +119,11 @@ export function TestitCta() {
           type="text"
           placeholder="https://example.com"
           value={url}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              onsend();
+            }
+          }}
           onChange={(e) => {
             setUrl(e.target.value);
           }}
