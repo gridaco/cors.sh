@@ -1,6 +1,33 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { TestitCta } from "../components";
+
+export function TryPlayground() {
+  return (
+    <RootWrapperTryPlayground>
+      Try it out on playground for requests with body 👉{" "}
+      <a className="underline" href="/playground">
+        cors.sh/playground
+      </a>
+    </RootWrapperTryPlayground>
+  );
+}
+
+const RootWrapperTryPlayground = styled.span`
+  color: rgba(0, 0, 0, 0.6);
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 160%;
+  text-align: left;
+  width: 356px;
+
+  .underline {
+    text-decoration: underline;
+  }
+`;
+
 /**
  * `<SectionHero>` ('section-hero')
  * - [Open in Figma](https://figma.com/file/aPfdtNb1aGFIN9p05cmmVY?node-id=15:1784)
@@ -52,6 +79,8 @@ export function SectionHero() {
       </Headings>
       <Cta>
         <TestitCta />
+        <div style={{ height: 20 }} />
+        <TryPlayground />
       </Cta>
       <FeatuersList>
         <Item>
