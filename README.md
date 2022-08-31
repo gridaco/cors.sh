@@ -10,6 +10,19 @@ https://cors.sh
 
 - https://github.com/gridaco/playground.cors.sh
 
+## Usage
+
+**Quick testing**
+Use [cors.sh/playground](https://cors.sh/playground) for testing out your cors blocked request.
+
+**JS**
+
+Add `proxy.cors.sh` to your request. For example,
+
+```js
+fetch("https://proxy.cors.sh/https://example.com/");
+```
+
 ## Disclaimer
 
 1. This project's intend is to serve developers a reliable cors proxy service with fast response for their development.
