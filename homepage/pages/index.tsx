@@ -10,7 +10,7 @@ export default function HomePage() {
     <>
       <AppbarGroup />
       <SectionHero />
-      <SectionPricing />
+      {/* <SectionPricing /> */}
       <SectionCtaLast />
       <SectionDisclaimer />
     </>

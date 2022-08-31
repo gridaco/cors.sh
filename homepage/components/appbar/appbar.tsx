@@ -49,7 +49,7 @@ export function Appbar() {
           <Menus>
             <MenuItem label="Docs" href="/docs" />
             <MenuItem label="Playground" href="/playground" />
-            <MenuItem label="Pricing" href="#pricing" />
+            {/* <MenuItem label="Pricing" href="#pricing" /> */}
             <MenuItem
               label="Github"
               href="https://github.com/gridaco/cors.sh"
