@@ -21,6 +21,9 @@ provider:
     shouldStartNameWithService: true
   region: us-west-1
   environment:
+    RATE_LIMIT_REDIS_URL: ${env:RATE_LIMIT_REDIS_URL}
+    RATE_LIMIT_REDIS_USERNAME: ${env:RATE_LIMIT_REDIS_USERNAME}
+    RATE_LIMIT_REDIS_PASSWORD: ${env:RATE_LIMIT_REDIS_PASSWORD}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
     DYNAMODB_TABLE_USAGE_LOG: "${self:service}-usage-log-${opt:stage, self:provider.stage}"
   iamRoleStatements:

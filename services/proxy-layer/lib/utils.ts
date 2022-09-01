@@ -6,11 +6,6 @@ export const regexp = /\.(?:AAA|AARP|ABARTH|ABB|ABBOTT|ABBVIE|ABC|ABLE|ABOGADO|A
 export const withCORS = (headers, request) => {
   headers["access-control-allow-origin"] = "*";
 
-  // =================== TEMPORARY WARNING https://github.com/bridgedxyz/base/issues/23 ======
-  headers[
-    "Warning"
-  ] = `${199} - "Api-key update required. Unauthorized request will be blocked from July first 2021. - follow this guideline https://github.com/bridgedxyz/base/issues/23"`;
-  // =================== TEMPORARY WARNING https://github.com/bridgedxyz/base/issues/23 ======
 
   var corsMaxAge = request.corsAnywhereRequestState.corsMaxAge;
   if (request.method === "OPTIONS" && corsMaxAge) {
