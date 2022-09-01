@@ -16,7 +16,7 @@ custom:
 provider:
   name: aws
   memorySize: 128
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   apiGateway:
     shouldStartNameWithService: true
   region: us-west-1

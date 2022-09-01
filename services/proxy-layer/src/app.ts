@@ -6,6 +6,7 @@ import * as responsetime from "response-time";
 import { logRequest } from "./usage";
 import { blaklistoriginlimit, payloadlimit } from "./limit";
 import { unauthorizedAppBlocking } from "./auth";
+import limiter from "./limit/rate-limit";
 
 const app = express();
 
@@ -39,9 +40,12 @@ app.use(payloadlimit); // 2
 app.use(
   responsetime({
     suffix: false,
-  })
+  }) as any
 );
 app.use(useragent.express());
+
+// main rate limiter
+app.use(limiter);
 
 // -- execution order matters --
 // (1)
