@@ -19,6 +19,9 @@ provider:
   runtime: nodejs14.x
   apiGateway:
     shouldStartNameWithService: true
+    binaryMediaTypes:
+      - "*/*"
+    endpointType: regional
   region: us-west-1
   environment:
     RATE_LIMIT_REDIS_URL: ${env:RATE_LIMIT_REDIS_URL}

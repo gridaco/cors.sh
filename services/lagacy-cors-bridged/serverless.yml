@@ -1,6 +1,6 @@
 # Welcome to serverless. Read the docs
 # https://serverless.com/framework/docs/
-
+frameworkVersion: "2"
 service: cors
 useDotenv: true
 custom:
@@ -25,6 +25,9 @@ provider:
   runtime: nodejs12.x
   apiGateway:
     shouldStartNameWithService: true
+    binaryMediaTypes:
+      - "*/*"
+    endpointType: regional
   region: us-west-1
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
