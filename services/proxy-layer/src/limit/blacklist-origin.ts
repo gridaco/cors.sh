@@ -49,7 +49,7 @@ function blacked(origin: string): boolean {
   // 5. ....
   try {
     const u = new URL(origin);
-    return blacklisted_origin.some(o => {
+    return blacklisted_origin.some((o) => {
       return u.hostname == o || u.hostname == "www." + o;
     });
   } catch (_) {

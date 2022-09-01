@@ -1,9 +1,6 @@
 import * as express from "express";
+import { STATIC_CORS_ACCOUNT_API_KEY_HEADER } from "../k";
 import { keys } from "./_tmp_static_api_keys";
-/**
- * cors.grida.cc static api key header
- */
-const STATIC_CORS_ACCOUNT_API_KEY_HEADER = "x-cors-grida-api-key";
 
 const nokey401UnAuthorized = () => {
   return "https://bit.ly/2UnZSA8";
@@ -33,11 +30,11 @@ export const unauthorizedAppBlocking = (
   }
 };
 
-function validate_api_key(apikey: string) {
+export function validate_api_key(apikey: string) {
   if (!apikey || apikey == "") {
     return false;
   }
-  const found = (keys as string[]).find(s => s === apikey);
+  const found = (keys as string[]).find((s) => s === apikey);
   if (found) {
     return true;
   }
