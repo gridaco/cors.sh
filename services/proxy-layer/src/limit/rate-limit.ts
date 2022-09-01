@@ -66,6 +66,14 @@ const limiter = rateLimit({
     return false;
   },
   keyGenerator: (req: Request, res: Response) => {
+    const apikey: string = req.headers[
+      STATIC_CORS_ACCOUNT_API_KEY_HEADER
+    ] as string;
+    if (apikey && validate_api_key(apikey)) {
+      // if using apikey, use the api key as key. (is this secure? - yes. is this the best way? - maybe, for now at least.)
+      return apikey;
+    }
+
     // if localhost, use ip.
     // if not localhost, use host.
     if (req.hostname == "localhost") {
