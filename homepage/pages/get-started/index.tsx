@@ -1,5 +1,6 @@
 import React from "react";
+import { PricingCardsList } from "../../layouts/pricing-card-list";
 
-export function GetstartedPage() {
-  return <></>;
+export default function GetstartedPage() {
+  return <PricingCardsList />;
 }
