@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+}
+
+model Application{
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  allowedOrigins String[]
+  allowedTargets String[]
+
+  // api key for testing formed in test_xxx
+  test_api_key String
+  // api key for production formed in live_xxx
+  live_api_key String
+}
+
+// grida workspace <> stripe customer
+model Customer{
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  // grida workspace (user) id
+  workspaceId String @unique
+
+}
+
+model Subscription{
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  // 
+}

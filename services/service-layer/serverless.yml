@@ -1,0 +1,62 @@
+service: cors-proxy-service
+useDotenv: true
+plugins:
+  - serverless-webpack
+  - serverless-webpack-prisma
+  - serverless-offline
+  - serverless-domain-manager
+
+custom:
+  customDomain:
+    domainName: posts.grida.cc
+    certificateName: "*.grida.cc"
+    basePath: ""
+    createRoute53Record: true
+    stage: production
+  serverless-offline:
+    httpPort: 4021
+    noPrependStageInUrl: true
+  webpack:
+    includeModules: true
+
+provider:
+  name: aws
+  environment:
+    DATABASE_URL: ${env:DATABASE_URL}
+  runtime: nodejs12.x
+  region: us-west-1
+  apiGateway:
+    # https://stackoverflow.com/questions/61003311/serverless-i-image-upload-to-s3-broken-after-deploy-local-worked-only/61003498#61003498
+    binaryMediaTypes:
+      - "*/*"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:GetObject
+        - s3:PutObjectAcl
+      Resource: "arn:aws:s3:::cms-posts/*"
+
+resource:
+  s3bucket:
+    Type: S3::Bucket
+    Properties:
+      BucketName: cms-posts
+
+functions:
+  main:
+    handler: index.handler
+    events:
+      - http:
+          method: any
+          path: /{proxy+}
+          cors:
+            origin: "*"
+      - http:
+          method: get
+          path: /
+          cors:
+            origin: "*"
+
+package:
+  individually: true

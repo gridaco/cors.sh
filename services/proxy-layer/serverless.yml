@@ -11,7 +11,8 @@ custom:
     createRoute53Record: false
 
   serverless-offline:
-    httpPort: 4012
+    httpPort: 4020
+    noPrependStageInUrl: true
 
 provider:
   name: aws
