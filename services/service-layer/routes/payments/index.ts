@@ -9,12 +9,10 @@ const router = express.Router();
 
 const PAYMENTSWEBURL = "http://localhost:8823";
 
-router.post("/create-checkout-session", async (req, res) => {
-  const price = await stripe.prices.retrieve(req.body.lookup_key as string, {
+router.get("/create-checkout-session", async (req, res) => {
+  const price = await stripe.prices.retrieve(req.query.price as string, {
     expand: ["product"],
   });
-  console.log("req.body.lookup_key", req.body.lookup_key);
-  console.log("prices", price);
   const session = await stripe.checkout.sessions.create({
     billing_address_collection: "auto",
     line_items: [

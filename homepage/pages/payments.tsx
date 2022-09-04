@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import classNames from "./payments.module.scss";
-
-const SERVER_URL = "http://localhost:4021";
-
-// TODO: this is test price - replace me.
-const PRICE_PERSONAL_PRO_MONTHLY = "price_1Lda7UAvR3geCh5rVaajCSw6";
+import * as k from "../k";
 
 const ProductDisplay = () => (
   <section>
@@ -16,15 +12,11 @@ const ProductDisplay = () => (
       </div>
     </div>
     <form
-      action={SERVER_URL + "/payments/create-checkout-session"}
-      method="POST"
+      action={k.SERVER_URL + "/payments/create-checkout-session"}
+      method="GET"
     >
       {/* Add a hidden field with the lookup_key of your Price */}
-      <input
-        type="hidden"
-        name="lookup_key"
-        value={PRICE_PERSONAL_PRO_MONTHLY}
-      />
+      <input type="hidden" name="price" value={k.PRICE_PERSONAL_PRO_MONTHLY} />
       <button id="checkout-and-portal-button" type="submit">
         Checkout
       </button>

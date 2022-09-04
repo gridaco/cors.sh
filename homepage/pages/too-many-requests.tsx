@@ -15,7 +15,7 @@ Upgrade your plan to remove this limit."
         <PricingCardsList
           enableIndividualActions={false}
           // fallback to personal plan
-          initialSelection={k.PRICE_PERSONAL_ID}
+          initialSelection={k.PRICE_PERSONAL_PRO_MONTHLY}
           onGetStartedClick={() => {}}
         />
       </StepLayout>
