@@ -56,12 +56,18 @@ export function PricingCardsList({
   enableIndividualActions,
   onGetStartedClick,
   initialSelection,
+  disableSelection = false,
 }: {
+  disableSelection?: boolean;
   initialSelection?: string;
   enableIndividualActions: boolean;
   onGetStartedClick: (id: string) => void;
 }) {
   const [selected, setSelected] = useState(initialSelection);
+  const onSelected = (id: string) => {
+    if (disableSelection) return;
+    setSelected(id);
+  };
 
   return (
     <div
@@ -73,7 +79,7 @@ export function PricingCardsList({
     >
       {prices.map((price) => (
         <PricingCard
-          onClick={() => setSelected(price.id)}
+          onClick={() => onSelected(price.id)}
           selected={selected === price.id}
           key={price.id}
           name={price.name}

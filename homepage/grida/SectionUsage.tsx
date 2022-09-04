@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { useRouter } from "next/router";
 /**
  * `<SectionUsage>` ('section-usage')
  * - [Open in Figma](https://figma.com/file/aPfdtNb1aGFIN9p05cmmVY?node-id=27:2213)
@@ -37,6 +38,7 @@ import styled from "@emotion/styled";
  * <!-- grida.meta.widget_declaration | engine : 0.0.1 | source : figma://aPfdtNb1aGFIN9p05cmmVY/27:2213 -->
  */
 export function SectionUsage() {
+  const router = useRouter();
   return (
     <RootWrapperSectionUsage>
       <Success>
@@ -92,7 +94,13 @@ export function SectionUsage() {
           <Js>JS</Js>
           <Sdk>SDK</Sdk>
         </Frame586_0001>
-        <ViewAllExamples>View all examples</ViewAllExamples>
+        <ViewAllExamples
+          onClick={() => {
+            router.push("/docs/category/guides");
+          }}
+        >
+          View all examples
+        </ViewAllExamples>
       </Frame4>
       <Items>
         <Item>
@@ -131,22 +139,10 @@ export function SectionUsage() {
       </Items>
       <ReqExample>GET https://proxy.cors.sh/https://instagram.com</ReqExample>
       <Logos>
-        <Logo
-          src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/4da57766-98db-451b-aab1-b7b1aaf7010a"
-          alt="image of Logo"
-        />
-        <Logo
-          src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/bb9c3a86-7fc6-4631-b074-d06a00e0fea5"
-          alt="image of Logo"
-        />
-        <Logo_0002
-          src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/4680b205-5fda-4088-bd96-0186336e02e7"
-          alt="image of Logo"
-        />
-        <Logo
-          src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/d79ffa89-a7f9-484e-bac4-7cd00c0ed998"
-          alt="image of Logo"
-        />
+        <Logo src="/logos-3p/instagram.png" alt="instagram" />
+        <Logo src="/logos-3p/tiktok.png" alt="tiktok" />
+        <Logo src="/logos-3p/twitter.png" alt="twitter" />
+        <Logo src="/logos-3p/github.png" alt="github" />
       </Logos>
     </RootWrapperSectionUsage>
   );

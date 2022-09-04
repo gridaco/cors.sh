@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
+import { Button } from "../components/button";
+import { Logo } from "../components/logo";
 
 type Props = {
   title: string;
@@ -17,26 +19,56 @@ export function StepLayout({
   children,
   disableEnterForNext,
 }: Props) {
+  const nextbtnref = React.useRef<HTMLButtonElement>(null);
+
   return (
-    <div
-      style={{
-        padding: 80,
+    <Layout
+      id="layout"
+      tabIndex={0} // to enable keydown event
+      onKeyDown={(e) => {
+        if (e.key === "Enter" && !disableEnterForNext) {
+          nextbtnref.current?.click();
+        }
       }}
     >
       <HeadingContaienr>
+        <Logo moveToHome />
+        <div style={{ height: 8 }} />
         <h1>{title}</h1>
-        <p>{description}</p>
+        <Description>{description}</Description>
       </HeadingContaienr>
       <div style={{ height: 40 }} />
       {children}
       <div style={{ height: 40 }} />
-      <div>
-        {!disableEnterForNext && <span>Press enter to continue</span>}
-        <button onClick={onNextClick}>{nextPromptLabel}</button>
-      </div>
-    </div>
+      <FooterSticky>
+        {!disableEnterForNext && (
+          <PressEnterToContinue>Press enter to continue</PressEnterToContinue>
+        )}
+        <Button ref={nextbtnref} onClick={onNextClick}>
+          {nextPromptLabel}
+        </Button>
+      </FooterSticky>
+    </Layout>
   );
 }
+
+const Layout = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 80px;
+  outline: none;
+  border: none;
+`;
+
+const Description = styled.p`
+  color: rgba(0, 0, 0, 0.8);
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: 400;
+  text-align: left;
+`;
 
 const HeadingContaienr = styled.div`
   display: flex;
@@ -44,4 +76,21 @@ const HeadingContaienr = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
+`;
+
+const PressEnterToContinue = styled.span`
+  color: rgba(0, 0, 0, 0.8);
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: 400;
+  text-align: left;
+`;
+
+const FooterSticky = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 24px;
+  flex-direction: row;
 `;
