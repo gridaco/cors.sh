@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { PricingCardsList } from "../layouts/pricing-card-list";
+import { useRouter } from "next/router";
 /**
  * `<SectionPricing>` ('section-pricing')
  * - [Open in Figma](https://figma.com/file/aPfdtNb1aGFIN9p05cmmVY?node-id=15:1613)
@@ -37,142 +39,26 @@ import styled from "@emotion/styled";
  * <!-- grida.meta.widget_declaration | engine : 0.0.1 | source : figma://aPfdtNb1aGFIN9p05cmmVY/15:1613 -->
  */
 export function SectionPricing() {
+  const router = useRouter();
   return (
     <RootWrapperSectionPricing>
       <Pricing>Pricing</Pricing>
-      <Group484>
-        <Frame497>
-          <Frame496>
-            <Frame495>
-              <ForPersonalProjects>For Personal Projects</ForPersonalProjects>
-              <Frame486>
-                <_4>$4</_4>
-                <Month>/ Month</Month>
-              </Frame486>
-            </Frame495>
-            <Frame310>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/9a2fc443-2814-434d-b8bb-269544918ff4" />
-                <FeatureName>1,000,000 requests per month</FeatureName>
-              </PricelistFeatureItem>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/8ba53d22-7889-4fbb-90d1-e509dac62909" />
-                <FeatureName>500GB Bandwidth</FeatureName>
-              </PricelistFeatureItem>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/375bd093-a621-4fbb-b1ca-1cb8f4d8f142" />
-                <FeatureName>Unlimited Sites</FeatureName>
-              </PricelistFeatureItem>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/8f74aa0c-ef80-4e7c-8e75-dc19ea478caa" />
-                <FeatureName>Max 6mb per request</FeatureName>
-              </PricelistFeatureItem>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/fa4f525a-d96b-4afc-97d7-aefd4c0a6d60" />
-                <FeatureName>Unlimited requests per hour</FeatureName>
-              </PricelistFeatureItem>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/256093de-7356-4ee0-ba9d-68e4d236d908" />
-                <FeatureName>No down time</FeatureName>
-              </PricelistFeatureItem>
-            </Frame310>
-          </Frame496>
-          <Button>
-            <Label>Get started</Label>
-          </Button>
-        </Frame497>
-      </Group484>
-      <Group483>
-        <Frame497>
-          <Frame496>
-            <Frame495>
-              <ForYourTeam>For your team</ForYourTeam>
-              <Frame486_0001>
-                <PayAsYouGo>Pay as you go</PayAsYouGo>
-                <From10PerMonth>From $10 per month</From10PerMonth>
-              </Frame486_0001>
-            </Frame495>
-            <Frame310>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/09e15423-7689-4bec-8040-21c7a6661dba" />
-                <FeatureName_0006>
-                  1,000,000 requests / month included
-                </FeatureName_0006>
-              </PricelistFeatureItem>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/fa245084-337b-4684-8aec-9fb564786e31" />
-                <FeatureName>Unlimited traffic</FeatureName>
-              </PricelistFeatureItem>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/bef5240e-8cc7-457c-9b6c-7b4d7a9d8c00" />
-                <FeatureName_0006>
-                  $1 per every next 100,000 requests
-                </FeatureName_0006>
-              </PricelistFeatureItem>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/3a169bfd-2fff-4288-8ffb-ca09df1d761d" />
-                <FeatureName>Unlimited Applications</FeatureName>
-              </PricelistFeatureItem>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/472b55aa-3ac3-43cf-a749-a9ce1327b9b4" />
-                <FeatureName>Max 6mb per request</FeatureName>
-              </PricelistFeatureItem>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/e8982801-e68e-4f1e-a4d9-db5f13e519b2" />
-                <FeatureName>Unlimited requests per hour</FeatureName>
-              </PricelistFeatureItem>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/448e0ac1-6b8c-4f36-873b-89fcae84c7fe" />
-                <FeatureName>No down time</FeatureName>
-              </PricelistFeatureItem>
-            </Frame310>
-          </Frame496>
-          <Button>
-            <Label>Get started</Label>
-          </Button>
-        </Frame497>
-      </Group483>
-      <Group485>
-        <Frame497>
-          <Frame496>
-            <Frame495>
-              <HobbyTesting>Hobby & Testing</HobbyTesting>
-              <Frame486_0001>
-                <_4>$0</_4>
-              </Frame486_0001>
-            </Frame495>
-            <Frame310>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/72b9c9ac-699c-4a24-b330-107e26602d3c" />
-                <FeatureName>10,000 requests per month</FeatureName>
-              </PricelistFeatureItem>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/c179610a-49b7-46ba-862c-b12d016dc165" />
-                <FeatureName>5GB traffic per month</FeatureName>
-              </PricelistFeatureItem>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/bcb384dd-69cb-48e0-9cee-fb60ee9b6bb8" />
-                <FeatureName>500 requests per hour</FeatureName>
-              </PricelistFeatureItem>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/4267af60-4545-4bcc-8764-d1af0dca937e" />
-                <FeatureName>3 Applications</FeatureName>
-              </PricelistFeatureItem>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/5735c8b4-aa0a-4364-acf4-d26c5336cca3" />
-                <FeatureName>3mb per request</FeatureName>
-              </PricelistFeatureItem>
-              <PricelistFeatureItem>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/516c40cc-dbef-45c2-9cdd-2fa67da73811" />
-                <FeatureName>No down time</FeatureName>
-              </PricelistFeatureItem>
-            </Frame310>
-          </Frame496>
-          <Button>
-            <Label>Get started</Label>
-          </Button>
-        </Frame497>
-      </Group485>
+      <div
+        style={{
+          display: "flex",
+          top: 300,
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
+        }}
+      >
+        <PricingCardsList
+          enableIndividualActions
+          onGetStartedClick={(price) => {
+            router.push({ pathname: "/get-started", query: { price } });
+          }}
+        />
+      </div>
       <FreePricingHeroCardLarge>
         <Frame315>
           <Frame247>

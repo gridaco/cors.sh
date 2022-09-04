@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import Check from "@mui/icons-material/Check";
 /**
  * `<PricingCard>` ('pricing-card')
  * - [Open in Figma](https://figma.com/file/aPfdtNb1aGFIN9p05cmmVY?node-id=44:1495)
@@ -45,8 +46,10 @@ export function PricingCard({
   name,
   unit,
   selected,
+  enableAction = true,
   onClick,
 }: {
+  enableAction?: boolean;
   onClick?: () => void;
   selected?: boolean;
   unit?: string;
@@ -75,13 +78,19 @@ export function PricingCard({
           <FeaturesArea>
             {features.map((feature) => (
               <PricelistFeatureItem key={feature}>
-                <IconsMdiCheck src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/031579aa-f076-4de6-aaed-0925e89cd933" />
+                <Check
+                  sx={{
+                    color: "#A9A9A9",
+                  }}
+                />
                 <FeatureName>{feature}</FeatureName>
               </PricelistFeatureItem>
             ))}
           </FeaturesArea>
         </ReadingArea>
-        <ButtonAsButton onClick={onStartClick}>{startLabel}</ButtonAsButton>
+        {enableAction && (
+          <ButtonAsButton onClick={onStartClick}>{startLabel}</ButtonAsButton>
+        )}
       </Content>
     </RootWrapperPricingCard>
   );

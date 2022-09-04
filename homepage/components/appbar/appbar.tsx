@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 /**
  * `<Appbar>` ('appbar')
  * - [Open in Figma](https://figma.com/file/aPfdtNb1aGFIN9p05cmmVY?node-id=18:1889)
@@ -39,6 +40,11 @@ import Link from "next/link";
  * <!-- grida.meta.widget_declaration | engine : 0.0.1 | source : figma://aPfdtNb1aGFIN9p05cmmVY/18:1889 -->
  */
 export function Appbar() {
+  const router = useRouter();
+  const onGetStartedClick = () => {
+    router.push("/get-started");
+  };
+
   return (
     <RootWrapperAppbar>
       <ContentFrame>
@@ -58,7 +64,7 @@ export function Appbar() {
         </Leading>
         <HeaderCtaSignupPlain>
           <HeaderCtaSignupPlain_0001>
-            <SignUp>Get started</SignUp>
+            <GetStarted onClick={onGetStartedClick}>Get started</GetStarted>
           </HeaderCtaSignupPlain_0001>
         </HeaderCtaSignupPlain>
       </ContentFrame>
@@ -207,7 +213,8 @@ const HeaderCtaSignupPlain_0001 = styled.div`
   box-sizing: border-box;
 `;
 
-const SignUp = styled.span`
+const GetStarted = styled.span`
+  cursor: pointer;
   color: black;
   text-overflow: ellipsis;
   font-size: 16px;

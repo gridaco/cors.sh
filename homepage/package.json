@@ -10,6 +10,8 @@
     "dependencies": {
         "@emotion/react": "^11.10.0",
         "@emotion/styled": "^11.10.0",
+        "@mui/icons-material": "^5.10.3",
+        "@mui/material": "^5.10.3",
         "@types/react-select": "^5.0.1",
         "next": "12.2.5",
         "react": "18.2.0",

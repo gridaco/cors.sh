@@ -12,7 +12,7 @@ interface Price {
 
 const prices: Price[] = [
   {
-    id: "",
+    id: "free",
     name: "For Testing",
     price: "Free",
     features: [
@@ -24,7 +24,7 @@ const prices: Price[] = [
     ],
   },
   {
-    id: "",
+    id: "personal",
     name: "For Personal projects",
     price: "$4",
     unit: "Month",
@@ -37,7 +37,7 @@ const prices: Price[] = [
     ],
   },
   {
-    id: "",
+    id: "payg",
     name: "For Production projects",
     description: "From $39 / month",
     price: "Pay as you go",
@@ -52,8 +52,16 @@ const prices: Price[] = [
   },
 ];
 
-export function PricingCardsList() {
-  const [selected, setSelected] = useState(1);
+export function PricingCardsList({
+  enableIndividualActions,
+  onGetStartedClick,
+  initialSelection,
+}: {
+  initialSelection?: string;
+  enableIndividualActions: boolean;
+  onGetStartedClick: (id: string) => void;
+}) {
+  const [selected, setSelected] = useState(initialSelection);
 
   return (
     <div
@@ -63,17 +71,21 @@ export function PricingCardsList() {
         gap: 40,
       }}
     >
-      {prices.map((price, index) => (
+      {prices.map((price) => (
         <PricingCard
-          onClick={() => setSelected(index)}
-          selected={selected === index}
+          onClick={() => setSelected(price.id)}
+          selected={selected === price.id}
           key={price.id}
           name={price.name}
           description={price.description}
           price={price.price}
+          startLabel="Get Started"
           unit={price.unit}
           features={price.features}
-          onStartClick={() => {}}
+          enableAction={enableIndividualActions}
+          onStartClick={() => {
+            onGetStartedClick(price.id);
+          }}
         />
       ))}
     </div>
