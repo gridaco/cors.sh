@@ -4,7 +4,7 @@
 
 The only cors proxy service all you'll ever need.
 
-| [Website](https://cors.sh) | [Proxy (proxy.cors.sh)](https://proxy.cors.sh) | [Playground](https://cors.sh/playground) |
+| [Website](https://cors.sh) | [Proxy (proxy.cors.sh)](https://proxy.cors.sh) | [Playground](https://cors.sh/playground) | [Docs](https://cors.sh/docs) |
 
 ## Usage
 
