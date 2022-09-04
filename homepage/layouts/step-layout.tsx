@@ -5,7 +5,7 @@ import { Logo } from "../components/logo";
 
 type Props = {
   title: string;
-  description: string;
+  description: string | React.ReactNode;
   nextPromptLabel: string;
   disableEnterForNext?: boolean;
   onNextClick: () => void;
@@ -34,7 +34,7 @@ export function StepLayout({
       <HeadingContaienr>
         <Logo moveToHome />
         <div style={{ height: 8 }} />
-        <h1>{title}</h1>
+        <Heading>{title}</Heading>
         <Description>{description}</Description>
       </HeadingContaienr>
       <div style={{ height: 40 }} />
@@ -61,6 +61,10 @@ const Layout = styled.div`
   border: none;
 `;
 
+const Heading = styled.h1`
+  max-width: 370px;
+`;
+
 const Description = styled.p`
   color: rgba(0, 0, 0, 0.8);
   text-overflow: ellipsis;
@@ -68,6 +72,7 @@ const Description = styled.p`
   font-family: "Helvetica Neue", sans-serif;
   font-weight: 400;
   text-align: left;
+  max-width: 600px;
 `;
 
 const HeadingContaienr = styled.div`

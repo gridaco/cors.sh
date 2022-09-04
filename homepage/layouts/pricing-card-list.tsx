@@ -5,17 +5,20 @@ export function PricingCardsList({
   enableIndividualActions,
   onGetStartedClick,
   initialSelection,
+  onPriceChange,
   disableSelection = false,
 }: {
   disableSelection?: boolean;
   initialSelection?: string;
   enableIndividualActions: boolean;
-  onGetStartedClick: (id: string) => void;
+  onPriceChange?: (price: string) => void;
+  onGetStartedClick?: (id: string) => void;
 }) {
   const [selected, setSelected] = useState(initialSelection);
   const onSelected = (id: string) => {
     if (disableSelection) return;
     setSelected(id);
+    onPriceChange?.(id);
   };
 
   return (
@@ -39,7 +42,7 @@ export function PricingCardsList({
           features={price.features}
           enableAction={enableIndividualActions}
           onStartClick={() => {
-            onGetStartedClick(price.id);
+            onGetStartedClick?.(price.id);
           }}
         />
       ))}

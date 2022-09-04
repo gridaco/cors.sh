@@ -37,6 +37,11 @@ const config = {
         permanent: true,
       },
       {
+        // if pyament is canceled, go back to get started page.
+        source: "/payments/canceled",
+        destination: "/get-started",
+      },
+      {
         source: "/console",
         destination: "https://console.grida.co/cors-proxy",
         permanent: true,
