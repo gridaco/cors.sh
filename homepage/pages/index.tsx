@@ -5,6 +5,7 @@ import { SectionDisclaimer } from "../grida/SectionDisclaimer";
 import { SectionHero } from "../grida/SectionHero";
 import { SectionPricing } from "../grida/SectionPricing";
 import { SectionUsage } from "../grida/SectionUsage";
+import ChatwootWidget from "../components/chatwood";
 
 export default function HomePage() {
   return (
@@ -15,6 +16,7 @@ export default function HomePage() {
       <SectionPricing />
       <SectionCtaLast />
       <SectionDisclaimer />
+      <ChatwootWidget />
     </>
   );
 }

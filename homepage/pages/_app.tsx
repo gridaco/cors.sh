@@ -42,6 +42,7 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <meta property="og:image" content="/og:image.jpg" />
       </Head>
+
       <ToastContainer />
       <Component {...pageProps} />
     </>
