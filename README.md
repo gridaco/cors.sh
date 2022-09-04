@@ -4,11 +4,7 @@
 
 The only cors proxy service all you'll ever need.
 
-https://cors.sh
-
-## [`cors.sh/playground`](https://cors.sh/playground), The testing editor (forked from hoppscotch)
-
-- https://github.com/gridaco/playground.cors.sh
+| [Website](https://cors.sh) | [Proxy (proxy.cors.sh)](https://proxy.cors.sh) | [Playground](https://cors.sh/playground) |
 
 ## Usage
 
@@ -22,6 +18,12 @@ Add `proxy.cors.sh` to your request. For example,
 ```js
 fetch("https://proxy.cors.sh/https://example.com/");
 ```
+
+## [`cors.sh/playground`](https://cors.sh/playground), The testing environment (forked from hoppscotch)
+
+- [cors.sh/playground](https://cors.sh/playground)
+- [gridaco/playground.cors.sh](https://github.com/gridaco/playground.cors.sh)
+- [hoppscotch/hoppscotch](https://github.com/hoppscotch/hoppscotch)
 
 ## Disclaimer
 
