@@ -183,14 +183,6 @@ const MenuText = styled.span`
   text-align: left;
 `;
 
-const Indicator = styled.div`
-  height: 2px;
-  background-color: rgba(0, 0, 0, 0);
-  align-self: stretch;
-  flex-shrink: 0;
-  opacity: 0;
-`;
-
 const HeaderCtaSignupPlain = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -199,7 +191,7 @@ const HeaderCtaSignupPlain = styled.div`
   position: absolute;
   top: calc((calc((50% + 0px)) - 16px));
   right: 0px;
-  width: 80px;
+  min-width: 80px;
   height: 32px;
 `;
 
