@@ -10,7 +10,7 @@ import { SECURE_BROWSER_COOKIE_AUTH_KEY } from "./key";
 // 3. the hacker sets the cookie with the jwt token, and the customer id.
 // - seems secure enough for now.
 export async function authMiddleware(req: Request, res: Response, next) {
-  const authorization = req.signedCookies[SECURE_BROWSER_COOKIE_AUTH_KEY];
+  const authorization = req.signedCookies?.[SECURE_BROWSER_COOKIE_AUTH_KEY];
   if (!authorization) {
     return res.status(401).json({ error: "Unauthorized" });
   }
