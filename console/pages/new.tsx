@@ -1,6 +1,10 @@
 import React from "react";
 import { Button, TextFormField } from "@editor-ui/console";
 export default function NewApplicationPage() {
+  const onCreateNewClick = () => {
+    //
+  };
+
   return (
     <div
       style={{
@@ -33,7 +37,9 @@ export default function NewApplicationPage() {
           helpText="You can add up to 3 urls of your site"
         />
         <div style={{ height: 16 }} />
-        <Button height={"32px"}>Create Project</Button>
+        <Button onClick={onCreateNewClick} height={"32px"}>
+          Create Project
+        </Button>
       </div>
     </div>
   );
