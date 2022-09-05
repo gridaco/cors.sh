@@ -42,7 +42,7 @@ export function sign_temporary_key(email: string) {
   return (
     TMP_KEY_PREFIX +
     "_" +
-    jwt.sign(payload, process.env.JWT_SECRET, {
+    jwt.sign(payload, process.env.API_JWT_SECRET, {
       expiresIn: TMP_KEY_EXP_IN,
     })
   );
@@ -64,13 +64,17 @@ export function live_key(appid: string): PermanentKey {
 
 export function sign_test_key(appid: string) {
   return (
-    TEST_KEY_PREFIX + "_" + jwt.sign(test_key(appid), process.env.JWT_SECRET)
+    TEST_KEY_PREFIX +
+    "_" +
+    jwt.sign(test_key(appid), process.env.API_JWT_SECRET)
   );
 }
 
 export function sign_live_key(appid: string) {
   return (
-    LIVE_KEY_PREFIX + "_" + jwt.sign(live_key(appid), process.env.JWT_SECRET)
+    LIVE_KEY_PREFIX +
+    "_" +
+    jwt.sign(live_key(appid), process.env.API_JWT_SECRET)
   );
 }
 
