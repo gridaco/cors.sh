@@ -6,5 +6,5 @@ export const HOST =
 export const SERVER_URL =
   process.env.NODE_ENV === "production"
     ? // TODO: this url is not live.
-      "https://service.cors.sh"
+      "https://services.cors.sh"
     : "http://localhost:4021";
