@@ -1,6 +1,6 @@
 const _PRICE_PERSONAL_PRO_MONTHLY = {
-  test: "price_1LbnTwAvR3geCh5rZm9v8CAy",
-  live: "",
+  test: "price_1Lda7UAvR3geCh5rVaajCSw6",
+  live: "price_1LbnTwAvR3geCh5rZm9v8CAy",
 } as const;
 
 export const PRICE_PERSONAL_PRO_MONTHLY =
