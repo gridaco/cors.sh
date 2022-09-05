@@ -17,10 +17,9 @@ model Application{
   allowedOrigins String[]
   allowedTargets String[]
 
-  // api key for testing formed in test_xxx
-  test_api_key String
-  // api key for production formed in live_xxx
-  live_api_key String
+  owner Customer @relation(fields: [ownerId], references: [id])
+  ownerId String
+
 }
 
 // grida workspace <> stripe customer
@@ -28,10 +27,18 @@ model Customer{
   id     String @id @default(auto()) @map("_id") @db.ObjectId
   // grida workspace (user) id
   workspaceId String @unique
-
+  subscriptions Subscription[]
+  applicatopms Application[]
 }
 
 model Subscription{
   id     String @id @default(auto()) @map("_id") @db.ObjectId
-  // 
+  customer Customer @relation(fields: [customerId], references: [id])
+  customerId String
+  // stripe subscription id
+  subscriptionId String @unique
+  // price id from stripe (product is not saved in db.)
+  priceId String
+
+  subscribedAt DateTime
 }
