@@ -53,7 +53,7 @@ export function Appbar() {
             <Image src={"/logo.svg"} height={20} width={100} />
           </Home>
           <Menus>
-            <MenuItem label="Docs" href="/docs" />
+            {/* <MenuItem label="Docs" href="/docs" /> */}
             <MenuItem label="Playground" href="/playground" />
             {/* <MenuItem label="Pricing" href="#pricing" /> */}
             <MenuItem
