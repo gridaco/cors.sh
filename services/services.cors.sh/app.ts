@@ -11,6 +11,10 @@ function logErrors(err, req, res, next) {
 
 const app = express();
 
+app.get("/", (req, res) => {
+  res.redirect("https://cors.sh");
+});
+
 app.use(cors());
 
 app.use(
