@@ -1,3 +1,9 @@
+const withLinaria = require("next-linaria");
+const withTM = require("next-transpile-modules")([
+  //
+  "@editor-ui/console",
+]);
+
 /**
  * @type {import('next').NextConfig}
  */
@@ -5,4 +11,4 @@ const nextconfig = {
   basePath: "/console",
 };
 
-module.exports = nextconfig;
+module.exports = withTM(withLinaria(nextconfig));

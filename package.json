@@ -11,7 +11,9 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "homepage"
+    "homepage",
+    "console",
+    "packages/editor-ui/packages/*"
   ],
   "scripts": {
     "homepage": "yarn workspace homepage run dev"

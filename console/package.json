@@ -8,13 +8,17 @@
     "start": "next start -p 8824"
   },
   "dependencies": {
+    "@editor-ui/console": "0.0.0",
+    "linaria": "^4.1.2",
     "next": "12.2.5",
+    "next-linaria": "^0.11.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@types/node": "^18.7.15",
     "@types/react": "18.0.18",
+    "next-transpile-modules": "^9.0.0",
     "typescript": "4.8.2"
   }
 }
