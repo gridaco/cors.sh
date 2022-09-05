@@ -1,4 +1,4 @@
-import { prisma } from "clients";
+import { prisma } from "../clients";
 import Axios from "axios";
 
 const authclient = Axios.create({

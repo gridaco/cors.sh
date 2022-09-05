@@ -1,6 +1,6 @@
 import { prisma } from "../../clients";
 import * as express from "express";
-import { sign_temporary_key } from "keygen";
+import { sign_temporary_key } from "../../keygen";
 const router = express.Router();
 
 // send me a api key to get started.

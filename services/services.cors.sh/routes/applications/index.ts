@@ -1,6 +1,6 @@
 import * as express from "express";
-import { prisma } from "clients";
-import { sign_live_key, sign_temporary_key, sign_test_key } from "keygen";
+import { prisma } from "../../clients";
+import { sign_live_key, sign_temporary_key, sign_test_key } from "../../keygen";
 
 const router = express.Router();
 
