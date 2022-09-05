@@ -23,6 +23,9 @@ provider:
   name: aws
   environment:
     DATABASE_URL: ${env:DATABASE_URL}
+    STRIPE_API_KEY: ${env:STRIPE_API_KEY}
+    STRIPE_WEBHOOK_SECRET: ${env:STRIPE_WEBHOOK_SECRET}
+    WEBHOST: ${env:WEBHOST}
   runtime: nodejs12.x
   region: us-west-1
   apiGateway:
