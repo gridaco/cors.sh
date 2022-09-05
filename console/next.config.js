@@ -1,6 +1,6 @@
 const withLinaria = require("next-linaria");
 const withTM = require("next-transpile-modules")([
-  //
+  "@cors.sh/service-api",
   "@editor-ui/console",
 ]);
 

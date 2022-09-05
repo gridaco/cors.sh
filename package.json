@@ -13,6 +13,7 @@
   "workspaces": [
     "homepage",
     "console",
+    "packages/*",
     "packages/editor-ui/packages/*"
   ],
   "scripts": {
