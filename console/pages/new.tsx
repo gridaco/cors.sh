@@ -33,7 +33,7 @@ export default function NewApplicationPage() {
         />
         <TextFormField
           label="You site"
-          placeholder="localhost:3000, www.my-site.com"
+          placeholder="http://localhost:3000, https://my-site.com"
           helpText="You can add up to 3 urls of your site"
         />
         <div style={{ height: 16 }} />
