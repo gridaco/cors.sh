@@ -40,6 +40,7 @@ const config = {
         // if pyament is canceled, go back to get started page.
         source: "/payments/canceled",
         destination: "/get-started",
+        permanent: true,
       },
       {
         source: "/console",
