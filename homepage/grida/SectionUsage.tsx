@@ -102,7 +102,7 @@ export function SectionUsage() {
         <Item>
           <CheckFilled size={16} />
           <FetchImagesFromInstagram>
-            Fetch images from instagram
+            Fetch images from Tiktok
           </FetchImagesFromInstagram>
         </Item>
         <Item>
@@ -114,7 +114,7 @@ export function SectionUsage() {
         <Item>
           <CheckFilled size={16} />
           <FetchImagesFromInstagram>
-            Fetch images from instagram
+            Fetch images from Instagram
           </FetchImagesFromInstagram>
         </Item>
       </Items>
