@@ -4,7 +4,7 @@ plugins:
   - serverless-webpack
   - serverless-webpack-prisma
   - serverless-offline
-  # - serverless-domain-manager
+  - serverless-domain-manager
 
 custom:
   customDomain:
