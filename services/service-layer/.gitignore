@@ -3,3 +3,9 @@
 
 # we use yarn.
 package-lock.json
+
+# env
+.env
+.env.staging
+.env.production
+.env.local

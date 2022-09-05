@@ -8,10 +8,10 @@ plugins:
 
 custom:
   customDomain:
-    domainName: posts.grida.cc
-    certificateName: "*.grida.cc"
+    domainName: services.cors.sh
+    certificateName: "services.cors.sh"
     basePath: ""
-    createRoute53Record: true
+    createRoute53Record: false
     stage: production
   serverless-offline:
     httpPort: 4021
@@ -30,18 +30,11 @@ provider:
     binaryMediaTypes:
       - "*/*"
   iamRoleStatements:
+    # email with ses
     - Effect: Allow
       Action:
-        - s3:PutObject
-        - s3:GetObject
-        - s3:PutObjectAcl
-      Resource: "arn:aws:s3:::cms-posts/*"
-
-resource:
-  s3bucket:
-    Type: S3::Bucket
-    Properties:
-      BucketName: cms-posts
+        - ses:SendEmail
+      Resource: "*"
 
 functions:
   main:
