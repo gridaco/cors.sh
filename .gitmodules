@@ -1,0 +1,3 @@
+[submodule "packages/editor-ui"]
+	path = packages/editor-ui
+	url = https://github.com/reflect-ui/reflect-editor-ui
