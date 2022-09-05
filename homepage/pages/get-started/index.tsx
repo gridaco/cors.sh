@@ -17,7 +17,11 @@ export default function GetstartedPage({ price: _price }: { price?: string }) {
       onNextClick={() => {
         //
         const redirect =
-          k.SERVER_URL + "/payments/checkout-session?price=" + price;
+          k.SERVER_URL +
+          "/payments/checkout-session?price=" +
+          (price ||
+            // ensure again to include price (fallback)
+            k.PRICE_PERSONAL_PRO_MONTHLY);
 
         router.push(
           "https://accounts.grida.co/signin?redirect_uri=" + redirect
