@@ -15,9 +15,6 @@ const config = {
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
 
-  // tracking
-  trackingID: "G-XG051N1VS3",
-
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: "gridaco", // Usually your GitHub org/user name.
@@ -51,6 +48,10 @@ const config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+        },
+        // tracking
+        googleAnalytics: {
+          trackingID: "G-XG051N1VS3",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
