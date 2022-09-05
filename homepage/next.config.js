@@ -1,3 +1,4 @@
+const CONSOLE_URL = process.env.CONSOLE_URL;
 /**
  * @type {import('next').NextConfig}
  */
@@ -14,11 +15,11 @@ const config = {
       },
       {
         source: "/console",
-        destination: "http://localhost:8824/console",
+        destination: CONSOLE_URL,
       },
       {
         source: "/console/:path*",
-        destination: "http://localhost:8824/console/:path*",
+        destination: CONSOLE_URL + "/:path*",
       },
       {
         source: "/docs",
