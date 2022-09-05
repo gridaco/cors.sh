@@ -2,5 +2,7 @@
  * @type {import('next').NextConfig}
  */
 const nextconfig = {
-  basePath: "console",
+  basePath: "/console",
 };
+
+module.exports = nextconfig;
