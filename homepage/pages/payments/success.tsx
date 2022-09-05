@@ -43,6 +43,7 @@ export default function PaymentSuccessPage({ session }: { session: string }) {
           api-key test_xxxxx-xxxx-xxxx
         </pre>
       </section>
+      <div style={{ height: 40 }} />
       <section>
         <h4>When going production, </h4>
         <ol>
