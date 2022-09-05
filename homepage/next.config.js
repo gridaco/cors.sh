@@ -1,3 +1,8 @@
+const withTM = require("next-transpile-modules")([
+  "@cors.sh/service-api",
+  "@editor-ui/console",
+]);
+
 const CONSOLE_URL = process.env.CONSOLE_URL;
 /**
  * @type {import('next').NextConfig}
@@ -64,4 +69,4 @@ const config = {
     ];
   },
 };
-module.exports = config;
+module.exports = withTM(config);

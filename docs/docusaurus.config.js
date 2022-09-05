@@ -15,6 +15,9 @@ const config = {
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
 
+  // tracking
+  trackingID: "G-XG051N1VS3",
+
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: "gridaco", // Usually your GitHub org/user name.

@@ -8,6 +8,7 @@
         "start": "next start -p 8823"
     },
     "dependencies": {
+        "@cors.sh/service-api": "0.0.0",
         "@emotion/react": "^11.10.0",
         "@emotion/styled": "^11.10.0",
         "@mui/icons-material": "^5.10.3",
@@ -25,6 +26,7 @@
         "@types/node": "^18.7.13",
         "@types/react": "18.0.17",
         "grida": "^0.0.21",
+        "next-transpile-modules": "^9.0.0",
         "typescript": "4.8.2"
     }
 }
