@@ -19,7 +19,7 @@ interface Price {
 
 export const prices: Price[] = [
   {
-    id: "free",
+    id: "price_1KeF2VAvR3geCh5rq6s4V2P1",
     name: "For Testing",
     price: "Free",
     features: [
@@ -44,9 +44,9 @@ export const prices: Price[] = [
     ],
   },
   {
-    id: "payg",
+    id: "price_1LegsaAvR3geCh5rBCiuVmDt",
     name: "For Production projects",
-    description: "From $39 / month",
+    description: "From $10 / month",
     price: "Pay as you go",
     features: [
       "5,000,000 requests / month included",
