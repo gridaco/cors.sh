@@ -57,9 +57,12 @@ export function SectionDisclaimer() {
 }
 
 const RootWrapperSectionDisclaimer = styled.div`
-  min-height: 100vh;
-  background-color: white;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 120px;
 `;
 
 const Disclaimer = styled.span`
@@ -69,9 +72,6 @@ const Disclaimer = styled.span`
   font-family: "Roboto Mono", sans-serif;
   font-weight: 500;
   text-align: center;
-  position: absolute;
-  left: calc((calc((50% + 1px)) - 55px));
-  top: 161px;
 `;
 
 const Text = styled.span`
@@ -83,7 +83,4 @@ const Text = styled.span`
   font-weight: 400;
   text-align: left;
   width: 400px;
-  position: absolute;
-  left: calc((calc((50% + 0px)) - 200px));
-  top: 245px;
 `;

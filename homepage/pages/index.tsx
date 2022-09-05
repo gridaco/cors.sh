@@ -14,7 +14,8 @@ export default function HomePage() {
       <SectionHero />
       <SectionUsage />
       <SectionPricing />
-      <SectionCtaLast />
+      {/* <SectionCtaLast /> */}
+      <div style={{ height: 120 }} />
       <SectionDisclaimer />
       <ChatwootWidget />
     </>
