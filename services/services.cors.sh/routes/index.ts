@@ -16,5 +16,7 @@ router.use("/payments", router_payments);
 router.use("/webhooks/stripe", router_stripe_webhooks);
 router.use("/applications", cors_website_only, router_applications);
 router.use("/start-key", cors_website_only, router_start_key);
-
+router.get("/", (req, res) => {
+  res.redirect("https://cors.sh");
+});
 export default router;
