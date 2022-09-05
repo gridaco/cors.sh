@@ -11,3 +11,7 @@
   - uess prisma
   - can be alted to ec2 instalce service.
   - handles few thousand requests every hour.
+
+## Shared keys
+
+- `JWT_SECRET` the jwt secret is shared accross services, the token issueing can be only done by the service layer, and the proxy layer can only verify the token.
