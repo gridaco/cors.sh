@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "../components/button";
 import { Logo } from "../components/logo";
 
@@ -21,16 +21,20 @@ export function StepLayout({
 }: Props) {
   const nextbtnref = React.useRef<HTMLButtonElement>(null);
 
+  useEffect(() => {
+    const listener = (e: KeyboardEvent) => {
+      if (e.key === "Enter" && !disableEnterForNext) {
+        onNextClick();
+      }
+    };
+    document.addEventListener("keydown", listener);
+    return () => {
+      document.removeEventListener("keydown", listener);
+    };
+  }, []);
+
   return (
-    <Layout
-      id="layout"
-      tabIndex={0} // to enable keydown event
-      onKeyDown={(e) => {
-        if (e.key === "Enter" && !disableEnterForNext) {
-          nextbtnref.current?.click();
-        }
-      }}
-    >
+    <Layout id="layout">
       <HeadingContaienr>
         <Logo moveToHome />
         <div style={{ height: 8 }} />

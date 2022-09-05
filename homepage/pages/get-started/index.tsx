@@ -15,6 +15,7 @@ export default function GetstartedPage({ price: _price }: { price?: string }) {
       title="Get started"
       description="Ready to use cors.sh? select your plan and let’s create your first project."
       onNextClick={() => {
+        //
         const redirect =
           k.SERVER_URL + "/payments/checkout-session?price=" + price;
 
