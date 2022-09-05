@@ -13,6 +13,14 @@ const config = {
         destination: "https://playground.cors.sh/:path*",
       },
       {
+        source: "/console",
+        destination: "http://localhost:8824/console",
+      },
+      {
+        source: "/console/:path*",
+        destination: "http://localhost:8824/console/:path*",
+      },
+      {
         source: "/docs",
         destination: "https://docs.cors.sh/intro",
       },

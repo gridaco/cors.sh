@@ -70,7 +70,7 @@ const Heading = styled.h1`
 `;
 
 const Description = styled.p`
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(0, 0, 0, 0.7);
   text-overflow: ellipsis;
   font-size: 14px;
   font-family: "Helvetica Neue", sans-serif;

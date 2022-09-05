@@ -1,7 +1,10 @@
+import styled from "@emotion/styled";
+import { useRouter } from "next/router";
 import { StepLayout } from "../../layouts/step-layout";
 
 // page redirected from stripe once the payment is successful
 export default function PaymentSuccessPage({ session }: { session: string }) {
+  const router = useRouter();
   return (
     <StepLayout
       title={"Thank you for your subscription"}
@@ -9,7 +12,8 @@ export default function PaymentSuccessPage({ session }: { session: string }) {
         <>
           You can have unlimited hourly rate limit to proxy.cors.sh. Plus, you
           can create as many projects as you want for your personal websites,
-          developing sites, portfolio sites and so on.{" "}
+          developing sites, portfolio sites and so on.
+          <br />
           <b>
             Let’s get started by creating your first project to get your api
             key.
@@ -17,16 +21,16 @@ export default function PaymentSuccessPage({ session }: { session: string }) {
         </>
       }
       nextPromptLabel={"Okay. Create my first project"}
-      onNextClick={function (): void {
-        throw new Error("Function not implemented.");
+      onNextClick={() => {
+        router.push("/console/new");
       }}
     >
       <section>
         <h4>In next steps,</h4>
         <ol>
-          <li>Create your first project</li>
-          <li>Get your api key</li>
-          <li>Modify your existing requests with ‘proxy.cors.sh’</li>
+          <LI>Create your first project</LI>
+          <LI>Get your api key</LI>
+          <LI>Modify your existing requests with ‘proxy.cors.sh’</LI>
         </ol>
         <pre
           style={{
@@ -42,23 +46,25 @@ export default function PaymentSuccessPage({ session }: { session: string }) {
       <section>
         <h4>When going production, </h4>
         <ol>
-          <li>
+          <LI>
             When you are ready to publish website, add trusted origins (your
             website address)
-          </li>
-          <li>
+          </LI>
+          <LI>
             Replace api key with live key starting starting with `live_xxx`..
-          </li>
-          <li>
+          </LI>
+          <LI>
             Set your project’s mode to production to disable localhost requests.
-          </li>
-          <li>
+          </LI>
+          <LI>
             (Optional) Upgrade your subscription to pay-as-you-go to prevent
             blocked requests while in production.
-          </li>
+          </LI>
         </ol>
       </section>
-      <div>session id: {session}</div>
+      {process.env.NODE_ENV === "development" && (
+        <div>session id: {session}</div>
+      )}
     </StepLayout>
   );
 }
@@ -79,3 +85,12 @@ export async function getServerSideProps(context: any) {
     props: { session: session_id || null },
   };
 }
+
+const LI = styled.li`
+  color: rgba(0, 0, 0, 0.7);
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: 400;
+  text-align: left;
+`;
