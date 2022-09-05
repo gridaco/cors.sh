@@ -42,11 +42,11 @@ const config = {
         destination: "/get-started",
         permanent: true,
       },
-      {
-        source: "/console",
-        destination: "https://console.grida.co/cors-proxy",
-        permanent: true,
-      },
+      // {
+      //   source: "/console",
+      //   destination: "https://console.grida.co/cors-proxy",
+      //   permanent: true,
+      // },
       {
         source: "/docs",
         destination: "/docs/intro",
