@@ -1,15 +1,13 @@
-import { Stripe } from "stripe";
 import * as express from "express";
-
-const stripe = new Stripe(process.env.STRIPE_API_KEY, {
-  apiVersion: "2022-08-01",
-});
+import { stripe } from "../../clients";
 
 const router = express.Router();
 
-const PAYMENTSWEBURL = "http://localhost:8823";
+const WEBHOST = process.env.WEBHOST;
+const PAYMENTSWEBURL = WEBHOST + "/payments";
+const WEBURL_CONSOLE = WEBHOST + "/console";
 
-router.get("/create-checkout-session", async (req, res) => {
+router.get("/checkout-session", async (req, res) => {
   const price = await stripe.prices.retrieve(req.query.price as string, {
     expand: ["product"],
   });
@@ -29,6 +27,24 @@ router.get("/create-checkout-session", async (req, res) => {
   });
 
   res.redirect(303, session.url);
+});
+
+router.post("/portal-session", async (req, res) => {
+  // For demonstration purposes, we're using the Checkout session to retrieve the customer ID.
+  // Typically this is stored alongside the authenticated user in your database.
+  const { session_id } = req.body;
+  const checkoutSession = await stripe.checkout.sessions.retrieve(session_id);
+
+  // This is the url to which the customer will be redirected when they are done
+  // managing their billing with the portal.
+  const returnUrl = WEBURL_CONSOLE;
+
+  const portalSession = await stripe.billingPortal.sessions.create({
+    customer: checkoutSession.customer as string,
+    return_url: returnUrl,
+  });
+
+  res.redirect(303, portalSession.url);
 });
 
 export default router;
