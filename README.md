@@ -31,4 +31,4 @@ fetch("https://proxy.cors.sh/https://example.com/");
    Using a cors proxy service to connect to your own server is not a best practice.
    We'll consistently optimize our service infra to keep the paid version affordable as possible.
 
-2. The original code behind cors proxy is by Rob wu's cors-anywhere and the playground is forked from hoppscotch. both licensed under MIT, and our project cors.sh is licensed under Apache 2.0.
+2. The original code behind cors proxy is by Rob wu's cors-anywhere and the playground is forked from hoppscotch. both licensed under MIT, and our project cors.sh is also licensed under MIT License.

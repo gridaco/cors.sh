@@ -2,9 +2,13 @@
   "name": "cors.sh",
   "version": "0.0.0",
   "description": "The only cors proxy service all you'll ever need.",
-  "repository": "https://github.com/bridgedxyz/cors.sh.git",
-  "author": "softmarshmallow <woojoo@softmarshmallow.com>",
-  "license": "Apache 2.0",
+  "repository": "https://github.com/gridaco/cors.sh.git",
+  "authors": [
+    "Rob-W",
+    "hoppscotch",
+    "softmarshmallow"
+  ],
+  "license": "MIT",
   "private": true,
   "workspaces": [
     "homepage"
