@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import CheckFilled from "../components/icons/check-filled";
+import { DemoTerminal } from "../components/demo-terminal";
 /**
  * `<SectionUsage>` ('section-usage')
  * - [Open in Figma](https://figma.com/file/aPfdtNb1aGFIN9p05cmmVY?node-id=27:2213)
@@ -79,25 +80,9 @@ export function SectionUsage() {
           <ProxyCorsSh>proxy.cors.sh</ProxyCorsSh>
         </Frame587>
       </Display>
-      <Frame4>
-        <GetHttpsProxyCorshShHttpsInstragramComPosts123HApiKeyGetYourApiKey>
-          GET https://proxy.corsh.sh/ https://instragram.com/posts/123
-          <br />
-          -h api-key get-your-api-key
-        </GetHttpsProxyCorshShHttpsInstragramComPosts123HApiKeyGetYourApiKey>
-        <Frame586_0001>
-          <CUrl>cURL</CUrl>
-          <Js>JS</Js>
-          <Sdk>SDK</Sdk>
-        </Frame586_0001>
-        <ViewAllExamples
-          onClick={() => {
-            router.push("/docs/category/guides");
-          }}
-        >
-          View all examples
-        </ViewAllExamples>
-      </Frame4>
+      <DemoContainer>
+        <DemoTerminal />
+      </DemoContainer>
       <Items>
         <Item>
           <CheckFilled size={16} />
@@ -372,82 +357,13 @@ const ProxyCorsSh = styled.span`
   text-align: left;
 `;
 
-const Frame4 = styled.div`
-  width: 948px;
-  height: 365px;
-  overflow: hidden;
-  background-color: white;
-  border: solid 1px rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
+const DemoContainer = styled.div`
   position: absolute;
-  box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.04);
+  width: 948px;
+  min-height: 365px;
+  height: 100%;
   left: calc((calc((50% + 0px)) - 474px));
   top: 968px;
-`;
-
-const GetHttpsProxyCorshShHttpsInstragramComPosts123HApiKeyGetYourApiKey = styled.span`
-  color: rgb(68, 68, 68);
-  text-overflow: ellipsis;
-  font-size: 16px;
-  font-family: "Helvetica Neue", sans-serif;
-  font-weight: 500;
-  text-align: left;
-  position: absolute;
-  left: 40px;
-  top: 98px;
-`;
-
-const Frame586_0001 = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 17px;
-  box-sizing: border-box;
-  position: absolute;
-  left: 40px;
-  top: 40px;
-  width: 127px;
-  height: 19px;
-`;
-
-const CUrl = styled.span`
-  color: rgba(0, 0, 0, 0.8);
-  text-overflow: ellipsis;
-  font-size: 16px;
-  font-family: Inter, sans-serif;
-  font-weight: 400;
-  text-align: left;
-`;
-
-const Js = styled.span`
-  color: rgba(0, 0, 0, 0.2);
-  text-overflow: ellipsis;
-  font-size: 16px;
-  font-family: Inter, sans-serif;
-  font-weight: 400;
-  text-align: left;
-`;
-
-const Sdk = styled.span`
-  color: rgba(0, 0, 0, 0.2);
-  text-overflow: ellipsis;
-  font-size: 16px;
-  font-family: Inter, sans-serif;
-  font-weight: 400;
-  text-align: left;
-`;
-
-const ViewAllExamples = styled.span`
-  color: rgb(215, 215, 215);
-  text-overflow: ellipsis;
-  font-size: 16px;
-  font-family: Inter, sans-serif;
-  font-weight: 400;
-  text-align: left;
-  position: absolute;
-  top: 318px;
-  right: 38px;
 `;
 
 const Items = styled.div`
