@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { TestitCta } from "../components";
+import CheckFilled from "../components/icons/check-filled";
+import { Close } from "@mui/icons-material";
 
 export function TryPlayground() {
   return (
@@ -84,45 +86,30 @@ export function SectionHero() {
       </Cta>
       <FeatuersList>
         <Item>
-          <Icon
-            src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/23d868b3-ada2-47ab-b644-9c74e28b62f7"
-            alt="icon"
-          />
+          <CheckFilled />
           <ItemText>Secure</ItemText>
         </Item>
         <Item>
-          <Icon
-            src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/21bda769-3c84-4886-be5c-9f90bbba4169"
-            alt="icon"
-          />
+          <CheckFilled />
           <ItemText>Reliable</ItemText>
         </Item>
         <Item>
-          <Icon
-            src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/eae41a02-31cc-48aa-af9a-53f757479aec"
-            alt="icon"
-          />
+          <CheckFilled />
           <ItemText>Fast</ItemText>
         </Item>
         <Item>
-          <Icon
-            src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/96c24982-f0ff-4c94-b19b-962b0ff748ef"
-            alt="icon"
-          />
+          <CheckFilled />
           <ItemText>A cors-anywhere mirror</ItemText>
         </Item>
       </FeatuersList>
       <Example>
         <X>
-          <Frame574
-            src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/2bb4e088-bfe5-422f-a778-1cc2fed4522f"
-            alt="icon"
-          />
+          <Close sx={{ fontSize: 12 }} />
         </X>
         <Text>
-          Access to XMLHttpRequest at ‘https://target.domain’ from origin
-          ‘https://my.site’ has been blocked by CORS policy: No
-          ‘Access-Control-Allow-Origin’ header is present on the requested
+          Access to XMLHttpRequest at 'https://target.domain' from origin
+          'https://my.site' has been blocked by CORS policy: No
+          'Access-Control-Allow-Origin' header is present on the requested
           resource.
         </Text>
       </Example>
@@ -238,7 +225,7 @@ const Example = styled.div`
   left: calc((calc((50% + 375px)) - 269px));
   top: 247px;
   width: 537px;
-  height: 104px;
+  word-break: break-all;
 `;
 
 const X = styled.div`
@@ -247,23 +234,22 @@ const X = styled.div`
   flex-direction: row;
   align-items: center;
   flex: none;
+  background-color: rgb(233, 22, 6);
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
   gap: 10px;
+  color: white;
   box-sizing: border-box;
-  padding: 4px 0px 0px;
-`;
-
-const Frame574 = styled.img`
-  width: 15px;
-  height: 15px;
-  object-fit: cover;
+  margin: 4px 0px 0px;
 `;
 
 const Text = styled.span`
   color: rgb(233, 22, 6);
   text-overflow: ellipsis;
   font-size: 18px;
-  font-family: "Source Code Pro", sans-serif;
-  font-weight: 500;
+  font-family: "Roboto Mono", sans-serif;
+  font-weight: 400;
   letter-spacing: -1px;
   line-height: 119%;
   text-align: left;

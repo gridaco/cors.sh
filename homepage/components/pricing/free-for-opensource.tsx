@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import * as k from "../../k";
+import CheckFilled from "../icons/check-filled";
 
 const features = [
   "1,000,000 requests / month",
@@ -19,10 +20,7 @@ export function FreeForOpenSource() {
           <Frame246>
             {features.map((feature, i) => (
               <PricelistFeatureItemFeatured key={i}>
-                <Frame245
-                  src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/4274d736-994a-45df-902c-cce0f898e5f8"
-                  alt="icon"
-                />
+                <CheckFilled />
                 <FeatureName_0019>{feature}</FeatureName_0019>
               </PricelistFeatureItemFeatured>
             ))}

@@ -26,6 +26,7 @@ export function PricingCardsList({
       style={{
         display: "flex",
         flexDirection: "row",
+        justifyContent: "center",
         gap: 40,
       }}
     >

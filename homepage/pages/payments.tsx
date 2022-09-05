@@ -11,10 +11,7 @@ const ProductDisplay = () => (
         <h5>$4.00 / month</h5>
       </div>
     </div>
-    <form
-      action={k.SERVER_URL + "/payments/create-checkout-session"}
-      method="GET"
-    >
+    <form action={k.SERVER_URL + "/payments/checkout-session"} method="GET">
       {/* Add a hidden field with the lookup_key of your Price */}
       <input type="hidden" name="price" value={k.PRICE_PERSONAL_PRO_MONTHLY} />
       <button id="checkout-and-portal-button" type="submit">

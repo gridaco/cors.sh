@@ -64,11 +64,7 @@ export function SectionPricing() {
       <FreeForOpensourcePosition>
         <FreeForOpenSource />
       </FreeForOpensourcePosition>
-      <Line35 />
-      <Frame587>
-        <Monthly>Monthly</Monthly>
-        <Yearly>Yearly</Yearly>
-      </Frame587>
+      <Line />
     </RootWrapperSectionPricing>
   );
 }
@@ -100,7 +96,7 @@ const FreeForOpensourcePosition = styled.div`
   height: 312px;
 `;
 
-const Line35 = styled.div`
+const Line = styled.div`
   width: 1039px;
   height: 0px;
   border-top: solid 1px rgba(0, 0, 0, 0.1);

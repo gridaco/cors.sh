@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
+import CheckFilled from "../components/icons/check-filled";
 /**
  * `<SectionUsage>` ('section-usage')
  * - [Open in Figma](https://figma.com/file/aPfdtNb1aGFIN9p05cmmVY?node-id=27:2213)
@@ -42,12 +43,7 @@ export function SectionUsage() {
   return (
     <RootWrapperSectionUsage>
       <Success>
-        <Frame575>
-          <Frame574
-            src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/768d0874-f371-4e34-abb2-41e861794089"
-            alt="icon"
-          />
-        </Frame575>
+        <CheckFilled size={16} color="blue" />
         <FetchSuccess>Fetch success!</FetchSuccess>
       </Success>
       <Headings>
@@ -104,34 +100,19 @@ export function SectionUsage() {
       </Frame4>
       <Items>
         <Item>
-          <Frame575>
-            <Frame574
-              src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/5076aea7-6313-4b62-b72e-cde511fd83cc"
-              alt="icon"
-            />
-          </Frame575>
+          <CheckFilled size={16} />
           <FetchImagesFromInstagram>
             Fetch images from instagram
           </FetchImagesFromInstagram>
         </Item>
         <Item>
-          <Frame575>
-            <Frame574
-              src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/5a847f10-7576-4f10-9620-c097216f0c90"
-              alt="icon"
-            />
-          </Frame575>
+          <CheckFilled size={16} />
           <ConnectToYourDevServer>
             Connect to your dev server
           </ConnectToYourDevServer>
         </Item>
         <Item>
-          <Frame575>
-            <Frame574
-              src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/c8f313c6-6ffa-462b-82ce-9a422243d076"
-              alt="icon"
-            />
-          </Frame575>
+          <CheckFilled size={16} />
           <FetchImagesFromInstagram>
             Fetch images from instagram
           </FetchImagesFromInstagram>
@@ -158,7 +139,7 @@ const Success = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
   box-shadow: 0px 4px 32px rgba(48, 94, 255, 0.1);
   border: solid 1px rgb(0, 71, 255);
@@ -487,7 +468,7 @@ const Item = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
   box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.04);
   border: solid 1px rgb(208, 208, 208);
