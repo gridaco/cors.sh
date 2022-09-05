@@ -1,6 +1,5 @@
-// TODO: this is test price - replace me.
 const _PRICE_PERSONAL_PRO_MONTHLY = {
-  test: "price_1Lda7UAvR3geCh5rVaajCSw6",
+  test: "price_1LbnTwAvR3geCh5rZm9v8CAy",
   live: "",
 } as const;
 
