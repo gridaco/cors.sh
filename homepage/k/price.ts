@@ -3,10 +3,16 @@ const _PRICE_PERSONAL_PRO_MONTHLY = {
   live: "price_1LbnTwAvR3geCh5rZm9v8CAy",
 } as const;
 
+const _PRICE_FREE = "price_1KeF2VAvR3geCh5rq6s4V2P1";
+
 export const PRICE_PERSONAL_PRO_MONTHLY =
   process.env.NODE_ENV === "production"
     ? _PRICE_PERSONAL_PRO_MONTHLY.live
     : _PRICE_PERSONAL_PRO_MONTHLY.test;
+
+export const PRICE_PAY_AS_YOU_GO = "price_1LegsaAvR3geCh5rBCiuVmDt";
+
+export const PRICE_FREE_MONTHLY = _PRICE_FREE;
 
 interface Price {
   id: string;
@@ -19,7 +25,7 @@ interface Price {
 
 export const prices: Price[] = [
   {
-    id: "price_1KeF2VAvR3geCh5rq6s4V2P1",
+    id: PRICE_FREE_MONTHLY,
     name: "For Testing",
     price: "Free",
     features: [
@@ -44,7 +50,7 @@ export const prices: Price[] = [
     ],
   },
   {
-    id: "price_1LegsaAvR3geCh5rBCiuVmDt",
+    id: PRICE_PAY_AS_YOU_GO,
     name: "For Production projects",
     description: "From $10 / month",
     price: "Pay as you go",

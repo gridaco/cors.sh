@@ -14,9 +14,24 @@ export default function GetstartedPage({ price: _price }: { price: string }) {
       title="Get started"
       description="Ready to use cors.sh? select your plan and let’s create your first project."
       onNextClick={() => {
-        // NOTE: reported problem - the price is not being set on production build.
-        const redirect =
-          k.SERVER_URL + "/payments/checkout-session?price=" + price;
+        let redirect;
+        switch (price) {
+          case k.PRICE_PAY_AS_YOU_GO: {
+            // TODO: add stripe integration.
+            redirect = "https://forms.gle/GXDGPAoM9fhZrQh77";
+            break;
+          }
+          case k.PRICE_PERSONAL_PRO_MONTHLY: {
+            redirect =
+              k.SERVER_URL + "/payments/checkout-session?price=" + price;
+            break;
+          }
+          case k.PRICE_FREE_MONTHLY: {
+            // the free plan does not require payments, so we can skip to create new project right away.
+            redirect = "/console/new";
+            break;
+          }
+        }
 
         router.push(
           "https://accounts.grida.co/signin?redirect_uri=" + redirect
