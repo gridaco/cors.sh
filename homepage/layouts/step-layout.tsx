@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import Head from "next/head";
 import React, { useEffect } from "react";
 import { Button } from "../components/button";
 import { Logo } from "../components/logo";
@@ -35,6 +36,10 @@ export function StepLayout({
 
   return (
     <Layout id="layout">
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={title} />
+      </Head>
       <HeadingContaienr>
         <Logo moveToHome />
         <div style={{ height: 8 }} />
