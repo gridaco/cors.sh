@@ -103,6 +103,8 @@ export function TestitCta() {
           <Select
             styles={style}
             defaultValue={selectedOption}
+            id="method-select"
+            instanceId="method-select"
             // @ts-ignore
             onChange={setSelectedOption}
             options={options}
