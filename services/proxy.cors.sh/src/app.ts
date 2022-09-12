@@ -30,7 +30,7 @@ const cors_proxy = corsProxy.createServer({
 });
 
 app.get("/", function (req, res) {
-  res.redirect("https://cors.sh/playground");
+  res.redirect("https://cors.sh/");
 });
 
 app.use(blaklistoriginlimit); // 1
