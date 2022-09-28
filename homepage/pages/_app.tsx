@@ -23,18 +23,29 @@ export default function App({ Component, pageProps }: AppProps) {
       </Script>
       <Head>
         <title>CORS.SH</title>
-        <meta name="description" content="One CORS Proxy you'll ever need" />
+        <SeoMeta />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="theme-color" content="#000000" />
-        <meta name="description" content="One CORS Proxy you'll ever need" />
         <link rel="icon" href="/favicon.ico" />
-        <meta property="og:image" content="/og:image.jpg" />
       </Head>
 
       <ToastContainer />
       <Component {...pageProps} />
+    </>
+  );
+}
+
+function SeoMeta() {
+  return (
+    <>
+      <meta name="description" content="One CORS Proxy you'll ever need" />
+      <meta
+        name="keywords"
+        content="cors, cors proxy, cors proxy server, free cors proxy, soap"
+      />
+      <meta property="og:image" content="/og:image.jpg" />
     </>
   );
 }
