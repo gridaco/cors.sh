@@ -42,7 +42,7 @@ import { FreeForOpenSource } from "../components/pricing/free-for-opensource";
 export function SectionPricing() {
   const router = useRouter();
   return (
-    <RootWrapperSectionPricing>
+    <RootWrapperSectionPricing id="pricing">
       <Pricing>Pricing</Pricing>
       <div
         style={{
