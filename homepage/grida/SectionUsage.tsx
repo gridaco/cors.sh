@@ -42,7 +42,7 @@ import { DemoTerminal } from "../components/demo-terminal";
 export function SectionUsage() {
   const router = useRouter();
   return (
-    <RootWrapperSectionUsage>
+    <RootWrapperSectionUsage id="usage">
       <Success>
         <CheckFilled size={16} color="blue" />
         <FetchSuccess>Fetch success!</FetchSuccess>
@@ -71,10 +71,7 @@ export function SectionUsage() {
           </Vector>
         </Frame586>
         <Frame579>
-          <Image2
-            src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/caba74e5-42b4-458d-83e8-4b33aee3c62a"
-            alt="image of Image2"
-          />
+          <Image2 src="/logos-3p/instagram@2x.png" alt="image of Image2" />
         </Frame579>
         <Frame587>
           <ProxyCorsSh>proxy.cors.sh</ProxyCorsSh>

@@ -115,7 +115,7 @@ export function SectionHero() {
       </Example>
       <FixThisInMinutes>Fix this in minutes</FixThisInMinutes>
       <PointerArtwork
-        src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/cefd949e-6c52-4e71-ac3a-32dd94f79030"
+        src="/assets/scribble-pointer.png"
         alt="image of PointerArtwork"
       />
     </RootWrapperSectionHero>
