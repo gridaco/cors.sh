@@ -7,8 +7,10 @@ import {
   RATE_LIMIT_FREE_ANONYMOUS_PER_HOUR,
   RATE_LIMIT_FREE_AUTHORIZED_PER_HOUR,
   RATE_LIMIT_WINDOW_MS,
-  STATIC_CORS_ACCOUNT_API_KEY_HEADER,
+  STATIC_CORS_ACCOUNT_API_KEY_HEADERS,
+  STATIC_CORS_ACCOUNT_API_KEY_HEADER_FOR_PAID_TIER,
 } from "../k";
+import { headerfrom } from "../_util/x-header";
 
 const client = createClient({
   url: process.env.RATE_LIMIT_REDIS_URL,
@@ -34,9 +36,7 @@ const limiter = rateLimit({
   windowMs: RATE_LIMIT_WINDOW_MS,
   max: (req: Request, res: Response) => {
     // the paid request will be skiped with `skip` configuration, set below only for free tier.
-    const apikey: string = req.headers[
-      STATIC_CORS_ACCOUNT_API_KEY_HEADER
-    ] as string;
+    const apikey = headerfrom(req.headers, STATIC_CORS_ACCOUNT_API_KEY_HEADERS);
     if (apikey && validate_api_key(apikey)) {
       // free & autorized
       return RATE_LIMIT_FREE_AUTHORIZED_PER_HOUR; // per hour
@@ -52,6 +52,14 @@ const limiter = rateLimit({
       return true;
     }
 
+    // tmp --------- remove this after applications are registered via console.
+    // prettier-ignore
+    const __maybe_paid_apikey = headerfrom(req.headers, STATIC_CORS_ACCOUNT_API_KEY_HEADER_FOR_PAID_TIER);
+    if (__maybe_paid_apikey && validate_api_key(__maybe_paid_apikey)) {
+      return true;
+    }
+    // end:tmp -----
+
     const _origin = req.headers["origin"];
 
     // if requested from cors.sh, skip rate limiting
@@ -66,9 +74,7 @@ const limiter = rateLimit({
     return false;
   },
   keyGenerator: (req: Request, res: Response) => {
-    const apikey: string = req.headers[
-      STATIC_CORS_ACCOUNT_API_KEY_HEADER
-    ] as string;
+    const apikey = headerfrom(req.headers, STATIC_CORS_ACCOUNT_API_KEY_HEADERS);
     if (apikey && validate_api_key(apikey)) {
       // if using apikey, use the api key as key. (is this secure? - yes. is this the best way? - maybe, for now at least.)
       return apikey;
@@ -87,7 +93,7 @@ const limiter = rateLimit({
   },
   handler: (req: Request, res: Response, next) => {
     // 429 handler
-    if (req.headers[STATIC_CORS_ACCOUNT_API_KEY_HEADER]) {
+    if (headerfrom(req.headers, STATIC_CORS_ACCOUNT_API_KEY_HEADERS)) {
       res
         .status(429)
         .send(

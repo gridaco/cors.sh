@@ -1,5 +1,6 @@
 import * as express from "express";
-import { STATIC_CORS_ACCOUNT_API_KEY_HEADER } from "../k";
+import { STATIC_CORS_ACCOUNT_API_KEY_HEADERS } from "../k";
+import { headerfrom } from "../_util/x-header";
 import { keys } from "./_tmp_static_api_keys";
 
 const nokey401UnAuthorized = () => {
@@ -19,9 +20,7 @@ export const unauthorizedAppBlocking = (
   if (req.method == "OPTIONS" || req.method == "HEAD") {
     next();
   }
-  const apikey: string = req.headers[
-    STATIC_CORS_ACCOUNT_API_KEY_HEADER
-  ] as string;
+  const apikey = headerfrom(req.headers, STATIC_CORS_ACCOUNT_API_KEY_HEADERS);
   if (apikey && validate_api_key(apikey)) {
     next();
   } else {
