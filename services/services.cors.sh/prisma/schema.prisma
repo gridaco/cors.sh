@@ -7,38 +7,43 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
-model Application{
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+model Application {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
   allowedOrigins String[]
   allowedTargets String[]
 
-  owner Customer @relation(fields: [ownerId], references: [id])
-  ownerId String
+  owner   Customer @relation(fields: [ownerId], references: [id])
+  ownerId String   @db.ObjectId
+}
 
+model TemporaryApplication {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  email String @unique
+  key   String @unique
 }
 
 // grida workspace <> stripe customer
-model Customer{
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
+model Customer {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
   // grida workspace (user) id
-  workspaceId String @unique
+  workspaceId   String         @unique
   subscriptions Subscription[]
-  applicatopms Application[]
+  applicatopms  Application[]
 }
 
-model Subscription{
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  customer Customer @relation(fields: [customerId], references: [id])
-  customerId String
+model Subscription {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  customer       Customer @relation(fields: [customerId], references: [id])
+  customerId     String   @db.ObjectId
   // stripe subscription id
-  subscriptionId String @unique
+  subscriptionId String   @unique
   // price id from stripe (product is not saved in db.)
-  priceId String
+  priceId        String
 
   subscribedAt DateTime
 }
