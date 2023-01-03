@@ -25,6 +25,15 @@ fetch("https://proxy.cors.sh/https://example.com/");
 - [gridaco/playground.cors.sh](https://github.com/gridaco/playground.cors.sh)
 - [hoppscotch/hoppscotch](https://github.com/hoppscotch/hoppscotch)
 
+## Contributing
+
+```bash
+# clone initially
+git clone --recurse-submodules https://github.com/gridaco/cors.sh
+# updating submodules (once required)
+git submodule update --init --recursive
+```
+
 ## Disclaimer
 
 1. This project's intend is to serve developers a reliable cors proxy service with fast response for their development.
