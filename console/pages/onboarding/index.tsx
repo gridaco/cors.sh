@@ -138,7 +138,7 @@ function SetupForm() {
     if (isValid) {
       setTimeout(() => {
         setIsPricingVisible(true);
-      }, 1000);
+      }, 1800);
     }
   }, [isValid]);
 

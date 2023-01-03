@@ -45,6 +45,7 @@ export interface CreateApplicationRequest {
 }
 
 export interface Application {
+  name: string;
   id: string;
   allowedOrigins: string[];
 }
