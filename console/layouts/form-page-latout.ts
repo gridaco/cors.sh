@@ -6,11 +6,19 @@ export const FormPageLayout = styled.div`
   margin: auto;
   align-items: center;
   justify-content: center;
-  max-width: 400px;
+  max-width: 320px;
   height: 100vh;
 
-  h1 {
+  h1,
+  p {
     text-align: center;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 21px;
+    width: 100%;
   }
 
   .form {

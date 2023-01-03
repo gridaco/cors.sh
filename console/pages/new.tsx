@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Button, TextFormField } from "@editor-ui/console";
 import client from "@cors.sh/service-api";
 import { useRouter } from "next/router";
+import { FormPageLayout } from "layouts";
 export default function NewApplicationPage() {
   const router = useRouter();
   const [name, setName] = React.useState("");
@@ -46,27 +47,9 @@ export default function NewApplicationPage() {
   }, [name, allowedOrigins]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        margin: "auto",
-        alignItems: "center",
-        justifyContent: "center",
-        maxWidth: "400px",
-        height: "100vh",
-      }}
-    >
+    <FormPageLayout>
       <h1>Create new application</h1>
-      <div
-        style={{
-          marginTop: 60,
-          display: "flex",
-          flexDirection: "column",
-          gap: 21,
-          width: "100%",
-        }}
-      >
+      <div className="form">
         <TextFormField
           label="Project Name"
           placeholder="my-portfolio-website"
@@ -87,6 +70,6 @@ export default function NewApplicationPage() {
           Create Project
         </Button>
       </div>
-    </div>
+    </FormPageLayout>
   );
 }
