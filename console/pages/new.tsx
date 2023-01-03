@@ -73,7 +73,7 @@ export default function NewApplicationPage() {
           onChange={setName}
         />
         <TextFormField
-          label="You site"
+          label="Your site"
           placeholder="http://localhost:3000, https://my-site.com"
           helpText="You can add up to 3 urls of your site"
           onChange={setAllowedOrigins}
