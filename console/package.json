@@ -8,8 +8,10 @@
     "start": "next start -p 8824"
   },
   "dependencies": {
-    "@editor-ui/console": "0.0.0",
     "@cors.sh/service-api": "0.0.0",
+    "@editor-ui/console": "0.0.0",
+    "@radix-ui/react-icons": "^1.1.1",
+    "framer-motion": "^8.1.3",
     "linaria": "^4.1.2",
     "next": "12.2.5",
     "next-linaria": "^0.11.0",
