@@ -39,6 +39,31 @@ export async function signin({ grida_token }: { grida_token: string }) {
   }
 }
 
+async function getOnboardingApiKey({ email }: { email: string }) {
+  try {
+    return (await _signed_client.post("/start-key/with-email", { email })).data;
+  } catch (e) {
+    if (e.response.status === 409) {
+      throw new AlreadySignedUp();
+    }
+    if (e.response.status === 429) {
+      throw new OnboardingApiKeyAlreadyRequested();
+    }
+  }
+}
+
+export class AlreadySignedUp extends Error {
+  constructor() {
+    super("already signed up");
+  }
+}
+
+export class OnboardingApiKeyAlreadyRequested extends Error {
+  constructor() {
+    super("onboarding api key already requested");
+  }
+}
+
 export interface CreateApplicationRequest {
   name: string;
   allowedOrigins: string[];
@@ -93,12 +118,14 @@ async function updateApplication(
 
 export default {
   ..._signed_client,
+  getOnboardingApiKey,
   createApplication,
   getApplication,
   listApplications,
   deleteApplication,
   updateApplication,
 } as AxiosInstance & {
+  getOnboardingApiKey: typeof getOnboardingApiKey;
   createApplication: typeof createApplication;
   getApplication: typeof getApplication;
   listApplications: typeof listApplications;
