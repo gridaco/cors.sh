@@ -1,4 +1,4 @@
-import Axios, { AxiosInstance } from "axios";
+import Axios, { AxiosInstance, AxiosError } from "axios";
 
 const HOST =
   process.env.NODE_ENV === "production"
@@ -43,11 +43,13 @@ async function getOnboardingApiKey({ email }: { email: string }) {
   try {
     return (await _signed_client.post("/start-key/with-email", { email })).data;
   } catch (e) {
-    if (e.response.status === 409) {
-      throw new AlreadySignedUp();
-    }
-    if (e.response.status === 429) {
-      throw new OnboardingApiKeyAlreadyRequested();
+    if (e instanceof AxiosError) {
+      switch (e.response?.status) {
+        case 409:
+          throw new AlreadySignedUp();
+        case 429:
+          throw new OnboardingApiKeyAlreadyRequested();
+      }
     }
   }
 }
