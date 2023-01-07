@@ -19,12 +19,13 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   //
   const { name } = req.body;
+  const { id: customer_id } = res.locals.customer;
   const application = await prisma.application.create({
     data: {
       name: name,
       owner: {
         connect: {
-          id: res.locals.customer.id,
+          id: customer_id,
         },
       },
     },
@@ -32,8 +33,14 @@ router.post("/", async (req, res) => {
 
   const payload = {
     ...application,
-    apikey_test: sign_test_key(application.id),
-    apukey_live: sign_live_key(application.id),
+    apikey_test: sign_test_key({
+      app_id: application.id,
+      owner_id: customer_id,
+    }),
+    apukey_live: sign_live_key({
+      app_id: application.id,
+      owner_id: customer_id,
+    }),
   };
 
   res.json(payload);

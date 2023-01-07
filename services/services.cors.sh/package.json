@@ -8,7 +8,7 @@
     "prisma:studio": "npx prisma studio",
     "prisma:generate": "npx prisma generate",
     "prisma:generate:watch": "npx prisma generate --watch",
-    "postinstall": "npm run prisma:generate",
+    "postinstall": "npm run prisma:generate && npm run prisma:format",
     "db:push": "npx prisma db push",
     "setup:prod": "echo 'passing'",
     "clean": "rimraf .build",
