@@ -89,7 +89,9 @@ export function PricingCard({
           </FeaturesArea>
         </ReadingArea>
         {enableAction && (
-          <ButtonAsButton onClick={onStartClick}>{startLabel}</ButtonAsButton>
+          <ButtonAsButton data-highlighted={selected} onClick={onStartClick}>
+            {startLabel}
+          </ButtonAsButton>
         )}
       </Content>
     </RootWrapperPricingCard>
@@ -263,5 +265,10 @@ const ButtonAsButton = styled.button`
   }
 
   :focus {
+  }
+
+  &[data-highlighted="true"] {
+    background-color: #2562ff;
+    border: none;
   }
 `;
