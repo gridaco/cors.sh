@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { PricingCardsList } from "../layouts/pricing-card-list";
 import { useRouter } from "next/router";
 import { FreeForOpenSource } from "../components/pricing/free-for-opensource";
+import { PRICE_PERSONAL_PRO_MONTHLY } from "../k";
 /**
  * `<SectionPricing>` ('section-pricing')
  * - [Open in Figma](https://figma.com/file/aPfdtNb1aGFIN9p05cmmVY?node-id=15:1613)
@@ -54,6 +55,7 @@ export function SectionPricing() {
         }}
       >
         <PricingCardsList
+          initialSelection={PRICE_PERSONAL_PRO_MONTHLY}
           disableSelection
           enableIndividualActions
           onGetStartedClick={(price) => {
