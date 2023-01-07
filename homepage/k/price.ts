@@ -117,6 +117,6 @@ export const prices: Price[] = [
   // price_free,
   price_pro_monthly,
   price_pro_yearly,
-  enterprise_yearly,
+  // enterprise_yearly,
   // price_pay_as_you_go,
 ];
