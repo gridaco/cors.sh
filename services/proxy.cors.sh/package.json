@@ -4,8 +4,8 @@
     "version": "0.1.0",
     "scripts": {
         "clean": "rimraf .build .serverless",
-        "deploy:prod": "yarn clean && sls deploy --stage production",
-        "deploy:staging": "yarn clean && sls deploy --stage staging",
+        "deploy:prod": "yarn clean && sls deploy --stage production --domain true",
+        "deploy:staging": "yarn clean && sls deploy --stage staging --domain false",
         "dev": "sls offline start",
         "build": "yarn clean && sls package"
     },
@@ -29,9 +29,9 @@
         "@types/node": "^18.7.14",
         "@types/proxy-from-env": "^1.0.1",
         "@types/response-time": "^2.3.4",
+        "rimraf": "^3.0.2",
         "serverless": "^2.22.0",
         "serverless-domain-manager": "^5.1.0",
-        "serverless-dynamodb-local": "^0.2.39",
         "serverless-offline": "^6.8.0",
         "serverless-plugin-dynamo-autoscaling": "^1.0.1",
         "serverless-plugin-optimize": "^4.1.4-rc.1",

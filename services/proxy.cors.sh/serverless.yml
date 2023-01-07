@@ -7,8 +7,10 @@ custom:
   customDomain:
     domainName: proxy.cors.sh
     basePath: ""
-    stage: "production"
+    stage: ${opt:stage, self:provider.stage}
     createRoute53Record: false
+    # enabled only for production - configured by package.json script with --domain flag.
+    enabled: ${opt:domain, false}
 
   serverless-offline:
     httpPort: 4020
@@ -48,6 +50,5 @@ functions:
 plugins:
   - serverless-plugin-typescript
   - serverless-plugin-optimize
-  - serverless-dynamodb-local
   - serverless-offline
   - serverless-domain-manager
