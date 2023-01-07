@@ -71,7 +71,7 @@ export default function PaymentSuccessPage({ session }: { session: string }) {
 }
 
 export async function getServerSideProps(context: any) {
-  const { session_id } = context.query;
+  const { session_id, onboarding_id } = context.query;
   if (!session_id) {
     // invalid entry
     return {
@@ -83,7 +83,10 @@ export async function getServerSideProps(context: any) {
   }
 
   return {
-    props: { session: session_id || null },
+    props: {
+      session: session_id || null,
+      onboarding_id,
+    },
   };
 }
 

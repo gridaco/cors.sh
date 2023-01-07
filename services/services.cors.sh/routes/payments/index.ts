@@ -8,7 +8,8 @@ const PAYMENTSWEBURL = WEBHOST + "/payments";
 const WEBURL_CONSOLE = WEBHOST + "/console";
 
 router.get("/checkout-session", async (req, res) => {
-  const price = await stripe.prices.retrieve(req.query.price as string, {
+  const { price: _q_price, onboarding: _q_onboarding } = req.query;
+  const price = await stripe.prices.retrieve(_q_price as string, {
     expand: ["product"],
   });
   const session = await stripe.checkout.sessions.create({
@@ -22,7 +23,7 @@ router.get("/checkout-session", async (req, res) => {
     ],
     mode: "subscription",
     // e.g. http://localhost:8823/?success=true&session_id=cs_test_a1qQdhxwfS5kKZJ1kToxKqAr2K6yHneucfi65lIs1OPVkmoH14YNAev76S
-    success_url: `${PAYMENTSWEBURL}/success?session_id={CHECKOUT_SESSION_ID}`,
+    success_url: `${PAYMENTSWEBURL}/success?session_id={CHECKOUT_SESSION_ID}&onboarding_id=${_q_onboarding}`,
     cancel_url: `${PAYMENTSWEBURL}/canceled`,
   });
 
