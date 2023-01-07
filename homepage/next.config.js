@@ -1,3 +1,4 @@
+const withLinaria = require("next-linaria");
 const withTM = require("next-transpile-modules")([
   "@app/ui",
   "@cors.sh/service-api",
@@ -70,4 +71,4 @@ const config = {
     ];
   },
 };
-module.exports = withTM(config);
+module.exports = withTM(withLinaria(config));
