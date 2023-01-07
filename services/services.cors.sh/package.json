@@ -4,6 +4,7 @@
   "description": "CORS.SH's service layer for managing api keys & subscription",
   "homepage": "https://cors.sh",
   "scripts": {
+    "prisma:format": "npx prisma format",
     "prisma:studio": "npx prisma studio",
     "prisma:generate": "npx prisma generate",
     "prisma:generate:watch": "npx prisma generate --watch",

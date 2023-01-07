@@ -12,6 +12,7 @@ generator client {
 }
 
 model Application {
+  @@map("applications")
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   name           String
   allowedOrigins String[]
@@ -19,31 +20,42 @@ model Application {
 
   owner   Customer @relation(fields: [ownerId], references: [id])
   ownerId String   @db.ObjectId
+
+  archivedAt DateTime?
+  createdAt DateTime @default(now())
 }
 
 model TemporaryApplication {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  email String @unique
-  key   String @unique
+  @@map("applications_onboarding")
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  email          String   @unique
+  name           String?
+  allowedOrigins String[] @default([])
+  priceId        String?
+  key            String   @unique
+  createdAt      DateTime @default(now())
 }
 
 // grida workspace <> stripe customer
 model Customer {
+  @@map("customers")
   id            String         @id @default(auto()) @map("_id") @db.ObjectId
   // grida workspace (user) id
   workspaceId   String         @unique
-  subscriptions Subscription[]
+  // subscriptions Subscription[]
   applicatopms  Application[]
+  createdAt DateTime @default(now())
 }
 
-model Subscription {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  customer       Customer @relation(fields: [customerId], references: [id])
-  customerId     String   @db.ObjectId
-  // stripe subscription id
-  subscriptionId String   @unique
-  // price id from stripe (product is not saved in db.)
-  priceId        String
+// model Subscription {
+//   @@map("subscriptions")
+//   id             String   @id @default(auto()) @map("_id") @db.ObjectId
+//   customer       Customer @relation(fields: [customerId], references: [id])
+//   customerId     String   @db.ObjectId
+//   // stripe subscription id
+//   subscriptionId String   @unique
+//   // price id from stripe (product is not saved in db.)
+//   priceId        String
 
-  subscribedAt DateTime
-}
+//   createdAt DateTime @default(now())
+// }
