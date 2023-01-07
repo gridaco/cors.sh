@@ -40,7 +40,7 @@ export function OnboardingCta() {
     try {
       const data = await client.onboardingWithEmail({ email: email });
       toast.success(
-        <p>API Key sent to {data?.email}. (Check your span folder as well)</p>
+        <p>API Key sent to {data?.email}. (Check your spam folder as well)</p>
       );
     } catch (e) {
       toast.error(<p>Something went wrong</p>);
