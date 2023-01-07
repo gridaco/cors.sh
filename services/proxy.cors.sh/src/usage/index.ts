@@ -1,5 +1,7 @@
 import * as express from "express";
-import type { CorsProxyApiRequest } from "./type";
+import type { CorsProxyApiRequestLog } from "./type";
+
+type Log = Omit<CorsProxyApiRequestLog, "id">;
 
 /**
  *
@@ -34,9 +36,9 @@ export async function logRequest(req: express.Request, res: express.Response) {
 
   const billed_duration = Math.ceil(duration / 100) * 100; // billed duration is stepped by 100ms
   // request id from api gateway
-  const request_id = req.headers["x-request-id"] as string;
+  // const request_id = req.headers["x-request-id"] as string;
 
-  const metric = {
+  const metric: Log = {
     ip: ip,
     origin: origin,
     ua: ua,
@@ -48,15 +50,10 @@ export async function logRequest(req: express.Request, res: express.Response) {
     billed_duration,
   };
 
-  systemlog(request_id, metric);
+  systemlog(metric);
   // await log(metric);
 }
 
-function systemlog(
-  id: string | undefined,
-  request: CorsProxyApiRequest & {
-    billed_duration: number;
-  }
-) {
-  console.log(id, request);
+function systemlog(request: Log) {
+  console.log(request);
 }

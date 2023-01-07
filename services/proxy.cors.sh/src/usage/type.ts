@@ -18,7 +18,7 @@ export interface CorsProxyApiRequest {
   /**
    * target resource url
    */
-  target: string;
+  target?: string;
   /**
    * duration in ms
    */
