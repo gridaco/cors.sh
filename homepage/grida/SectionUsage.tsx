@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import CheckFilled from "../components/icons/check-filled";
 import { DemoTerminal } from "../components/demo-terminal";
+import { TestItOutCta } from "../components";
 /**
  * `<SectionUsage>` ('section-usage')
  * - [Open in Figma](https://figma.com/file/aPfdtNb1aGFIN9p05cmmVY?node-id=27:2213)
@@ -40,7 +41,8 @@ import { DemoTerminal } from "../components/demo-terminal";
  * <!-- grida.meta.widget_declaration | engine : 0.0.1 | source : figma://aPfdtNb1aGFIN9p05cmmVY/27:2213 -->
  */
 export function SectionUsage() {
-  const router = useRouter();
+  const [target, setTarget] = React.useState("https://acme.com");
+
   return (
     <RootWrapperSectionUsage id="usage">
       <Success>
@@ -78,7 +80,10 @@ export function SectionUsage() {
         </Frame587>
       </Display>
       <DemoContainer>
-        <DemoTerminal />
+        <ReqExample>
+          <TestItOutCta onChange={setTarget} />
+        </ReqExample>
+        <DemoTerminal target={target} />
       </DemoContainer>
       <Items>
         <Item>
@@ -100,7 +105,7 @@ export function SectionUsage() {
           </FetchImagesFromInstagram>
         </Item>
       </Items>
-      <ReqExample>GET https://proxy.cors.sh/https://instagram.com</ReqExample>
+      {/* <ReqExample>GET https://proxy.cors.sh/https://instagram.com</ReqExample> */}
       <Logos>
         <Logo src="/logos-3p/instagram.png" alt="instagram" />
         <Logo src="/logos-3p/tiktok.png" alt="tiktok" />
@@ -112,7 +117,7 @@ export function SectionUsage() {
 }
 
 const RootWrapperSectionUsage = styled.div`
-  height: 1375px;
+  height: 1800px;
   background-color: white;
   position: relative;
 `;
@@ -357,8 +362,7 @@ const ProxyCorsSh = styled.span`
 const DemoContainer = styled.div`
   position: absolute;
   width: 948px;
-  min-height: 365px;
-  height: 100%;
+  height: 500px;
   left: calc((calc((50% + 0px)) - 474px));
   top: 968px;
 `;
@@ -420,16 +424,13 @@ const ConnectToYourDevServer = styled.span`
 `;
 
 const ReqExample = styled.span`
-  color: rgba(0, 0, 0, 0.6);
-  text-overflow: ellipsis;
-  font-size: 14px;
-  font-family: Inter, sans-serif;
-  font-weight: 400;
-  line-height: 160%;
-  text-align: left;
   position: absolute;
-  left: calc((calc((50% + 0px)) - 163px));
-  top: 537px;
+  display: flex;
+  z-index: 1;
+  top: 570px;
+  left: 0px;
+  right: 0px;
+  justify-content: center;
 `;
 
 const Logos = styled.div`
