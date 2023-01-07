@@ -26,14 +26,14 @@ export default function GetstartedPage({ price: _price }: { price: string }) {
         redirect = "https://forms.gle/GXDGPAoM9fhZrQh77";
         break;
       }
-      case k.PRICE_PERSONAL_PRO_MONTHLY: {
-        redirect = k.SERVER_URL + "/payments/checkout-session?price=" + price;
-        break;
-      }
       case k.PRICE_FREE_MONTHLY: {
         // the free plan does not require payments, so we can skip to create new project right away.
         redirect =
           window.location.protocol + window.location.host + "/console/new";
+        break;
+      }
+      default: {
+        redirect = k.SERVER_URL + "/payments/checkout-session?price=" + price;
         break;
       }
     }
