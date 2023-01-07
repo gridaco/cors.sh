@@ -24,13 +24,6 @@ interface TemporaryKey {
   expires_at: number;
 }
 
-// shared db
-interface ShardedApplicationAuhorizationTable {
-  app_id: string;
-  last_synced: number;
-  plan: string;
-}
-
 const TMP_KEY_EXP_IN_DAYS = 1;
 const TMP_KEY_PREFIX = "temp";
 const TEST_KEY_PREFIX = "test";
