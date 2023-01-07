@@ -57,4 +57,11 @@ router.post("/with-form", async (req, res) => {
   res.status(201).json(d);
 });
 
+// conversion
+router.post("/conversion", (req, res) => {
+  const { onboarding_id, checkout_session_id } = req.body;
+  //
+  // if onboarding's email is placeholded. get email from checkout via stripe
+});
+
 export default router;

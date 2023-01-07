@@ -31,7 +31,7 @@ router.post("signin", async (req, res) => {
 
   const customer = await prisma.customer.findUnique({
     where: {
-      workspaceId: data.id,
+      // workspaceId: data.id,
     },
   });
 

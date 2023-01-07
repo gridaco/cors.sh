@@ -70,7 +70,7 @@ async function onboardingWithForm({
 }) {
   return (
     await _signed_client.post<OnboardingApplication>("/onboarding/with-form", {
-      name: allowedOrigins,
+      name: name,
       allowedOrigins: allowedOrigins,
       priceId: priceId,
     })
@@ -102,6 +102,7 @@ export interface Application {
 
 export interface OnboardingApplication {
   id: string;
+  email: string;
   name?: string;
   allowedOrigins: string[];
   priceId?: string;
