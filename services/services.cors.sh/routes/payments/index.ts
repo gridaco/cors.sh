@@ -1,17 +1,37 @@
 import * as express from "express";
-import { stripe } from "../../clients";
+import { prisma, stripe } from "../../clients";
 
 const router = express.Router();
 
 const WEBHOST = process.env.WEBHOST;
 const PAYMENTSWEBURL = WEBHOST + "/payments";
 const WEBURL_CONSOLE = WEBHOST + "/console";
+const PROTOCOL = process.env.NODE_ENV === "production" ? "https" : "http";
+// e.g.
+// http://localhost:4021/payments/checkout/new?price=price_1Lda7UAvR3geCh5rVaajCSw6&onboarding_id=63b9a40c02478a88364d7202
+router.get("/checkout/new", async (req, res) => {
+  const host = req.headers.host;
 
-router.get("/checkout-session", async (req, res) => {
-  const { price: _q_price, onboarding: _q_onboarding } = req.query;
-  const price = await stripe.prices.retrieve(_q_price as string, {
+  const { onboarding_id: _q_onboarding } = req.query;
+
+  const onboarding = await prisma.temporaryApplication.findUnique({
+    where: { id: _q_onboarding as string },
+  });
+
+  if (!onboarding) {
+    return res.status(400).json({ error: "invalid session" });
+  }
+
+  const { priceId } = onboarding;
+
+  const price = await stripe.prices.retrieve(priceId, {
     expand: ["product"],
   });
+
+  const extra_params = new URLSearchParams({
+    onboarding_id: _q_onboarding as string,
+  });
+
   const session = await stripe.checkout.sessions.create({
     billing_address_collection: "auto",
     line_items: [
@@ -23,11 +43,82 @@ router.get("/checkout-session", async (req, res) => {
     ],
     mode: "subscription",
     // e.g. http://localhost:8823/?success=true&session_id=cs_test_a1qQdhxwfS5kKZJ1kToxKqAr2K6yHneucfi65lIs1OPVkmoH14YNAev76S
-    success_url: `${PAYMENTSWEBURL}/success?session_id={CHECKOUT_SESSION_ID}&onboarding_id=${_q_onboarding}`,
-    cancel_url: `${PAYMENTSWEBURL}/canceled`,
+    success_url: `${PROTOCOL}://${host}/payments/success?session_id={CHECKOUT_SESSION_ID}&${extra_params}`,
+    cancel_url: `${PROTOCOL}://${host}/payments/canceled?session_id={CHECKOUT_SESSION_ID}&${extra_params}`,
   });
 
   res.redirect(303, session.url);
+});
+
+router.get("/success", async (req, res) => {
+  const { session_id, onboarding_id } = req.query;
+
+  console.log("payment success for", session_id);
+
+  const checkout_session = await stripe.checkout.sessions.retrieve(
+    session_id as string
+  );
+
+  const {
+    customer: stripe_customer_id,
+    customer_email, // can be null if created on checkout page (unless explicitly specified by our side.)
+    customer_details,
+    subscription,
+  } = checkout_session;
+
+  // on success, convert onboarding app to a real app (and remove the temporary app)
+  // (if user has one.)
+
+  // remove
+  const tmp = await prisma.temporaryApplication.delete({
+    where: { id: onboarding_id as string },
+  });
+
+  console.log("details", checkout_session, tmp);
+
+  // create customer
+  // TODO: what if already exists?
+  const customer = await prisma.customer.create({
+    data: {
+      applications: {
+        create: {
+          // use the tmp's id since the api key is partially based on the application's id
+          id: tmp.id,
+          name: tmp.name || "Untitled",
+          allowedOrigins: tmp.allowedOrigins,
+        },
+      },
+      stripeId: stripe_customer_id as string,
+
+      // ''
+    },
+  });
+
+  const applications = await prisma.application.findMany({
+    where: { owner: { id: customer.id } },
+  });
+
+  const _params = {
+    session_id: session_id as string,
+    onboarding_id: tmp?.id,
+    customer_id: customer.id,
+    application_id: tmp ? applications[0].id : undefined,
+  };
+  // prettier-ignore
+  Object.keys(_params).forEach((key) => _params[key] === undefined ? delete _params[key] : {});
+
+  const params = new URLSearchParams(_params);
+
+  const redirect_uri = `${PAYMENTSWEBURL}/success?${params.toString()}`;
+
+  res.redirect(303, redirect_uri);
+});
+
+router.get("/canceled", async (req, res) => {
+  // remove the temporary app
+  const { session_id, onboarding_id } = req.query;
+
+  res.redirect(303, `${PAYMENTSWEBURL}/canceled`);
 });
 
 router.post("/portal-session", async (req, res) => {

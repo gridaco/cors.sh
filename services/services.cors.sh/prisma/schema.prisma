@@ -12,9 +12,8 @@ generator client {
 }
 
 model Application {
-  @@map("applications")
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  name           String
+  name           String   @default("Untitled")
   allowedOrigins String[]
   allowedTargets String[]
 
@@ -22,11 +21,12 @@ model Application {
   ownerId String   @db.ObjectId
 
   archivedAt DateTime?
-  createdAt DateTime @default(now())
+  createdAt  DateTime  @default(now())
+
+  @@map("applications")
 }
 
 model TemporaryApplication {
-  @@map("applications_onboarding")
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   email          String   @unique
   name           String?
@@ -34,17 +34,21 @@ model TemporaryApplication {
   priceId        String?
   key            String   @unique
   createdAt      DateTime @default(now())
+
+  @@map("applications_onboarding")
 }
 
 // grida workspace <> stripe customer
 model Customer {
-  @@map("customers")
-  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
   // grida workspace (user) id
-  workspaceId   String         @unique
+  // workspaceId   String         @unique
+  stripeId     String        @unique
   // subscriptions Subscription[]
-  applicatopms  Application[]
-  createdAt DateTime @default(now())
+  applications Application[]
+  createdAt    DateTime      @default(now())
+
+  @@map("customers")
 }
 
 // model Subscription {
