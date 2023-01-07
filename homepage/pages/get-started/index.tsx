@@ -51,8 +51,11 @@ export default function GetstartedPage({ price: _price }: { price: string }) {
   const onNextClick = useCallback(async () => {
     // create onboarding application
     const application = await client.onboardingWithForm({
-      name,
-      allowedOrigins: allowedOrigins.split(",").map((x) => x.trim()),
+      name: name ? name : undefined,
+      allowedOrigins: allowedOrigins
+        .split(",")
+        .map((x) => x.trim())
+        .filter(Boolean),
       priceId: price,
     });
 
@@ -74,9 +77,10 @@ export default function GetstartedPage({ price: _price }: { price: string }) {
       }
       default: {
         let params = new URLSearchParams();
-        params.append("price", price);
-        params.append("onboarding", onboarding_id);
-        redirect = k.SERVER_URL + "/payments/checkout-session" + "?" + params;
+        params.append("onboarding_id", onboarding_id);
+        // TODO: multiple search params not supported by accounts.grida.co?redirect_uri=x
+
+        redirect = k.SERVER_URL + "/payments/checkout/new" + "?" + params;
 
         break;
       }
@@ -98,8 +102,8 @@ export default function GetstartedPage({ price: _price }: { price: string }) {
         <p>
           Ready to use cors.sh? select your plan and let’s create your first
           project. <br />
-          <p style={{ padding: 4, opacity: 0.5 }}>you can change this later</p>
         </p>
+        <p style={{ opacity: 0.5 }}>you can change this later</p>
       </div>
       <div className="form">
         <TextFormField
@@ -121,6 +125,8 @@ export default function GetstartedPage({ price: _price }: { price: string }) {
           <FormFieldLabel>Plan</FormFieldLabel>
           <div style={{ flex: 1, alignSelf: "stretch" }}>
             <Select
+              id="pricing-select"
+              instanceId="pricing-select"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   onEnter();
