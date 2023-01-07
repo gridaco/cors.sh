@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import { Logo } from "logo";
-import { FormPageLayout } from "layouts";
+import { FormPageLayout } from "@app/ui/layouts";
 import Head from "next/head";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import { UnderlineButton } from "components";

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Button, TextFormField } from "@editor-ui/console";
 import client from "@cors.sh/service-api";
 import { useRouter } from "next/router";
-import { FormPageLayout } from "layouts";
+import { FormPageLayout } from "@app/ui/layouts";
 export default function NewApplicationPage() {
   const router = useRouter();
   const [name, setName] = React.useState("");

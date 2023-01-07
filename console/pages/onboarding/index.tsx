@@ -10,7 +10,7 @@ import client from "@cors.sh/service-api";
 import { useRouter } from "next/router";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import Head from "next/head";
-import { FormPageLayout } from "layouts";
+import { FormPageLayout } from "@app/ui/layouts";
 import { motion } from "framer-motion";
 
 export default function NewApplicationPage() {

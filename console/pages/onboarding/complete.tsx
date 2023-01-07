@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 
 import Head from "next/head";
-import { FormPageLayout, PageCloseButton } from "layouts";
+import { FormPageLayout, PageCloseButton } from "@app/ui/layouts";
 
 export default function InitialOnboardingFinalPage() {
   return (

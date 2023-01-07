@@ -1,4 +1,5 @@
 const withTM = require("next-transpile-modules")([
+  "@app/ui",
   "@cors.sh/service-api",
   "@editor-ui/console",
 ]);

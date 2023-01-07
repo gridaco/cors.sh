@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { Pencil1Icon, EyeOpenIcon } from "@radix-ui/react-icons";
 import client, { ApplicationWithApiKey } from "@cors.sh/service-api";
-import { FormPageLayout, PageCloseButton } from "layouts";
+import { FormPageLayout, PageCloseButton } from "@app/ui/layouts";
 import { Button, TextFormField } from "@editor-ui/console";
 import copy from "copy-to-clipboard";
 import toast from "react-hot-toast";
