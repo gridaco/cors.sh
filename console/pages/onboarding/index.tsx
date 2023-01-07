@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import Head from "next/head";
 import { FormPageLayout } from "@app/ui/layouts";
+import { validateUrls } from "@app/ui/utils";
 import { motion } from "framer-motion";
 
 export default function NewApplicationPage() {
@@ -94,18 +95,6 @@ function SetupForm() {
   const [isBusy, setIsBusy] = React.useState(false);
   const [isValid, setIsValid] = React.useState(false);
   const [isPricingVisible, setIsPricingVisible] = React.useState(false);
-
-  const validateUrls = (urls: string) => {
-    const lines = urls.split(",").map((line) => line.trim());
-    for (const line of lines) {
-      try {
-        new URL(line);
-      } catch (e) {
-        return false;
-      }
-    }
-    return true;
-  };
 
   const onEnter = () => {
     if (!isValid) {
