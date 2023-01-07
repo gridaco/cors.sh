@@ -5,7 +5,7 @@ export default function CtaPage() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const email = (e.target as HTMLFormElement).email.value;
-    const res = await client.getOnboardingApiKey({
+    const res = await client.onboardingWithEmail({
       email,
     });
     console.log(res);

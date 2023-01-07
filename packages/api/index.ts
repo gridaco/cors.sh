@@ -39,9 +39,14 @@ export async function signin({ grida_token }: { grida_token: string }) {
   }
 }
 
-async function getOnboardingApiKey({ email }: { email: string }) {
+async function onboardingWithEmail({ email }: { email: string }) {
   try {
-    return (await _signed_client.post("/start-key/with-email", { email })).data;
+    return (
+      await _signed_client.post<OnboardingApplication>(
+        "/onboarding/with-email",
+        { email }
+      )
+    ).data;
   } catch (e) {
     if (e instanceof AxiosError) {
       switch (e.response?.status) {
@@ -52,6 +57,24 @@ async function getOnboardingApiKey({ email }: { email: string }) {
       }
     }
   }
+}
+
+async function onboardingWithForm({
+  name,
+  allowedOrigins = [],
+  priceId,
+}: {
+  name?: string;
+  allowedOrigins?: string[];
+  priceId?: string;
+}) {
+  return (
+    await _signed_client.post<OnboardingApplication>("/onboarding/with-form", {
+      name: allowedOrigins,
+      allowedOrigins: allowedOrigins,
+      priceId: priceId,
+    })
+  ).data;
 }
 
 export class AlreadySignedUp extends Error {
@@ -75,6 +98,13 @@ export interface Application {
   name: string;
   id: string;
   allowedOrigins: string[];
+}
+
+export interface OnboardingApplication {
+  id: string;
+  name?: string;
+  allowedOrigins: string[];
+  priceId?: string;
 }
 
 export type ApplicationWithApiKey = Application & {
@@ -120,14 +150,16 @@ async function updateApplication(
 
 export default {
   ..._signed_client,
-  getOnboardingApiKey,
+  onboardingWithEmail,
+  onboardingWithForm,
   createApplication,
   getApplication,
   listApplications,
   deleteApplication,
   updateApplication,
 } as AxiosInstance & {
-  getOnboardingApiKey: typeof getOnboardingApiKey;
+  onboardingWithEmail: typeof onboardingWithEmail;
+  onboardingWithForm: typeof onboardingWithForm;
   createApplication: typeof createApplication;
   getApplication: typeof getApplication;
   listApplications: typeof listApplications;
