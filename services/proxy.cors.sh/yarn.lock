@@ -1978,7 +1978,7 @@ aws-sdk@^2.624.0, aws-sdk@^2.756.0, aws-sdk@^2.834.0:
     uuid "3.3.2"
     xml2js "0.4.19"
 
-aws-sdk@^2.7.0, aws-sdk@^2.792.0:
+aws-sdk@^2.7.0:
   version "2.936.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.936.0.tgz#b69f5db7c0c745f260b014415a8fbfb38c5e615d"
   integrity sha512-X0kuyycck0fEPN5V0Vw1PmPIQ4BO0qupsL1El5jnXzXxNkf1cOmn5PMSxPXPsdcqua4w4h3sf143/yME0V9w8g==
@@ -3568,16 +3568,6 @@ dynamodb-localhost@0.0.9:
     progress "^1.1.8"
     rimraf "^2.6.3"
     tar "^4.4.8"
-
-dynamoose@^2.7.3:
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/dynamoose/-/dynamoose-2.7.3.tgz#1242fddb683c17f83411578c3c0c7d10c2f0c60d"
-  integrity sha512-Hnfp3Sh3p+YwpPFtxTGDAuliESSbaFcaPE4FYVGekWA+oOXjGj6F/0QCrZCsLnBsd1p7rCDDRnublfGHH7NDXA==
-  dependencies:
-    aws-sdk "^2.792.0"
-    js-object-utilities "^2.0.0"
-    source-map-support "^0.5.19"
-    uuid "^8.3.1"
 
 ecc-jsbn@~0.1.1:
   version "0.1.2"
@@ -5179,11 +5169,6 @@ jmespath@0.15.0:
   version "0.15.0"
   resolved "https://registry.yarnpkg.com/jmespath/-/jmespath-0.15.0.tgz#a3f222a9aae9f966f5d27c796510e28091764217"
   integrity sha1-o/Iiqarp+Wb10nx5ZRDigJF2Qhc=
-
-js-object-utilities@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/js-object-utilities/-/js-object-utilities-2.0.0.tgz#79629a32bdcc7a60dced03f669cabc78b35f637c"
-  integrity sha512-d0o5Hnd+9q9mswk8VhU9Fzl+QLce3FvtNlLKV7UTUYjAZuChAKeS/DnuameOpiJAXquqrXLJYUcABxhIWogwpA==
 
 js-string-escape@^1.0.1:
   version "1.0.1"
@@ -8248,7 +8233,7 @@ uuid@^3.0.0, uuid@^3.3.2, uuid@^3.4.0:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
-uuid@^8.3.1, uuid@^8.3.2:
+uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==

@@ -6,11 +6,11 @@
         "clean": "rimraf .build .serverless",
         "deploy:prod": "yarn clean && sls deploy --stage production",
         "deploy:staging": "yarn clean && sls deploy --stage staging",
-        "dev": "sls offline start"
+        "dev": "sls offline start",
+        "build": "yarn clean && sls package"
     },
     "dependencies": {
         "aws-serverless-express": "^3.4.0",
-        "dynamoose": "^2.7.3",
         "express": "^4.17.1",
         "express-rate-limit": "^6.5.2",
         "express-useragent": "^1.0.15",

@@ -1,24 +1,6 @@
 import * as express from "express";
-import * as dynamoose from "dynamoose";
-import * as https from "https";
-const agent = new https.Agent({
-  keepAlive: true,
-  rejectUnauthorized: true,
-  maxSockets: 1000,
-});
+import type { CorsProxyApiRequest } from "./type";
 
-dynamoose.aws.sdk.config.update({
-  httpOptions: {
-    agent: agent,
-  },
-});
-
-import {
-  CorsProxyApiRequest,
-  CorsProxyApiRequestLog,
-  CorsRequestLogModel,
-} from "./model";
-import { nanoid } from "nanoid";
 /**
  *
  * @param req
@@ -49,7 +31,12 @@ export async function logRequest(req: express.Request, res: express.Response) {
       return _rt ? _rt : 0;
     })()
   );
-  await log({
+
+  const billed_duration = Math.ceil(duration / 100) * 100; // billed duration is stepped by 100ms
+  // request id from api gateway
+  const request_id = req.headers["x-request-id"] as string;
+
+  const metric = {
     ip: ip,
     origin: origin,
     ua: ua,
@@ -58,22 +45,18 @@ export async function logRequest(req: express.Request, res: express.Response) {
     at: timestamp,
     target: url,
     app: "anonymous",
-  });
+    billed_duration,
+  };
+
+  systemlog(request_id, metric);
+  // await log(metric);
 }
 
-async function log(request: CorsProxyApiRequest) {
-  // console.log("request", request);
-  const id = nanoid();
-  const billedduration = Math.ceil(request.duration / 100) * 100; // billed duration is stepped by 100ms
-  try {
-    const payload = new CorsRequestLogModel(<CorsProxyApiRequestLog>{
-      id: id,
-      billed_duration: billedduration,
-      ...request,
-    });
-
-    await payload.save();
-  } catch (_) {
-    // do nothing
+function systemlog(
+  id: string | undefined,
+  request: CorsProxyApiRequest & {
+    billed_duration: number;
   }
+) {
+  console.log(id, request);
 }

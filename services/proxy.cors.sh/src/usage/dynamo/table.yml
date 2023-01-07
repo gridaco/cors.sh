@@ -1,0 +1,46 @@
+# use this configuration on serverless.yml to enable logging.
+
+provider:
+  name: aws
+  environment:
+    DYNAMODB_TABLE_USAGE_LOG: "${self:service}-usage-log-${opt:stage, self:provider.stage}"
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:DescribeTable
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE_USAGE_LOG}"
+
+resources:
+  Resources:
+    usageLogTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "${self:provider.environment.DYNAMODB_TABLE_USAGE_LOG}"
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: app
+            AttributeType: S
+        GlobalSecondaryIndexes:
+          - IndexName: appIndex
+            KeySchema:
+              - AttributeName: app
+                KeyType: HASH
+            Projection:
+              ProjectionType: "ALL"
+            ProvisionedThroughput:
+              ReadCapacityUnits: 10
+              WriteCapacityUnits: 10 # no write is required
+        ProvisionedThroughput:
+          ReadCapacityUnits: 10 # no read is required
+          WriteCapacityUnits: 10
