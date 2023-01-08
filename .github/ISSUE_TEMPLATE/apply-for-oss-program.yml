@@ -6,10 +6,10 @@ assignees: [softmarshmallow]
 body:
 - type: checkboxes
   attributes:
-    label: Is there an existing issue for this?
-    description: Please search to see if an issue already exists for the bug you encountered.
+    label: You are applying for OSS program
+    description: Please ensure your project is open to public.
     options:
-    - label: I have searched the existing issues
+    - label: Yes my project is OSS licensed and open to public.
       required: true
 - type: textarea
   attributes:
