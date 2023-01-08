@@ -1,0 +1,55 @@
+name: Apply for OSS Program
+description: Apply your OSS Project for free pro-plan of cors.sh
+title: "[Application] for my OSS Project"
+labels: [application]
+assignees: [softmarshmallow]
+body:
+- type: checkboxes
+  attributes:
+    label: Is there an existing issue for this?
+    description: Please search to see if an issue already exists for the bug you encountered.
+    options:
+    - label: I have searched the existing issues
+      required: true
+- type: textarea
+  attributes:
+    label: Repository URL to your project
+    description: Copy & paste url to your project repo
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: URL to your website
+    description: Please let us know the url to your website if you have one.
+  validations:
+    required: false
+- type: textarea
+  attributes:
+    label: Expected Quota of usage
+    description: How much API calls do you expect to occur via your site?
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Details
+    description: |
+      examples:
+        - **Category**: Blockchain
+        - **License**: MIT
+        - **Date of release**: 12/25/2023
+    value: |
+        - Category:
+        - License:
+        - Date of release:
+    render: markdown
+  validations:
+    required: false
+- type: textarea
+  attributes:
+    label: Anything else?
+    description: |
+      Links? References? Anything that will give us more context about the project!
+
+      Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
+  validations:
+    required: false
