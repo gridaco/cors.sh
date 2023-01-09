@@ -29,6 +29,7 @@ provider:
     STRIPE_API_KEY: ${env:STRIPE_API_KEY}
     STRIPE_WEBHOOK_SECRET: ${env:STRIPE_WEBHOOK_SECRET}
     WEBHOST: ${env:WEBHOST}
+    DYNAMODB_TABLE_SERVICE_KEYS: "${self:service}-keys-${opt:stage, self:provider.stage}"
   runtime: nodejs12.x
   region: us-west-1
   apiGateway:
@@ -41,6 +42,40 @@ provider:
       Action:
         - ses:SendEmail
       Resource: "*"
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:DescribeTable
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE_SERVICE_KEYS}"
+
+resources:
+  Resources:
+    service-keys-table:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "${self:provider.environment.DYNAMODB_TABLE_SERVICE_KEYS}"
+        AttributeDefinitions:
+          - AttributeName: signature
+            AttributeType: S
+          - AttributeName: plan
+            AttributeType: S
+          - AttributeName: config
+            AttributeType: M
+          - AttributeName: active
+            AttributeType: BOOL
+        KeySchema:
+          - AttributeName: signature
+            KeyType: HASH
+        ProvisionedThroughput:
+          # $0.000145 per RCU
+          ReadCapacityUnits: ${param:service-keys-rcu, 1}
+          # $0.000725 per WCU
+          WriteCapacityUnits: ${param:service-keys-wcu, 1}
 
 functions:
   main:
