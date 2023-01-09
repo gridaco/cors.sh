@@ -9,4 +9,4 @@ package-lock.json
 .env.staging
 .env.production
 .env.local
-.env.dev.local
+.env.*.local
