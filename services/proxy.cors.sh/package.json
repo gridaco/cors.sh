@@ -4,8 +4,8 @@
     "version": "0.1.0",
     "scripts": {
         "clean": "rimraf .build .serverless",
-        "deploy:prod": "yarn clean && sls deploy --stage production --domain true",
-        "deploy:staging": "yarn clean && sls deploy --stage staging --domain false",
+        "deploy:prod": "yarn clean && source deploy/prod.sh",
+        "deploy:staging": "yarn clean && && source deploy/staging.sh",
         "dev": "sls offline start",
         "build": "yarn clean && sls package"
     },
