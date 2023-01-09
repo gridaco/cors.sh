@@ -25,7 +25,7 @@
         </mj-text>
         <mj-text>
           <code>
-            <pre style="background-color: black; padding:12px; color:white;">{{CODE}}</pre>
+            <p style="background-color: black; padding:12px; color:white;">{{CODE}}</p>
           </code>
         </mj-text>
         <mj-text>Copy &amp; Paste this api key to your api call (XHR) header.</mj-text>
@@ -37,13 +37,13 @@
         <mj-text>
           <code css-class="overflow-scroll">
             <div style="background-color: #F4F2F0;overflow:auto;width:auto;padding:12px;">
-              <pre style="margin: 0; line-height: 125%">
-<span style="color: #CC556A">fetch</span><span style="color: #999999">(</span><span style="color: #71982C">&#39;https://proxy.cors.sh/https://acme.com&#39;</span><span style="color: #999999">,</span> <span style="color: #999999">{</span>
-  <span style="color: #CC556A">headers</span><span style="color: #937042">:</span> <span style="color: #999999">{</span>
-    <span style="color: #71982C">&#39;<mark>x-cors-api-key</mark>&#39;</span><span style="color: #937042">:</span> <span style="color: #71982C">&#39;{{CODE}}&#39;</span>
-  <span style="color: #999999">}</span>
-<span style="color: #999999">})</span>
-</pre>
+              <div style="margin: 0; line-height: 125%">
+                <span style="color: #CC556A">fetch</span><span style="color: #999999">(</span><span style="color: #71982C">&#39;https://proxy.cors.sh/https://acme.com&#39;</span><span style="color: #999999">,</span> <span style="color: #999999">{</span><br />
+                &nbsp;&nbsp;<span style="color: #CC556A">headers</span><span style="color: #937042">:</span> <span style="color: #999999">{</span><br />
+                &nbsp;&nbsp;<span style="color: #71982C">&#39;<mark>x-cors-api-key</mark>&#39;</span><span style="color: #937042">:</span>&nbsp;<span style="color: #71982C">&#39;{{CODE}}&#39;</span><br />
+                &nbsp;&nbsp;<span style="color: #999999">}</span><br />
+                <span style="color: #999999">})</span><br />
+              </div>
             </div>
           </code>
         </mj-text>
