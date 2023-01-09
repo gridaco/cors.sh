@@ -28,6 +28,7 @@ function WarningIcon() {
 }
 
 export function OnboardingCta() {
+  const [isBusy, setIsBusy] = useState(false);
   const [email, setEmail] = useState("");
 
   const onsend = async () => {
@@ -37,15 +38,19 @@ export function OnboardingCta() {
       return;
     }
 
-    try {
-      const data = await client.onboardingWithEmail({ email: email });
+
+    // send email
+    setIsBusy(true);
+
+    client.onboardingWithEmail({ email: email }).then(data => {
       toast.success(
-        <p>API Key sent to {data?.email}. (Check your spam folder as well)</p>
+        <p>API Key sent to your email.<br/>Please check your <b>spam folder</b> as well</p>
       );
-    } catch (e) {
+    }).catch(e => {
       toast.error(<p>Something went wrong</p>);
-      return;
-    }
+    }).finally(() => {
+      setIsBusy(false);
+    });
   };
 
   return (
@@ -56,6 +61,7 @@ export function OnboardingCta() {
           autoComplete="email"
           placeholder="alice@acme.com"
           value={email}
+          disabled={isBusy}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               onsend();
@@ -66,7 +72,7 @@ export function OnboardingCta() {
           }}
         />
       </InputGroup>
-      <ButtonAsButton onClick={onsend}>Send me an API Key</ButtonAsButton>
+      <ButtonAsButton disabled={isBusy} onClick={onsend}>Send me an API Key</ButtonAsButton>
     </RootWrapperCta>
   );
 }
