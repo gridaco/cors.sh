@@ -2,7 +2,7 @@
   <mj-head>
     <mj-font name="Source Code Pro" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600;700&display=swap" />
     <mj-attributes>
-      <mj-text font-size="14px" align="left" color="black" font-family="Source Code Pro" />
+      <mj-text font-size="14px" align="left" color="black" font-family="'Source Code Pro', monospace" />
       <mj-section background-color="#fff" />
       <mj-social-element icon-size="24px" />
       <mj-style inline="inline">
@@ -15,7 +15,11 @@
   <mj-body background-color="#eee">
     <mj-hero padding="24px 0px 0px 0px">
       <mj-text color="black">
-        <h1>Your API key for</br>proxy.cors.sh</h1>
+        <h1>
+          Your API key for
+          </br>
+          proxy.cors.sh
+        </h1>
       </mj-text>
     </mj-hero>
     <mj-section>
