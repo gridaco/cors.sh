@@ -56,7 +56,7 @@
         </mj-text>
         <mj-text> Since this key is a temporary key to get you started, you have to sign-in &amp; claim your account to get a permanent one. <b>This key will only be valid for 3 days.</b>
         </mj-text>
-        <mj-button background-color="black" color="white" href="{{ONBOARDINGLINK}}" align="left" inner-padding="8px"> Get the permanent key </mj-button>
+        <mj-button background-color="black" color="white" href="{{ONBOARDINGLINK}}" align="left" inner-padding="8px">👉 Get the permanent key </mj-button>
         <mj-text color="rgba(0, 0, 0, 0.5)">
           <small>button not working? copy &amp; paste this link to your browser</small>
           <small>
