@@ -5,6 +5,7 @@ plugins:
   - serverless-webpack-prisma
   - serverless-offline
   - serverless-domain-manager
+  - '@haftahave/serverless-ses-template'
 
 custom:
   customDomain:
@@ -13,6 +14,8 @@ custom:
     basePath: ""
     createRoute53Record: false
     stage: production
+  sesTemplates:
+    addStage: true
   serverless-offline:
     httpPort: 4021
     noPrependStageInUrl: true

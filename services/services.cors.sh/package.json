@@ -35,6 +35,7 @@
     "stripe": "^10.7.0"
   },
   "devDependencies": {
+    "@haftahave/serverless-ses-template": "^4.0.5",
     "@types/aws-lambda": "^8.10.95",
     "@types/body-parser": "^1.19.2",
     "@types/cors": "^2.8.12",
