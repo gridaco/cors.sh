@@ -24,8 +24,8 @@
           <h3>Your temporary API key is..</h3>
         </mj-text>
         <mj-text>
-          <code>
-            <p style="background-color: black; padding:12px; color:white;" class="break">{{CODE}}</p>
+          <code class="break">
+            <p style="background-color: black; padding:12px; color:white;">{{CODE}}</p>
           </code>
         </mj-text>
         <mj-text>Copy &amp; Paste this api key to your api call (XHR) header.</mj-text>
