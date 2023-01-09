@@ -177,7 +177,7 @@
       <div
          style="font-family:Source Code Pro;font-size:14px;line-height:1;text-align:left;color:black;"
       ><code>
-            <pre style="background-color: black; padding:12px">{{CODE}}</pre>
+            <p style="background-color: black; padding:12px; color:white;">{{CODE}}</p>
           </code></div>
     
                 </td>
@@ -226,15 +226,15 @@
                   
       <div
          style="font-family:Source Code Pro;font-size:14px;line-height:1;text-align:left;color:black;"
-      ><code>
+      ><code css-class="overflow-scroll">
             <div style="background-color: #F4F2F0;overflow:auto;width:auto;padding:12px;">
-              <pre style="margin: 0; line-height: 125%">
-<span style="color: #CC556A">fetch</span><span style="color: #999999">(</span><span style="color: #71982C">&#39;https://proxy.cors.sh/https://acme.com&#39;</span><span style="color: #999999">,</span> <span style="color: #999999">{</span>
-  <span style="color: #CC556A">headers</span><span style="color: #937042">:</span> <span style="color: #999999">{</span>
-    <span style="color: #71982C">&#39;<mark>x-cors-api-key</mark>&#39;</span><span style="color: #937042">:</span> <span style="color: #71982C">&#39;{{CODE}}&#39;</span>
-  <span style="color: #999999">}</span>
-<span style="color: #999999">})</span>
-</pre>
+              <div style="margin: 0; line-height: 125%">
+                <span style="color: #CC556A">fetch</span><span style="color: #999999">(</span><span style="color: #71982C">&#39;https://proxy.cors.sh/https://acme.com&#39;</span><span style="color: #999999">,</span> <span style="color: #999999">{</span><br />
+                &nbsp;&nbsp;<span style="color: #CC556A">headers</span><span style="color: #937042">:</span> <span style="color: #999999">{</span><br />
+                &nbsp;&nbsp;<span style="color: #71982C">&#39;<mark>x-cors-api-key</mark>&#39;</span><span style="color: #937042">:</span>&nbsp;<span style="color: #71982C">&#39;{{CODE}}&#39;</span><br />
+                &nbsp;&nbsp;<span style="color: #999999">}</span><br />
+                <span style="color: #999999">})</span><br />
+              </div>
             </div>
           </code></div>
     
@@ -279,7 +279,7 @@
                align="center" bgcolor="black" role="presentation" style="border:none;border-radius:3px;cursor:auto;mso-padding-alt:8px;background:black;" valign="middle"
             >
               <a
-                 href="https://cors.sh/#signup" style="display:inline-block;background:black;color:white;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:8px;mso-padding-alt:0px;border-radius:3px;" target="_blank"
+                 href="{{ONBOARDINGLINK}}" style="display:inline-block;background:black;color:white;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:8px;mso-padding-alt:0px;border-radius:3px;" target="_blank"
               >
                 Get the permanent key
               </a>

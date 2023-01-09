@@ -5,11 +5,6 @@
       <mj-text font-size="14px" align="left" color="black" font-family="Source Code Pro" />
       <mj-section background-color="#fff" />
       <mj-social-element icon-size="24px" />
-      <mj-style>
-        .overflow-scroll {
-          overflow: scroll;
-        }
-      </mj-style>
     </mj-attributes>
   </mj-head>
   <mj-body background-color="#eee">
