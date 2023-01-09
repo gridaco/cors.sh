@@ -26,14 +26,16 @@ model Application {
   @@map("applications")
 }
 
-model TemporaryApplication {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  email          String   @unique
+model OnboardingApplications {
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  email          String     @unique
   name           String?
-  allowedOrigins String[] @default([])
+  allowedOrigins String[]   @default([])
   priceId        String?
-  key            String   @unique
-  createdAt      DateTime @default(now())
+  key            String     @unique
+  emailSentAt    DateTime[] @default([])
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 
   @@map("applications_onboarding")
 }
