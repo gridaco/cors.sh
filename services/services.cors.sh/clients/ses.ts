@@ -1,6 +1,6 @@
 import * as AWS from "@aws-sdk/client-ses";
 
-const SENDER_EMAIL = "hello@grida.co";
+const SENDER_EMAIL = "no-reply@cors.sh";
 const ses = new AWS.SES({});
 
 interface EmailBody_Raw {
@@ -15,27 +15,25 @@ interface EmailBody_Html {
 
 type EmailContent = EmailBody_Raw | EmailBody_Html;
 
-export async function sendEmail(
+export async function emailWithTemplate(
   to: string,
-  options: {
-    template?: {
-      templateId: string;
-      data: {};
-    };
-    content?: EmailContent;
-  }
+  template: string,
+  data: object
+) {
+  await ses.sendTemplatedEmail({
+    Destination: {
+      ToAddresses: [to],
+    },
+    Source: SENDER_EMAIL,
+    Template: template,
+    TemplateData: JSON.stringify(data),
+  })
+}
+
+export async function email(
+  to: string,
+  content: EmailContent
 ): Promise<boolean> {
-  if (options.template && options.template) {
-    throw "provide only one option between template and rawContent";
-  }
-
-  let content: EmailContent;
-  if (options.content) {
-    content = options.content;
-  } else if (options.template) {
-    throw "using template is not supported yet.";
-  }
-
   try {
     const sendResp = await ses.sendEmail({
       Destination: {
