@@ -14,7 +14,7 @@ router.get("/checkout/new", async (req, res) => {
 
   const { onboarding_id: _q_onboarding } = req.query;
 
-  const onboarding = await prisma.temporaryApplication.findUnique({
+  const onboarding = await prisma.onboardingApplications.findUnique({
     where: { id: _q_onboarding as string },
   });
 
@@ -70,7 +70,7 @@ router.get("/success", async (req, res) => {
   // (if user has one.)
 
   // remove
-  const tmp = await prisma.temporaryApplication.delete({
+  const tmp = await prisma.onboardingApplications.delete({
     where: { id: onboarding_id as string },
   });
 

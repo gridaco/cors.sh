@@ -1,7 +1,5 @@
 import * as express from "express";
-import { sign_temporary_key } from "../../keygen";
-import { nanoid } from "nanoid";
-import { prisma } from "../../clients";
+import { createOnboardingApplication } from "../../controllers/applications";
 
 const router = express.Router();
 
@@ -9,49 +7,34 @@ const router = express.Router();
 router.post("/with-email", async (req, res) => {
   // create new temporary application bind to the email (form is optional)
 
-  const { email, name, allowedOrigins } = req.body;
+  const { email } = req.body;
 
   // @requires: email
   if (!email) {
     return res.status(400).json({ error: "email is required" });
   }
 
-  const d = await prisma.temporaryApplication.create({
-    data: {
-      key: sign_temporary_key(email),
-      email: email,
-      name: name,
-      allowedOrigins: allowedOrigins ?? [],
-    },
+  const d = await createOnboardingApplication({
+    type: "with-email",
+    email,
   });
 
   // send an email to the user
   // TODO:
 
-  res.status(201).json({
-    id: d.id,
-    // omit the key since it also works as a verification code for faster signup
-    // key: "omitted"
-    email: d.email,
-    name: d.name,
-    allowedOrigins: d.allowedOrigins,
-    priceId: d.priceId,
-  });
+  res.status(201).json(d);
 });
 
 router.post("/with-form", async (req, res) => {
   // create new temporary application bind to the form (email is optional)
 
   const { name, allowedOrigins, priceId } = req.body;
-  const email = `${nanoid(10)}@unknown-users.cors.sh`;
-  const d = await prisma.temporaryApplication.create({
-    data: {
-      key: sign_temporary_key(email),
-      email,
-      name,
-      allowedOrigins: allowedOrigins ?? [],
-      priceId,
-    },
+
+  const d = await createOnboardingApplication({
+    type: "with-form",
+    name,
+    allowedOrigins,
+    priceId,
   });
 
   res.status(201).json(d);
