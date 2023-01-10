@@ -11,6 +11,7 @@ import {
 import Select from "react-select";
 import client from "@cors.sh/service-api";
 import * as k from "../../k";
+import { toast } from "react-toastify";
 
 export default function GetstartedPage({ price: _price }: { price: string }) {
   const [name, setName] = React.useState("");
@@ -49,44 +50,51 @@ export default function GetstartedPage({ price: _price }: { price: string }) {
   }, [name, allowedOrigins]);
 
   const onNextClick = useCallback(async () => {
-    // create onboarding application
-    const application = await client.onboardingWithForm({
-      name: name ? name : undefined,
-      allowedOrigins: allowedOrigins
-        .split(",")
-        .map((x) => x.trim())
-        .filter(Boolean),
-      priceId: price,
-    });
+    setIsBusy(true);
 
-    const onboarding_id = application.id;
+    try {
+      // create onboarding application
+      const application = await client.onboardingWithForm({
+        name: name ? name : undefined,
+        allowedOrigins: allowedOrigins
+          .split(",")
+          .map((x) => x.trim())
+          .filter(Boolean),
+        priceId: price,
+      });
 
-    // redirect user to payment page
-    let redirect;
-    switch (stateRef.current) {
-      case k.PRICE_PAY_AS_YOU_GO: {
-        // TODO: add stripe integration.
-        redirect = "https://forms.gle/GXDGPAoM9fhZrQh77";
-        break;
+      const onboarding_id = application.id;
+
+      // redirect user to payment page
+      let redirect;
+      switch (stateRef.current) {
+        case k.PRICE_PAY_AS_YOU_GO: {
+          // TODO: add stripe integration.
+          redirect = "https://forms.gle/GXDGPAoM9fhZrQh77";
+          break;
+        }
+        case k.PRICE_FREE_MONTHLY: {
+          // the free plan does not require payments, so we can skip to create new project right away.
+          redirect =
+            window.location.protocol + window.location.host + "/console/new";
+          break;
+        }
+        default: {
+          let params = new URLSearchParams();
+          params.append("onboarding_id", onboarding_id);
+          // TODO: multiple search params not supported by accounts.grida.co?redirect_uri=x
+
+          redirect = k.SERVER_URL + "/payments/checkout/new" + "?" + params;
+
+          break;
+        }
       }
-      case k.PRICE_FREE_MONTHLY: {
-        // the free plan does not require payments, so we can skip to create new project right away.
-        redirect =
-          window.location.protocol + window.location.host + "/console/new";
-        break;
-      }
-      default: {
-        let params = new URLSearchParams();
-        params.append("onboarding_id", onboarding_id);
-        // TODO: multiple search params not supported by accounts.grida.co?redirect_uri=x
 
-        redirect = k.SERVER_URL + "/payments/checkout/new" + "?" + params;
-
-        break;
-      }
+      router.replace(redirect);
+    } catch (e) {
+      toast("Oops. something went wrong. please try again.", { type: "error" });
+      setIsBusy(false);
     }
-
-    router.push("https://accounts.grida.co/signin?redirect_uri=" + redirect);
   }, [price]);
 
   return (
