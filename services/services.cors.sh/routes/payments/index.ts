@@ -4,7 +4,6 @@ import { prisma, stripe } from "../../clients";
 const router = express.Router();
 
 const WEBHOST = process.env.WEBHOST;
-const PAYMENTSWEBURL = WEBHOST + "/payments";
 const WEBURL_CONSOLE = WEBHOST + "/console";
 const PROTOCOL = process.env.NODE_ENV === "production" ? "https" : "http";
 // e.g.
@@ -43,8 +42,8 @@ router.get("/checkout/new", async (req, res) => {
     ],
     mode: "subscription",
     // e.g. http://localhost:8823/?success=true&session_id=cs_test_a1qQdhxwfS5kKZJ1kToxKqAr2K6yHneucfi65lIs1OPVkmoH14YNAev76S
-    success_url: `${PROTOCOL}://${host}/onboarding/payment-success?session_id={CHECKOUT_SESSION_ID}&${extra_params}`,
-    cancel_url: `https://cors.sh/`,
+    success_url: `${PROTOCOL}://${host}/payments/success?session_id={CHECKOUT_SESSION_ID}&${extra_params}`,
+    cancel_url: `${PROTOCOL}://${host}/payments/canceled?session_id={CHECKOUT_SESSION_ID}&${extra_params}`,
   });
 
   res.redirect(303, session.url);
@@ -109,7 +108,7 @@ router.get("/success", async (req, res) => {
 
   const params = new URLSearchParams(_params);
 
-  const redirect_uri = `${PAYMENTSWEBURL}/success?${params.toString()}`;
+  const redirect_uri = `${WEBHOST}/onboarding/payment-success?${params.toString()}`;
 
   res.redirect(303, redirect_uri);
 });
@@ -118,7 +117,7 @@ router.get("/canceled", async (req, res) => {
   // remove the temporary app
   const { session_id, onboarding_id } = req.query;
 
-  res.redirect(303, `${PAYMENTSWEBURL}/canceled`);
+  res.redirect(303, `https://cors.sh/`);
 });
 
 router.post("/portal-session", async (req, res) => {
