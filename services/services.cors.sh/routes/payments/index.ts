@@ -43,8 +43,8 @@ router.get("/checkout/new", async (req, res) => {
     ],
     mode: "subscription",
     // e.g. http://localhost:8823/?success=true&session_id=cs_test_a1qQdhxwfS5kKZJ1kToxKqAr2K6yHneucfi65lIs1OPVkmoH14YNAev76S
-    success_url: `${PROTOCOL}://${host}/payments/success?session_id={CHECKOUT_SESSION_ID}&${extra_params}`,
-    cancel_url: `${PROTOCOL}://${host}/payments/canceled?session_id={CHECKOUT_SESSION_ID}&${extra_params}`,
+    success_url: `${PROTOCOL}://${host}/onboarding/payment-success?session_id={CHECKOUT_SESSION_ID}&${extra_params}`,
+    cancel_url: `https://cors.sh/`,
   });
 
   res.redirect(303, session.url);
