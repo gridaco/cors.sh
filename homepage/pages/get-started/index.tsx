@@ -155,7 +155,7 @@ export default function GetstartedPage({ price: _price }: { price: string }) {
           onClick={onNextClick}
           height={"32px"}
         >
-          Sign in with Grida and Continue
+          Continue
         </Button>
       </div>
     </FormPageLayout>
