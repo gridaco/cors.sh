@@ -1,0 +1,86 @@
+<mjml>
+  <mj-head>
+    <mj-font name="Source Code Pro" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600;700&display=swap" />
+    <mj-attributes>
+      <mj-text font-size="14px" align="left" color="black" font-family="'Source Code Pro', monospace" />
+      <mj-section background-color="#fff" />
+      <mj-social-element icon-size="24px" />
+      <mj-style inline="inline">
+        .break {
+          word-break: break-all !important;
+        }
+      </mj-style>
+    </mj-attributes>
+  </mj-head>
+  <mj-body background-color="#eee">
+    <mj-hero padding="24px 0px 0px 0px">
+      <mj-text color="black">
+        <h1>
+          Thank you for
+          </br>
+          your subscription
+        </h1>
+      </mj-text>
+    </mj-hero>
+    <mj-section>
+      <mj-column>
+        <mj-text>We’re all set. Let’s get rid of the cors errors by extending your api call with proxy.cors.sh like below.</mj-text>
+        <mj-text font-weight="bold">
+          <h3>Your temporary API key is..</h3>
+        </mj-text>
+        <mj-text>
+          <code class="break">
+            <p style="background-color: black; padding:12px; color:white;">
+              # for testing
+              </br>
+              {{CODE_TEST}}
+              </br>
+              </br>
+              # for production
+              </br>
+              {{CODE_LIVE}}
+            </p>
+          </code>
+        </mj-text>
+        <mj-text>Copy &amp; Paste this api key to your api call (XHR) header.</mj-text>
+        <mj-text font-weight="bold">
+          <h3>Example usage</h3>
+        </mj-text>
+        <mj-text>You can use the api key like below. For more example, visit <a href="https://cors.sh/#usage">https://cors.sh/#usage</a>
+        </mj-text>
+        <mj-text>
+          <code css-class="overflow-scroll">
+            <div style="background-color: #F4F2F0;overflow:auto;width:auto;padding:12px;">
+              <div style="margin: 0; line-height: 125%;">
+                <span style="color: #CC556A">fetch</span><span style="color: #999999">(</span><span style="color: #71982C">&#39;https://proxy.cors.sh/https://acme.com&#39;</span><span style="color: #999999">,</span> <span style="color: #999999">{</span><br />
+                &nbsp;&nbsp;<span style="color: #CC556A">headers</span><span style="color: #937042">:</span> <span style="color: #999999">{</span><br />
+                &nbsp;&nbsp;<span style="color: #71982C">&#39;x-cors-api-key&#39;</span><span style="color: #937042">:</span>&nbsp;<span style="color: #71982C" class="break">&#39;{{CODE_TEST}}&#39;</span><br />
+                &nbsp;&nbsp;<span style="color: #999999">}</span><br />
+                <span style="color: #999999">})</span><br />
+              </div>
+            </div>
+          </code>
+        </mj-text>
+
+        <mj-text>
+          <h3>What’s Next?</h3>
+          <ul>
+            <li><a href="https://cors.sh/docs">Learn how to secure your api key</a></li>
+            <li><a href="https://cors.sh/docs">Before publishing your website to production</a></li>
+            <li><a href="https://cors.sh/docs">Create new application on console</a></li>
+          </ul>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <!-- footer -->
+    <mj-section background-color="#fff">
+      <mj-column>
+        <mj-image src="https://s3.us-west-1.amazonaws.com/cors.sh-public-resources/branding/CORS.SH-black.svg" height="24px" />
+        <mj-text color="rgba(0, 0, 0, 0.5)">
+          <small>
+            <a href="https://grida.co">A Grida Product</a> | <a href="mailto:hello@grida.co">Contact</a>
+          </small>
+        </mj-text>
+      </mj-column>
+  </mj-body>
+</mjml>
