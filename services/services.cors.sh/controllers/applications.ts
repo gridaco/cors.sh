@@ -177,20 +177,39 @@ export async function convertApplication({
     where: { id: onboarding_id as string },
   });
 
+  const customer = await prisma.customer.findUnique({
+    where: { stripeId: stripe_customer_id as string },
+  });
+
   const application = await prisma.application.create({
     data: {
       id: tmp.id,
       name: tmp.name || "Untitled",
       allowedOrigins: tmp.allowedOrigins,
       owner: {
-        connect: {
-          stripeId: stripe_customer_id as string,
-        },
+        connect: customer,
       },
     },
   });
 
-  // TODO: send email to the user
+  // send email to the user
+  emailWithTemplate(
+    customer.email,
+    `mail_cors_sh_onboarding_with_subscription_payment_success_${process.env.STAGE}`,
+    {
+      APPLICATIONNAME: tmp.name,
+      // TODO:
+      CODE_LIVE: "live_xxxx-xxxx-xxxx",
+      // TODO:
+      CODE_TEST: "tets_xxxx-xxxx-xxxx",
+    }
+  )
+    .then(() => {
+      // set email verified to true
+    })
+    .catch((e) => {
+      // if email send fails with unknown email, set email verified to false.
+    });
 
   // TODO: once application is created, sync to the keys table
 
