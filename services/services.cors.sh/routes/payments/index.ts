@@ -52,8 +52,6 @@ router.get("/checkout/new", async (req, res) => {
 router.get("/success", async (req, res) => {
   const { session_id, onboarding_id } = req.query;
 
-  console.log("payment success for", session_id);
-
   const checkout_session = await stripe.checkout.sessions.retrieve(
     session_id as string
   );
@@ -69,9 +67,12 @@ router.get("/success", async (req, res) => {
   // (if user has one.)
 
   // remove
-  const tmp = await prisma.onboardingApplications.delete({
+  const tmp = await prisma.onboardingApplications.findUnique({
     where: { id: onboarding_id as string },
   });
+  // const tmp = await prisma.onboardingApplications.delete({
+  //   where: { id: onboarding_id as string },
+  // });
 
   console.log("details", checkout_session, tmp);
 
@@ -79,29 +80,29 @@ router.get("/success", async (req, res) => {
   // TODO: what if already exists?
   const customer = await prisma.customer.create({
     data: {
-      applications: {
-        create: {
-          // use the tmp's id since the api key is partially based on the application's id
-          id: tmp.id,
-          name: tmp.name || "Untitled",
-          allowedOrigins: tmp.allowedOrigins,
-        },
-      },
+      // applications: {
+      //   create: {
+      //     // use the tmp's id since the api key is partially based on the application's id
+      //     id: tmp.id,
+      //     name: tmp.name || "Untitled",
+      //     allowedOrigins: tmp.allowedOrigins,
+      //   },
+      // },
       stripeId: stripe_customer_id as string,
 
       // ''
     },
   });
 
-  const applications = await prisma.application.findMany({
-    where: { owner: { id: customer.id } },
-  });
+  // const applications = await prisma.application.findMany({
+  //   where: { owner: { id: customer.id } },
+  // });
 
   const _params = {
     session_id: session_id as string,
     onboarding_id: tmp?.id,
     customer_id: customer.id,
-    application_id: tmp ? applications[0].id : undefined,
+    application_id: tmp.id,
   };
   // prettier-ignore
   Object.keys(_params).forEach((key) => _params[key] === undefined ? delete _params[key] : {});

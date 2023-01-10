@@ -77,6 +77,11 @@ async function onboardingWithForm({
   ).data;
 }
 
+async function getOnboardingApplication(id: string) {
+  return (await _signed_client.get<OnboardingApplication>(`/onboarding/${id}`))
+    .data;
+}
+
 export class AlreadySignedUp extends Error {
   constructor() {
     super("already signed up");
@@ -153,6 +158,7 @@ export default {
   ..._signed_client,
   onboardingWithEmail,
   onboardingWithForm,
+  getOnboardingApplication,
   createApplication,
   getApplication,
   listApplications,
@@ -161,6 +167,7 @@ export default {
 } as AxiosInstance & {
   onboardingWithEmail: typeof onboardingWithEmail;
   onboardingWithForm: typeof onboardingWithForm;
+  getOnboardingApplication: typeof getOnboardingApplication;
   createApplication: typeof createApplication;
   getApplication: typeof getApplication;
   listApplications: typeof listApplications;

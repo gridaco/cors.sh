@@ -14,6 +14,10 @@ export const FormPageLayout = styled.div`
     text-align: center;
   }
 
+  .description {
+    margin-top: 16px;
+  }
+
   .body {
     display: flex;
     flex-direction: column;

@@ -93,6 +93,22 @@ export async function createOnboardingApplication(
   };
 }
 
+export async function getOnboardingApplication(id: string) {
+  return await prisma.onboardingApplications.findUnique({
+    where: { id: id },
+    select: {
+      // omit private data
+      id: true,
+      name: true,
+      email: true,
+      allowedOrigins: true,
+      priceId: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+}
+
 async function sendOnboardingEmail(
   email: string,
   application?: OnboardingApplications

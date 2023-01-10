@@ -54,14 +54,16 @@ export default function GetstartedPage({ price: _price }: { price: string }) {
 
     try {
       // create onboarding application
-      const application = await client.onboardingWithForm({
+      const form = {
         name: name ? name : undefined,
         allowedOrigins: allowedOrigins
           .split(",")
           .map((x) => x.trim())
           .filter(Boolean),
         priceId: price,
-      });
+      };
+
+      const application = await client.onboardingWithForm(form);
 
       const onboarding_id = application.id;
 
@@ -95,7 +97,7 @@ export default function GetstartedPage({ price: _price }: { price: string }) {
       toast("Oops. something went wrong. please try again.", { type: "error" });
       setIsBusy(false);
     }
-  }, [price]);
+  }, [name, allowedOrigins, price]);
 
   return (
     <FormPageLayout>

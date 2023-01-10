@@ -1,5 +1,8 @@
 import * as express from "express";
-import { createOnboardingApplication } from "../../controllers/applications";
+import {
+  getOnboardingApplication,
+  createOnboardingApplication,
+} from "../../controllers/applications";
 
 const router = express.Router();
 
@@ -45,6 +48,20 @@ router.post("/conversion", (req, res) => {
   const { onboarding_id, checkout_session_id } = req.body;
   //
   // if onboarding's email is placeholded. get email from checkout via stripe
+});
+
+router.get("/:id", async (req, res) => {
+  // this route does not have a guard by design.
+  // get onboarding application (only public data)
+  const { id } = req.params;
+
+  const d = await getOnboardingApplication(id);
+
+  if (!d) {
+    return res.status(404).json({ error: "application not found" });
+  }
+
+  res.status(200).json(d);
 });
 
 export default router;
