@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
 import styled from "@emotion/styled";
-
+import { Client, ApplicationWithApiKey } from "@cors.sh/service-api";
 import Head from "next/head";
 import { FormPageLayout, PageCloseButton } from "@app/ui/layouts";
 
-export default function InitialOnboardingFinalPage() {
+export default function InitialOnboardingFinalPage({
+  application,
+}: {
+  application: ApplicationWithApiKey;
+}) {
   return (
     <>
       <Head>
@@ -20,7 +24,7 @@ export default function InitialOnboardingFinalPage() {
           </p>
           <div className="body">
             <VideoDemo />
-            <CodeExamples />
+            <CodeExamples apikey={application.apikey_test} />
           </div>
           <div style={{ height: 30 }} />
           <div>
@@ -33,13 +37,13 @@ export default function InitialOnboardingFinalPage() {
   );
 }
 
-function CodeExamples() {
+function CodeExamples({ apikey }: { apikey: string }) {
   return (
     <CodeBlock>
       <pre>
         GET https://proxy.corsh.sh/https://instragram.com/posts/123
         <br />
-        -h api-key test_xxxxx-xxxx-xxxx
+        -h x-cors-api-key {apikey}
       </pre>
     </CodeBlock>
   );
@@ -83,4 +87,37 @@ function VideoDemo() {
       </video>
     </div>
   );
+}
+
+export async function getServerSideProps(context: any) {
+  const { app, checkout_session_id } = context.query;
+
+  if (!app) {
+    return {
+      redirect: {
+        destination: "/console",
+        permanent: false,
+      },
+    };
+  }
+
+  try {
+    const client = new Client({
+      "x-cors-service-checkout-session-id": checkout_session_id,
+    });
+
+    const application = await client.getApplication(app);
+
+    return {
+      props: {
+        application,
+      },
+    };
+  } catch (e) {
+    console.error(e);
+    // 404
+    return {
+      notFound: true,
+    };
+  }
 }

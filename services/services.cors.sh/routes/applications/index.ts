@@ -15,6 +15,25 @@ router.get("/", async (req, res) => {
   res.json(applications);
 });
 
+// get a single application
+router.get("/:id", async (req, res) => {
+  const id = req.params.id;
+  const application = await prisma.application.findFirst({
+    where: {
+      id: id,
+      owner: {
+        id: res.locals.customer.id as string,
+      },
+    },
+  });
+
+  if (!application) {
+    return res.status(404).json({ error: "application not found" });
+  }
+
+  res.json(application);
+});
+
 // create a new application
 router.post("/", async (req, res) => {
   //

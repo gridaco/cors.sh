@@ -70,33 +70,20 @@ router.get("/success", async (req, res) => {
   const tmp = await prisma.onboardingApplications.findUnique({
     where: { id: onboarding_id as string },
   });
-  // const tmp = await prisma.onboardingApplications.delete({
-  //   where: { id: onboarding_id as string },
-  // });
 
-  console.log("details", checkout_session, tmp);
+  // if onboarding's email is placeholded. get email from checkout via stripe
+  const email = tmp.email.endsWith("@unknown-users.cors.sh")
+    ? customer_email ?? customer_details.email
+    : tmp.email;
 
   // create customer
   // TODO: what if already exists?
   const customer = await prisma.customer.create({
     data: {
-      // applications: {
-      //   create: {
-      //     // use the tmp's id since the api key is partially based on the application's id
-      //     id: tmp.id,
-      //     name: tmp.name || "Untitled",
-      //     allowedOrigins: tmp.allowedOrigins,
-      //   },
-      // },
       stripeId: stripe_customer_id as string,
-
-      // ''
+      email: email,
     },
   });
-
-  // const applications = await prisma.application.findMany({
-  //   where: { owner: { id: customer.id } },
-  // });
 
   const _params = {
     session_id: session_id as string,

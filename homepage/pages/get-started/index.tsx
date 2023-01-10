@@ -113,7 +113,7 @@ export default function GetstartedPage({ price: _price }: { price: string }) {
           Ready to use cors.sh? select your plan and let’s create your first
           project. <br />
         </p>
-        <p style={{ opacity: 0.5 }}>you can change this later</p>
+        <p style={{ opacity: 0.5 }}>you can update the fields later</p>
       </div>
       <div className="form">
         <TextFormField

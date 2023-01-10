@@ -1,4 +1,4 @@
-import { prisma, emailWithTemplate } from "../clients";
+import { prisma, stripe, emailWithTemplate } from "../clients";
 import { sign_temporary_key } from "../keygen";
 import { nanoid } from "nanoid";
 import type { OnboardingApplications } from "@prisma/client";
@@ -160,7 +160,39 @@ async function sendOnboardingEmail(
   return true;
 }
 
-function convertToVerifiedApplication() {
-  // onboarding: OnboardingApplication,
-  // checkout_session_id: string
+export async function convertApplication({
+  onboarding_id,
+  checkout_session_id,
+}: {
+  onboarding_id: string;
+  checkout_session_id: string;
+}) {
+  const checkout_session = await stripe.checkout.sessions.retrieve(
+    checkout_session_id as string
+  );
+
+  const { customer: stripe_customer_id } = checkout_session;
+
+  const tmp = await prisma.onboardingApplications.delete({
+    where: { id: onboarding_id as string },
+  });
+
+  const application = await prisma.application.create({
+    data: {
+      id: tmp.id,
+      name: tmp.name || "Untitled",
+      allowedOrigins: tmp.allowedOrigins,
+      owner: {
+        connect: {
+          stripeId: stripe_customer_id as string,
+        },
+      },
+    },
+  });
+
+  // TODO: send email to the user
+
+  // TODO: once application is created, sync to the keys table
+
+  return application;
 }
