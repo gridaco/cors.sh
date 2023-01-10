@@ -26,9 +26,7 @@
       <mj-column>
         <mj-text>We’re all set. Let’s get rid of the cors errors by extending your api call with proxy.cors.sh like below.</mj-text>
         <mj-text font-weight="bold">
-          <h3>Your temporary API key is..</h3>
-        </mj-text>
-        <mj-text>
+          <h3>Your API key for your first application “{{APPLICATIONNAME}}” is..</h3>
           <code class="break">
             <p style="background-color: black; padding:12px; color:white;">
               # for testing
