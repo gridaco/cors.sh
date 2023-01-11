@@ -249,16 +249,16 @@ export async function convertApplication({
     owner: { id: customer.id },
   });
 
+  const signed = signApplication(application);
+
   // send email to the user
   emailWithTemplate(
     customer.email,
     `mail_cors_sh_onboarding_with_payment_success_${process.env.STAGE}`,
     {
       APPLICATIONNAME: tmp.name,
-      // TODO:
-      CODE_LIVE: "live_xxxx-xxxx-xxxx",
-      // TODO:
-      CODE_TEST: "tets_xxxx-xxxx-xxxx",
+      CODE_LIVE: signed.apikey_live,
+      CODE_TEST: signed.apikey_test,
     }
   )
     .then(() => {
