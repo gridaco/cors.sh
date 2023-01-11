@@ -13,6 +13,7 @@
         "@emotion/styled": "^11.10.0",
         "@mui/icons-material": "^5.10.3",
         "@mui/material": "^5.10.3",
+        "@radix-ui/react-collapsible": "^1.0.1",
         "@types/react-select": "^5.0.1",
         "nanoid": "^4.0.0",
         "next": "12.2.5",
