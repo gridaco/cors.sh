@@ -2,14 +2,14 @@ import crypto from "crypto";
 import { totp } from "otplib";
 import day from "dayjs";
 
-const API_KEY_TEMP_HASH_SECRET = process.env.API_KEY_TEMP_HASH_SECRET;
+const API_KEY_TEMP_OTP_SECRET = process.env.API_KEY_TEMP_OTP_SECRET;
 const API_KEY_TEST_HASH_SECRET = process.env.API_KEY_TEST_HASH_SECRET;
 const API_KEY_LIVE_HASH_SECRET = process.env.API_KEY_LIVE_HASH_SECRET;
 
 const API_KEY_HASH_SECRET_BY_TYPE = {
   test: API_KEY_TEST_HASH_SECRET,
   live: API_KEY_LIVE_HASH_SECRET,
-  temp: API_KEY_TEMP_HASH_SECRET,
+  temp: API_KEY_TEMP_OTP_SECRET,
 } as const;
 
 interface PermanentKey {
@@ -37,33 +37,29 @@ function live_key(signature: string): PermanentKey {
 }
 
 export function sign_temporary_key() {
-  // const secret = API_KEY_TEMP_HASH_SECRET;
-  const secret = "API_KEY_TEMP_HASH_SECRET";
-  // TODO: replace
-  // create a otp that is valid for 1 day from now.
-  // length: 32
-
-  // console.log("secret", secret);
+  const secret = API_KEY_TEMP_OTP_SECRET;
 
   totp.resetOptions();
   totp.options = {
     digits: 8,
-    step: 60 * 60 * 24,
+    // create a otp that is valid for 1 day from now.
+    step: 60 * 60 * 24 * TMP_KEY_EXP_IN_DAYS,
   };
-
-  const token = totp.generate(secret);
-
-  // sha1
-  // const key = crypto
-  //   .createHmac("sha1", secret)
-  //   .update(JSON.stringify(token))
-  //   .digest("hex");
-
-  const key = token;
-
   const expires_at = day().add(TMP_KEY_EXP_IN_DAYS, "day");
+
+  const otp = totp.generate(secret);
+
+  // encode the 8 digit token as a hex string
+
+  let cipher = crypto.createCipher("aes-256-cbc", secret);
+  let encrypted = cipher.update(otp, "utf8", "hex") + cipher.final("hex");
+
+  // let decipher = crypto.createDecipher("aes-256-cbc", secret);
+  // let decrypted =
+  //   decipher.update(encrypted, "hex", "utf8") + decipher.final("utf8");
+
   return {
-    key: prefix("temp") + "_" + key,
+    key: prefix("temp") + "_" + encrypted,
     expires_at,
   };
 }

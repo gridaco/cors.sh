@@ -1,13 +1,15 @@
 import { totp } from "otplib";
 import { sign_temporary_key } from "./index";
 
-const API_KEY_TEMP_HASH_SECRET = "API_KEY_TEMP_HASH_SECRET";
+const API_KEY_TEMP_OTP_SECRET = "API_KEY_TEMP_OTP_SECRET";
 
 describe("", () => {
-  const { key } = sign_temporary_key();
-  const token = key.split("temp_")[1];
+  // const key = "temp_b5cb488e2fed4cf70355f814521fca97";
+  const token = "41594019";
 
-  console.log(token);
+  // console.log(token);
+
+  // decode it
 
   totp.options = {
     digits: 8,
@@ -16,7 +18,7 @@ describe("", () => {
   test("", async () => {
     const valid = totp.verify({
       token,
-      secret: API_KEY_TEMP_HASH_SECRET,
+      secret: API_KEY_TEMP_OTP_SECRET,
     });
     expect(valid).toBe(true);
   });

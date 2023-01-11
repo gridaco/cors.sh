@@ -9,7 +9,7 @@ import crypto from "crypto";
 const db = new AWS.DynamoDB.DocumentClient();
 
 const CORS_API_KEY_HEADER = "x-cors-api-key";
-const SIGNATURE_KEY = process.env.API_KEY_TEMP_HASH_SECRET;
+const SIGNATURE_KEY = process.env.API_KEY_TEMP_OTP_SECRET;
 const TABLE = process.env.DYNAMODB_TABLE_SERVICE_KEYS!;
 
 module.exports.authorize = async (event) => {
