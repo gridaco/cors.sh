@@ -43,7 +43,9 @@ export function sign_temporary_key() {
   totp.resetOptions();
   totp.options = {
     digits: 8,
-    epoch: expires_at.unix(),
+    epoch: expires_at.unix() * 1000,
+    step: 30,
+    window: 1,
   };
 
   const otp = totp.generate(API_KEY_TEMP_OTP_SECRET);

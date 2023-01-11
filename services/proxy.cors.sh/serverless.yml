@@ -14,6 +14,7 @@ custom:
 
   serverless-offline:
     httpPort: 4020
+    lambdaPort: 3020
     noPrependStageInUrl: true
 
 provider:
@@ -49,12 +50,12 @@ functions:
       - http:
           path: /{proxy+}
           method: any
-          authorizer:
-            name: cors-proxy-authorizer
-            identitySource: "method.request.header.x-cors-api-key"
-            type: token
-            resultTtlInSeconds: 3600 # 1 hour
-            arn: ${env:CORS_PROXY_AUTHORIZER_ARN}
+          # authorizer:
+          #   name: cors-proxy-authorizer
+          #   identitySource: "method.request.header.x-cors-api-key"
+          #   type: token
+          #   resultTtlInSeconds: 3600 # 1 hour
+          #   arn: ${env:CORS_PROXY_AUTHORIZER_ARN}
       - http:
           path: /
           method: get

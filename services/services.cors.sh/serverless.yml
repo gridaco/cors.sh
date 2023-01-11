@@ -5,7 +5,7 @@ plugins:
   - serverless-webpack-prisma
   - serverless-offline
   - serverless-domain-manager
-  - '@haftahave/serverless-ses-template'
+  - "@haftahave/serverless-ses-template"
 
 custom:
   customDomain:
@@ -18,6 +18,7 @@ custom:
     addStage: true
   serverless-offline:
     httpPort: 4021
+    lambdaPort: 3021
     noPrependStageInUrl: true
   webpack:
     includeModules: true
