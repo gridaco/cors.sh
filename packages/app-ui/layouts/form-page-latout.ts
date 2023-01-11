@@ -7,7 +7,7 @@ export const FormPageLayout = styled.div`
   align-items: center;
   justify-content: center;
   max-width: 320px;
-  height: 100vh;
+  min-height: 100vh;
 
   h1,
   p {
