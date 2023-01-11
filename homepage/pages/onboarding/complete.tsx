@@ -3,6 +3,8 @@ import styled from "@emotion/styled";
 import { Client, ApplicationWithApiKey } from "@cors.sh/service-api";
 import Head from "next/head";
 import { FormPageLayout, PageCloseButton } from "@app/ui/layouts";
+import { CollapsibleInfoCard } from "components";
+import { UnderlineButton } from "@app/ui/components";
 
 export default function InitialOnboardingFinalPage({
   application,
@@ -18,18 +20,56 @@ export default function InitialOnboardingFinalPage({
         <PageCloseButton />
         <>
           <h1>Extend your api call with proxy.cors.sh.</h1>
-          <p>
-            We’re all set. Let’s get rid of the cors error by extending the api
-            call with proxy.cors.sh like below.
+          <p className="description">
+            We’re all set. Let’s get rid of the cors errors by extending your
+            api call with proxy.cors.sh like below.
           </p>
+          <div style={{ height: 16 }} />
           <div className="body">
             <VideoDemo />
             <CodeExamples apikey={application.apikey_test} />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 8,
+              }}
+            >
+              <CollapsibleInfoCard title="View more examples">
+                Aloha
+              </CollapsibleInfoCard>
+              <CollapsibleInfoCard title="What's Next?">
+                <h5>Useful resources</h5>
+                <ul>
+                  <li>
+                    <a href="https://cors.sh/docs">
+                      Learn how to secure your api key
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://cors.sh/docs">
+                      Before publishing your website to production
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://cors.sh/docs">
+                      Create new application on console
+                    </a>
+                  </li>
+                </ul>
+              </CollapsibleInfoCard>
+            </div>
           </div>
           <div style={{ height: 30 }} />
-          <div>
-            <button>Move to dashboard</button>
-            <button>I need help</button>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 8,
+            }}
+          >
+            <UnderlineButton>Move to dashboard</UnderlineButton>
+            <UnderlineButton>I need help</UnderlineButton>
           </div>
         </>
       </FormPageLayout>
