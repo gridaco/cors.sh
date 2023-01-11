@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import styled from "@emotion/styled";
-import { Pencil1Icon, EyeOpenIcon } from "@radix-ui/react-icons";
+import { Pencil1Icon } from "@radix-ui/react-icons";
 import client, { ApplicationWithApiKey } from "@cors.sh/service-api";
 import { FormPageLayout, PageCloseButton } from "@app/ui/layouts";
 import { Button, TextFormField } from "@editor-ui/console";
-import copy from "copy-to-clipboard";
-import toast from "react-hot-toast";
 import { Logo } from "logo";
 import { UnderlineButton } from "@app/ui/components";
+import { ApiKeyReveal } from "@app/ui/components";
 
 export default function ApplicationDetailPage({
   application,
@@ -132,93 +131,6 @@ const TitleInputWrapper = styled.div`
 
   &:hover {
     .edit-button {
-      opacity: 1;
-    }
-  }
-`;
-
-function ApiKeyReveal({ keys }: { keys: { test: string; prod: string } }) {
-  const [masked, setMasked] = React.useState(true);
-
-  const onCopy = (text: string) => {
-    copy(text);
-    toast.success("Copied to clipboard");
-  };
-
-  const keydisplay = (key: string, masked: boolean) => {
-    if (masked) {
-      // leave the first 5 characters as is
-      // replace all characters except "-" that with x
-      const first5 = key.slice(0, 5);
-      const target = key.slice(5);
-      // replace all characters except "-" with x
-      const masked = target.replace(/[^-]/g, "x");
-      return first5 + masked.slice(5);
-    } else {
-      return key;
-    }
-  };
-
-  return (
-    <CodeBlock>
-      <div
-        className="reveal"
-        onClick={() => {
-          setMasked(false);
-        }}
-        style={{
-          visibility: masked ? "visible" : "hidden",
-        }}
-      >
-        <EyeOpenIcon />
-      </div>
-      <pre>
-        API Keys
-        <br />
-        {[keys.test, keys.prod].map((key) => {
-          return (
-            <span key={key} className="key" onClick={() => onCopy(key)}>
-              <u>{keydisplay(key, masked)}</u>
-              <br />
-            </span>
-          );
-        })}
-      </pre>
-    </CodeBlock>
-  );
-}
-
-const CodeBlock = styled.code`
-  position: relative;
-  display: block;
-  width: 100%;
-  padding: 21px;
-  background: black;
-  color: white;
-  border-radius: 4px;
-  font-size: 12px;
-  font-family: monospace;
-  font-weight: 400;
-
-  .reveal {
-    position: absolute;
-    cursor: pointer;
-    top: 12px;
-    right: 12px;
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
-  }
-
-  .key {
-    cursor: pointer;
-  }
-
-  pre {
-    margin: 0;
-  }
-
-  &:hover {
-    .reveal {
       opacity: 1;
     }
   }
