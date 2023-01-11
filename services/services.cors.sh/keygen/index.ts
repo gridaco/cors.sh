@@ -1,6 +1,6 @@
 import crypto from "crypto";
+import { totp } from "otplib";
 import day from "dayjs";
-import jwt from "jsonwebtoken";
 
 const API_KEY_TEMP_HASH_SECRET = process.env.API_KEY_TEMP_HASH_SECRET;
 const API_KEY_TEST_HASH_SECRET = process.env.API_KEY_TEST_HASH_SECRET;
@@ -13,69 +13,76 @@ const API_KEY_HASH_SECRET_BY_TYPE = {
 } as const;
 
 interface PermanentKey {
-  app_id: string;
-  owner_id: string;
+  signature: string;
   type: "test" | "live";
 }
 
-interface TemporaryKey {
-  email: string;
-  type: "tmp";
-  expires_at: number;
-}
-
-const TMP_KEY_EXP_IN_DAYS = 1;
 const TMP_KEY_PREFIX = "temp";
 const TEST_KEY_PREFIX = "test";
 const LIVE_KEY_PREFIX = "live";
+const TMP_KEY_EXP_IN_DAYS = 1;
 
-function temp_key(email: string): TemporaryKey {
+function test_key(signature: string): PermanentKey {
   return {
-    email,
-    type: "tmp",
-    expires_at: day().add(TMP_KEY_EXP_IN_DAYS, "day").unix(),
-  };
-}
-
-function test_key({
-  app_id,
-  owner_id,
-}: {
-  app_id: string;
-  owner_id: string;
-}): PermanentKey {
-  return {
-    app_id,
-    owner_id,
+    signature,
     type: "test",
   };
 }
 
-function live_key({
-  app_id,
-  owner_id,
-}: {
-  app_id: string;
-  owner_id: string;
-}): PermanentKey {
+function live_key(signature: string): PermanentKey {
   return {
-    app_id,
-    owner_id,
+    signature,
     type: "live",
   };
 }
 
-export function sign_temporary_key(email: string) {
-  const payload = temp_key(email);
-  return prefix("temp") + "_" + sign(payload, "temp");
+export function sign_temporary_key() {
+  // const secret = API_KEY_TEMP_HASH_SECRET;
+  const secret = "API_KEY_TEMP_HASH_SECRET";
+  // TODO: replace
+  // create a otp that is valid for 1 day from now.
+  // length: 32
+
+  // console.log("secret", secret);
+
+  totp.resetOptions();
+  totp.options = {
+    digits: 8,
+    step: 60 * 60 * 24,
+  };
+
+  const token = totp.generate(secret);
+
+  // sha1
+  // const key = crypto
+  //   .createHmac("sha1", secret)
+  //   .update(JSON.stringify(token))
+  //   .digest("hex");
+
+  const key = token;
+
+  const expires_at = day().add(TMP_KEY_EXP_IN_DAYS, "day");
+  return {
+    key: prefix("temp") + "_" + key,
+    expires_at,
+  };
 }
 
-export function sign_test_key(signature: { app_id: string; owner_id: string }) {
-  return prefix("test") + "_" + sign(test_key(signature), "test");
+export function sign(signature: string, type: "test" | "live") {
+  switch (type) {
+    case "test":
+      return sign_test_key(signature);
+    case "live":
+      return sign_live_key(signature);
+  }
 }
 
-export function sign_live_key(signature: { app_id: string; owner_id: string }) {
-  return prefix("live") + "_" + sign(live_key(signature), "live");
+export function sign_test_key(signature: string) {
+  return prefix("test") + "_" + encrypt(test_key(signature), "test");
+}
+
+export function sign_live_key(signature: string) {
+  return prefix("live") + "_" + encrypt(live_key(signature), "live");
 }
 
 //
@@ -103,7 +110,7 @@ function prefix(type: "test" | "live" | "temp") {
   }
 }
 
-function sign(data: string | object, type: "test" | "live" | "temp") {
+function encrypt(data: string | object, type: "test" | "live") {
   const key = API_KEY_HASH_SECRET_BY_TYPE[type];
   const hmac = crypto.createHmac("sha256", key);
   hmac.update(JSON.stringify(data));

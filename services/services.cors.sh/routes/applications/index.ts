@@ -1,6 +1,9 @@
 import * as express from "express";
 import { prisma } from "../../clients";
-import { sign_live_key, sign_temporary_key, sign_test_key } from "../../keygen";
+import {
+  createApplication,
+  signApplication,
+} from "../../controllers/applications";
 
 const router = express.Router();
 
@@ -38,31 +41,23 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   //
   const { name } = req.body;
-  const { id: customer_id } = res.locals.customer;
-  const application = await prisma.application.create({
-    data: {
-      name: name,
-      owner: {
-        connect: {
-          id: customer_id,
-        },
-      },
-    },
+
+  const app = await createApplication({
+    name,
+    owner: res.locals.customer,
   });
 
-  const payload = {
-    ...application,
-    apikey_test: sign_test_key({
-      app_id: application.id,
-      owner_id: customer_id,
-    }),
-    apukey_live: sign_live_key({
-      app_id: application.id,
-      owner_id: customer_id,
-    }),
-  };
+  const signed = await signApplication(app);
 
-  res.json(payload);
+  res.json({
+    id: signed.id,
+    name: signed.name,
+    allowedOrigins: signed.allowedOrigins,
+    allowedTargets: signed.allowedTargets,
+    // available once
+    apikey_test: signed.apikey_test,
+    apikey_live: signed.apikey_live,
+  });
 });
 
 router.put("/:id", async (req, res) => {

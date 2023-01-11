@@ -7,5 +7,6 @@ export interface KeyInfo {
     allowed_targets: string[];
   };
   active: boolean;
+  expires_at: number;
   synced_at: number;
 }
