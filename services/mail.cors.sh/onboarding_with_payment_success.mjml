@@ -61,12 +61,14 @@
         </mj-text>
 
         <mj-text>
-          <h3>What’s Next?</h3>
-          <ul>
-            <li><a href="https://cors.sh/docs">Learn how to secure your api key</a></li>
-            <li><a href="https://cors.sh/docs">Before publishing your website to production</a></li>
-            <li><a href="https://cors.sh/docs">Create new application on console</a></li>
-          </ul>
+          <a href="https://cors.sh/docs">Read the docs</a>
+          <!-- <h3>What’s Next?</h3> -->
+          <!-- <ul> -->
+          <!-- disabled temporary since we do not have a console yet. -->
+          <!-- <li><a href="https://cors.sh/docs">Learn how to secure your api key</a></li> -->
+          <!-- <li><a href="https://cors.sh/docs">Before publishing your website to production</a></li> -->
+          <!-- <li><a href="https://cors.sh/docs">Create new application on console</a></li> -->
+          <!-- </ul> -->
         </mj-text>
       </mj-column>
     </mj-section>
