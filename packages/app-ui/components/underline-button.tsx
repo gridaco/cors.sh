@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 
 export function UnderlineButton({ children }: React.PropsWithChildren<{}>) {
-  return <_Button className="underline-button">{children}</_Button>;
+  return <_Button>{children}</_Button>;
 }
 
 const _Button = styled.button`

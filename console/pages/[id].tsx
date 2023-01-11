@@ -7,7 +7,7 @@ import { Button, TextFormField } from "@editor-ui/console";
 import copy from "copy-to-clipboard";
 import toast from "react-hot-toast";
 import { Logo } from "logo";
-import { UnderlineButton } from "components";
+import { UnderlineButton } from "@app/ui/components";
 
 export default function ApplicationDetailPage({
   application,
