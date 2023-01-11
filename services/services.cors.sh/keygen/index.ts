@@ -2,6 +2,7 @@ import crypto from "crypto";
 import { totp } from "otplib";
 import day from "dayjs";
 
+const API_KEY_TEMP_AES_SECRET = process.env.API_KEY_TEMP_AES_SECRET;
 const API_KEY_TEMP_OTP_SECRET = process.env.API_KEY_TEMP_OTP_SECRET;
 const API_KEY_TEST_HASH_SECRET = process.env.API_KEY_TEST_HASH_SECRET;
 const API_KEY_LIVE_HASH_SECRET = process.env.API_KEY_LIVE_HASH_SECRET;
@@ -37,8 +38,6 @@ function live_key(signature: string): PermanentKey {
 }
 
 export function sign_temporary_key() {
-  const secret = API_KEY_TEMP_OTP_SECRET;
-
   totp.resetOptions();
   totp.options = {
     digits: 8,
@@ -47,16 +46,11 @@ export function sign_temporary_key() {
   };
   const expires_at = day().add(TMP_KEY_EXP_IN_DAYS, "day");
 
-  const otp = totp.generate(secret);
+  const otp = totp.generate(API_KEY_TEMP_OTP_SECRET);
 
-  // encode the 8 digit token as a hex string
-
-  let cipher = crypto.createCipher("aes-256-cbc", secret);
+  // convert to complex string with aes
+  let cipher = crypto.createCipher("aes-256-cbc", API_KEY_TEMP_AES_SECRET);
   let encrypted = cipher.update(otp, "utf8", "hex") + cipher.final("hex");
-
-  // let decipher = crypto.createDecipher("aes-256-cbc", secret);
-  // let decrypted =
-  //   decipher.update(encrypted, "hex", "utf8") + decipher.final("utf8");
 
   return {
     key: prefix("temp") + "_" + encrypted,
