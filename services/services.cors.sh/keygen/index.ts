@@ -21,7 +21,7 @@ interface PermanentKey {
 const TMP_KEY_PREFIX = "temp";
 const TEST_KEY_PREFIX = "test";
 const LIVE_KEY_PREFIX = "live";
-const TMP_KEY_EXP_IN_DAYS = 1;
+const TMP_KEY_EXP_IN_DAYS = 3;
 
 function test_key(signature: string): PermanentKey {
   return {
@@ -38,13 +38,13 @@ function live_key(signature: string): PermanentKey {
 }
 
 export function sign_temporary_key() {
+  const expires_at = day().add(TMP_KEY_EXP_IN_DAYS, "day");
+
   totp.resetOptions();
   totp.options = {
     digits: 8,
-    // create a otp that is valid for 1 day from now.
-    step: 60 * 60 * 24 * TMP_KEY_EXP_IN_DAYS,
+    epoch: expires_at.unix(),
   };
-  const expires_at = day().add(TMP_KEY_EXP_IN_DAYS, "day");
 
   const otp = totp.generate(API_KEY_TEMP_OTP_SECRET);
 
