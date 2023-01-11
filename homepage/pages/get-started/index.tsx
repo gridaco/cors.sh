@@ -11,7 +11,7 @@ import {
 import Select from "react-select";
 import client from "@cors.sh/service-api";
 import * as k from "../../k";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 export default function GetstartedPage({ price: _price }: { price: string }) {
   const [name, setName] = React.useState("");
@@ -94,7 +94,7 @@ export default function GetstartedPage({ price: _price }: { price: string }) {
 
       router.replace(redirect);
     } catch (e) {
-      toast("Oops. something went wrong. please try again.", { type: "error" });
+      toast.error("Oops. something went wrong. please try again.");
       setIsBusy(false);
     }
   }, [name, allowedOrigins, price]);

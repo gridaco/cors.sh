@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import { Button, TextFormField } from "@editor-ui/console";
 import { FormPageLayout, PageCloseButton } from "@app/ui/layouts";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 // page redirected from stripe once the payment is successful
 export default function PaymentSuccessPage({
@@ -39,7 +39,7 @@ export default function PaymentSuccessPage({
         });
       })
       .catch((e) => {
-        toast("Something went wrong. Please try again later.");
+        toast.error("Something went wrong. Please try again later.");
       })
       .finally(() => {
         setBusy(false);

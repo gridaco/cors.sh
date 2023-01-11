@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Select from "react-select";
 import Axios, { Method } from "axios";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 type TMethod = "GET" | "POST" | "PUT" | "DELETE";
 
@@ -80,7 +80,7 @@ export function TestItOutCta({
       url: "https://proxy.cors.sh/" + url,
     })
       .then(() => {
-        toast(
+        toast.success(
           <>
             Request {selectedOption.value} to {url} succeeded.
             <br />
@@ -99,7 +99,7 @@ export function TestItOutCta({
         );
       })
       .catch((e) => {
-        toast(
+        toast.error(
           <>
             Request {selectedOption.value} to {url}{" "}
             <i
@@ -107,7 +107,7 @@ export function TestItOutCta({
                 color: "red",
               }}
             >
-              failed with {e.response.status}
+              failed with {e.response?.status}
             </i>
           </>,
           {

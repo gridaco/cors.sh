@@ -1,31 +1,7 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import client from "@cors.sh/service-api";
-import { toast } from "react-toastify";
-
-function WarningIcon() {
-  return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g clip-path="url(#clip0_31_2300)">
-        <path
-          d="M1 21H23L12 2L1 21ZM13 18H11V16H13V18ZM13 14H11V10H13V14Z"
-          fill="black"
-        />
-      </g>
-      <defs>
-        <clipPath id="clip0_31_2300">
-          <rect width="24" height="24" fill="white" />
-        </clipPath>
-      </defs>
-    </svg>
-  );
-}
+import { toast } from "react-hot-toast";
 
 export function OnboardingCta() {
   const [isBusy, setIsBusy] = useState(false);
@@ -38,19 +14,26 @@ export function OnboardingCta() {
       return;
     }
 
-
     // send email
     setIsBusy(true);
 
-    client.onboardingWithEmail({ email: email }).then(data => {
-      toast.success(
-        <p>API Key sent to your email.<br/>Please check your <b>spam folder</b> as well</p>
-      );
-    }).catch(e => {
-      toast.error(<p>Something went wrong</p>);
-    }).finally(() => {
-      setIsBusy(false);
-    });
+    client
+      .onboardingWithEmail({ email: email })
+      .then((data) => {
+        toast.success(
+          <p>
+            API Key sent to your email.
+            <br />
+            Please check your <b>spam folder</b> as well
+          </p>
+        );
+      })
+      .catch((e) => {
+        toast.error(<p>Something went wrong</p>);
+      })
+      .finally(() => {
+        setIsBusy(false);
+      });
   };
 
   return (
@@ -72,7 +55,9 @@ export function OnboardingCta() {
           }}
         />
       </InputGroup>
-      <ButtonAsButton disabled={isBusy} onClick={onsend}>Send me an API Key</ButtonAsButton>
+      <ButtonAsButton disabled={isBusy} onClick={onsend}>
+        Send me an API Key
+      </ButtonAsButton>
     </RootWrapperCta>
   );
 }
