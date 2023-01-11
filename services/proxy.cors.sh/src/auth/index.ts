@@ -1,1 +1,1 @@
-export { unauthorizedAppBlocking } from "./static-account-api-key-auth";
+export { unauthorizedAppBlocking } from "./legacy/static-account-api-key-auth";

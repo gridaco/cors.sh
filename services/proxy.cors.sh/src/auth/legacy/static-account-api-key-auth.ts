@@ -1,7 +1,7 @@
 import * as express from "express";
-import { STATIC_CORS_ACCOUNT_API_KEY_HEADERS } from "../k";
-import { headerfrom } from "../_util/x-header";
-import { keys } from "./_tmp_static_api_keys";
+import { STATIC_CORS_ACCOUNT_API_KEY_HEADERS } from "../../k";
+import { headerfrom } from "../../_util/x-header";
+import { keys } from "../_tmp_static_api_keys";
 
 const nokey401UnAuthorized = () => {
   return "https://bit.ly/2UnZSA8";

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import rateLimit from "express-rate-limit";
 import RedisStore from "rate-limit-redis";
 import { createClient } from "redis";
-import { validate_api_key } from "../auth/static-account-api-key-auth";
+import { validate_api_key } from "../auth/legacy/static-account-api-key-auth";
 import {
   RATE_LIMIT_FREE_ANONYMOUS_PER_HOUR,
   RATE_LIMIT_FREE_AUTHORIZED_PER_HOUR,
