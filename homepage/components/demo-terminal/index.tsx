@@ -2,51 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-
-/**
- * usage code snippet
- */
-const examples = {
-  fetch: (t: string) => `fetch('https://proxy.cors.sh/${t}', {
-    headers: {
-      'x-cors-api-key': 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-    }
-  })
-
-// or...
-functon fetchWithProxy(url, params){
-  return fetch(\`https://proxy.cors.sh/\${url}\`, 
-  { 
-    ...params,
-    headers: 
-    { 
-      ...params.headers,
-      'x-cors-api-key': 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
-    }
-  });
-}
-
-fetchWithProxy('${t}')
-  `,
-  axios: (t: string) => `import Axios from "axios";
-
-Axios.get('https://proxy.cors.sh/${t}', {
-  headers: {
-    'x-cors-api-key': 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-  }
-})
-
-// or...
-const client = Axios.create({
-  baseURL: 'https://proxy.cors.sh/' + '${t}',
-  headers: {
-    'x-cors-api-key': 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-  }
-})
-
-client.get('/')
-`,
-} as const;
+import { examples } from "k";
 
 export function DemoTerminal({
   target = "https://acme.com",
