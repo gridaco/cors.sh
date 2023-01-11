@@ -80,6 +80,7 @@ const CodeBlock = styled.code`
   font-size: 12px;
   font-family: monospace;
   font-weight: 400;
+  overflow-x: scroll;
 
   .reveal {
     position: absolute;
