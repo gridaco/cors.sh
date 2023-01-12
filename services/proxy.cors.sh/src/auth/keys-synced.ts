@@ -1,5 +1,5 @@
 import { DynamoDB } from "aws-sdk";
-
+import * as day from "dayjs";
 const db = new DynamoDB.DocumentClient();
 
 const TABLE = process.env.DYNAMODB_TABLE_SERVICE_KEYS!;
@@ -12,14 +12,12 @@ export async function verify_synced_key(key: string): Promise<
 > {
   const record = await find(key);
 
-  console.log("record", record);
-
   if (!record) {
     return false;
   }
 
   const { active, expires_at } = record;
-  if (active && expires_at > Date.now()) {
+  if (active && expires_at > day().unix()) {
     return {
       plan: "2023.t1",
     };

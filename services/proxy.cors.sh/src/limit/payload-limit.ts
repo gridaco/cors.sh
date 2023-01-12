@@ -14,7 +14,7 @@ export const payloadlimit = (req, res, next) => {
 
   const agent = requrl.startsWith("https:") ? https : http;
   agent
-    .request(requrl, { method: "HEAD" }, _resp => {
+    .request(requrl, { method: "HEAD" }, (_resp) => {
       const len = Number(_resp.headers["content-length"]);
       if (len && len > MB * MAX_TARGET_RESOURCE_MB) {
         // reject if data larger than 30mb.
@@ -27,7 +27,7 @@ export const payloadlimit = (req, res, next) => {
         next();
       }
     })
-    .on("error", err => {
+    .on("error", (err) => {
       // ignore error for this
       // target, which is anonymous, might not support HEAD request.
       next();

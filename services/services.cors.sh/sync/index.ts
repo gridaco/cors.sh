@@ -48,7 +48,7 @@ function sync_record(
     },
     active: true,
     expires_at,
-    synced_at: Date.now(),
+    synced_at: day().unix(),
   };
 
   // write to db
