@@ -4,7 +4,7 @@ const db = new DynamoDB.DocumentClient();
 
 const TABLE = process.env.DYNAMODB_TABLE_SERVICE_KEYS!;
 
-function keyinfo(key: string): {
+export function keyinfo(key: string): {
   signature: string;
   mode: "temp" | "live" | "test" | "v2022";
 } {

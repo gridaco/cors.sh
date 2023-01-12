@@ -5,8 +5,8 @@ import * as responsetime from "response-time";
 
 import { logRequest } from "./usage";
 import { blaklistoriginlimit, payloadlimit } from "./limit";
-import { unauthorizedAppBlocking } from "./auth";
 import limiter from "./limit/rate-limit";
+import { authorization } from "./auth";
 
 const app = express();
 
@@ -35,13 +35,16 @@ app.get("/", function (req, res) {
 
 app.use(blaklistoriginlimit); // 1
 app.use(payloadlimit); // 2
-// app.use(unauthorizedAppBlocking); // 3
+app.use(authorization); // 3
 
+// response time middleware
 app.use(
   responsetime({
     suffix: false,
   }) as any
 );
+
+// user agent middleware
 app.use(useragent.express());
 
 // main rate limiter
@@ -76,13 +79,14 @@ app.use((req, res) => {
  */
 app.use(((err, req, res, next) => {
   if (res.headersSent) {
-    return;
+    return next(err);
   }
   try {
-    return res.status(500).json({
+    console.error(err);
+    res.status(500).json({
       message: "Internal Server Error",
       error: err,
-      issue: "https://github.com/bridgedxyz/base/issues",
+      issue: "https://github.com/gridaco/cors.sh/issues",
     });
   } catch (_) {}
 }) as express.ErrorRequestHandler);
