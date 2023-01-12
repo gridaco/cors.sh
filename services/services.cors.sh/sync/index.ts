@@ -2,6 +2,7 @@ import AWS from "aws-sdk";
 import * as keygen from "../keygen";
 import type { KeyInfo } from "./type";
 import type { Application } from "@prisma/client";
+import day from "dayjs";
 
 const db = new AWS.DynamoDB.DocumentClient();
 
@@ -10,16 +11,22 @@ export default async function sync(application: Application) {
     application;
 
   const data = {
-    plan: "",
+    // TODO: get plan data
+    // for now, fixing it as "2023.t1", which is the pro plan
+    plan: "2023.t1",
     allowedOrigins,
     allowedTargets,
   };
 
+  // TODO: get subscription data. to calculate expires_at
+  // for now, we are givving all keys a 3 year expiry
+  const expires_at = day().add(3, "year").unix();
+
   // test
-  sync_record(signature_test, "test", 0, data);
+  sync_record(signature_test, "test", expires_at, data);
 
   // live
-  sync_record(signature_live, "live", 0, data);
+  sync_record(signature_live, "live", expires_at, data);
 }
 
 function sync_record(
@@ -33,7 +40,7 @@ function sync_record(
   }
 ) {
   const record: KeyInfo = {
-    signature: keygen.sign(signature, type),
+    key: keygen.sign(signature, type).token,
     plan: data.plan,
     config: {
       allowed_origins: data.allowedOrigins,

@@ -1,6 +1,6 @@
 // shared db
 export interface KeyInfo {
-  signature: string;
+  key: string;
   plan: string;
   config: {
     allowed_origins: string[];
