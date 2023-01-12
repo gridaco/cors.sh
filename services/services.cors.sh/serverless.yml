@@ -23,19 +23,26 @@ custom:
     lambdaPort: 3021
     noPrependStageInUrl: true
   webpack:
-    includeModules: true
+    includeModules:
+      forceExclude:
+        - aws-sdk
 
 provider:
   name: aws
+  runtime: nodejs14.x
+  region: us-west-1
   environment:
     DATABASE_URL: ${env:DATABASE_URL}
     STRIPE_API_KEY: ${env:STRIPE_API_KEY}
     STRIPE_WEBHOOK_SECRET: ${env:STRIPE_WEBHOOK_SECRET}
     WEBHOST: ${env:WEBHOST}
+    API_KEY_TEMP_AES_KEY: ${env:API_KEY_TEMP_AES_KEY}
+    API_KEY_TEMP_AES_IV: ${env:API_KEY_TEMP_AES_IV}
+    API_KEY_TEST_HASH_SECRET: ${env:API_KEY_TEST_HASH_SECRET}
+    API_KEY_LIVE_HASH_SECRET: ${env:API_KEY_LIVE_HASH_SECRET}
+    SERVICE_JWT_SECRET: ${env:SERVICE_JWT_SECRET}
     DYNAMODB_TABLE_SERVICE_KEYS: "${self:service}-keys-${opt:stage, self:provider.stage}"
     STAGE: ${opt:stage, self:provider.stage}
-  runtime: nodejs12.x
-  region: us-west-1
   apiGateway:
     # https://stackoverflow.com/questions/61003311/serverless-i-image-upload-to-s3-broken-after-deploy-local-worked-only/61003498#61003498
     binaryMediaTypes:
