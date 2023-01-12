@@ -32,6 +32,8 @@ provider:
     RATE_LIMIT_REDIS_USERNAME: ${env:RATE_LIMIT_REDIS_USERNAME}
     RATE_LIMIT_REDIS_PASSWORD: ${env:RATE_LIMIT_REDIS_PASSWORD}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+    # for auth, managed by service.cors.sh
+    DYNAMODB_TABLE_SERVICE_KEYS: "cors-proxy-service-keys-${opt:stage, self:provider.stage}"
   httpApi:
     authorizers:
       default:

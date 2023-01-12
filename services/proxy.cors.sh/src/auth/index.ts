@@ -38,7 +38,7 @@ export async function authorization(
     const authorization: AuthorizationInfo = {
       authorized: false,
       id,
-      tier: "anonymous",
+      plan: "anonymous",
     };
     res.locals.authorization = authorization;
     next();
@@ -57,7 +57,7 @@ export async function authorization(
     const authorization: AuthorizationInfo = {
       authorized: true,
       id: ip,
-      tier: "unlimited",
+      plan: "unlimited",
       skip_rate_limit: true,
     };
     res.locals.authorization = authorization;
@@ -68,8 +68,18 @@ export async function authorization(
   switch (mode) {
     case "live":
     case "test": {
+      // TODO: explicit handling for test / live key
       const verified = await verify_synced_key(signature);
       if (verified) {
+        const { plan } = verified;
+        const authorization: AuthorizationInfo = {
+          authorized: true,
+          id: signature,
+          plan: plan,
+        };
+        res.locals.authorization = authorization;
+        next();
+        return;
       } else {
         res
           .status(402)
@@ -86,7 +96,7 @@ export async function authorization(
         const authorization: AuthorizationInfo = {
           authorized: true,
           id: signature + ip,
-          tier: "temp",
+          plan: "temp",
         };
         res.locals.authorization = authorization;
         next();
@@ -105,7 +115,7 @@ export async function authorization(
         const authorization: AuthorizationInfo = {
           authorized: true,
           id: signature,
-          tier: "paid",
+          plan: "2022.t1",
         };
         res.locals.authorization = authorization;
         next();
@@ -124,7 +134,7 @@ export async function authorization(
 export interface AuthorizationInfo {
   authorized: boolean;
   id: string | "demo";
-  tier: "anonymous" | "temp" | "free" | "paid" | "unlimited";
+  plan: "anonymous" | "temp" | "free" | "unlimited" | "2022.t1" | "2023.t1";
   skip_rate_limit?: boolean;
 }
 

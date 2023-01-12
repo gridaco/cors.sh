@@ -6,7 +6,7 @@
         "clean": "rimraf .build .serverless",
         "deploy:prod": "yarn clean && source deploy/prod.sh",
         "deploy:staging": "yarn clean && && source deploy/staging.sh",
-        "dev": "sls offline start",
+        "dev": "sls offline start --stage development",
         "build": "yarn clean && sls package --stage development"
     },
     "dependencies": {

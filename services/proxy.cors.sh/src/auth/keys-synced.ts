@@ -4,23 +4,36 @@ const db = new DynamoDB.DocumentClient();
 
 const TABLE = process.env.DYNAMODB_TABLE_SERVICE_KEYS!;
 
-export async function verify_synced_key(signature: string) {
-  const key = await find(signature);
+export async function verify_synced_key(key: string): Promise<
+  | {
+      plan: "2023.t1";
+    }
+  | false
+> {
+  const record = await find(key);
 
-  if (!key) {
+  console.log("record", record);
+
+  if (!record) {
     return false;
   }
 
-  const { active, expires_at } = key;
-  return active && expires_at > Date.now();
+  const { active, expires_at } = record;
+  if (active && expires_at > Date.now()) {
+    return {
+      plan: "2023.t1",
+    };
+  }
+
+  return false;
 }
 
-async function find(signature: string): Promise<ServiceKeyInfo | null> {
+async function find(key: string): Promise<ServiceKeyInfo | null> {
   const { Item } = await db
     .get({
       TableName: TABLE,
       Key: {
-        signature: signature,
+        key: key,
       },
     })
     .promise();
