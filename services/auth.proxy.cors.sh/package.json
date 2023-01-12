@@ -2,7 +2,6 @@
   "name": "auth.proxy.cors.sh",
   "version": "0.0.0",
   "dependencies": {
-    "aws-sdk": "^2.1290.0",
-    "otplib": "^12.0.1"
+    "aws-sdk": "^2.1290.0"
   }
 }
