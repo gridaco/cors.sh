@@ -14,6 +14,8 @@ custom:
     basePath: ""
     createRoute53Record: false
     stage: production
+    # enabled only for production - configured by package.json script with --domain flag.
+    enabled: ${param:domain, false}
   sesTemplates:
     addStage: true
   serverless-offline:
@@ -56,21 +58,15 @@ provider:
 
 resources:
   Resources:
-    service-keys-table:
+    serviceKeysTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: "${self:provider.environment.DYNAMODB_TABLE_SERVICE_KEYS}"
         AttributeDefinitions:
-          - AttributeName: signature
+          - AttributeName: key
             AttributeType: S
-          - AttributeName: plan
-            AttributeType: S
-          - AttributeName: config
-            AttributeType: M
-          - AttributeName: active
-            AttributeType: BOOL
         KeySchema:
-          - AttributeName: signature
+          - AttributeName: key
             KeyType: HASH
         ProvisionedThroughput:
           # $0.000145 per RCU
