@@ -1,11 +1,12 @@
 import * as express from "express";
 import { validate_tmp_key } from "./keys-temp";
+import { verify_synced_key } from "./keys-synced";
 import { keyinfo } from "./keys";
 import { headerfrom } from "../_util/x-header";
 import { STATIC_CORS_ACCOUNT_API_KEY_HEADERS } from "../k";
 import * as legacy from "./legacy";
 
-export function authorization(
+export async function authorization(
   req: express.Request,
   res: express.Response,
   next
@@ -67,6 +68,16 @@ export function authorization(
   switch (mode) {
     case "live":
     case "test": {
+      const verified = await verify_synced_key(signature);
+      if (verified) {
+      } else {
+        res
+          .status(402)
+          .send(
+            "Your account is suspended. Please make a payment at https://cors.sh"
+          );
+        return;
+      }
       break;
     }
     case "temp": {
