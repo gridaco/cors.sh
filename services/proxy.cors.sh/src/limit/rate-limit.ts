@@ -12,10 +12,20 @@ import {
 } from "../k";
 import { headerfrom } from "../_util/x-header";
 
+// rather if locally ran by `sls offline`
+const IS_OFFLINE = process.env.IS_OFFLINE;
+
 const client = createClient({
   url: process.env.RATE_LIMIT_REDIS_URL,
   username: process.env.RATE_LIMIT_REDIS_USERNAME,
   password: process.env.RATE_LIMIT_REDIS_PASSWORD,
+  socket: IS_OFFLINE
+    ? {
+        // 10 minutes
+        connectTimeout: 10 * 60 * 1000,
+        keepAlive: 10 * 60 * 1000,
+      }
+    : undefined,
 
   // ... (see https://github.com/redis/node-redis/blob/master/docs/client-configuration.md)
 });
