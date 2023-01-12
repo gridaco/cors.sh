@@ -33,6 +33,7 @@ provider:
     STRIPE_WEBHOOK_SECRET: ${env:STRIPE_WEBHOOK_SECRET}
     WEBHOST: ${env:WEBHOST}
     DYNAMODB_TABLE_SERVICE_KEYS: "${self:service}-keys-${opt:stage, self:provider.stage}"
+    STAGE: ${opt:stage, self:provider.stage}
   runtime: nodejs12.x
   region: us-west-1
   apiGateway:
