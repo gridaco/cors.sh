@@ -7,8 +7,12 @@ import day from "dayjs";
 const db = new AWS.DynamoDB.DocumentClient();
 
 export default async function sync(application: Application) {
-  const { signature_live, signature_test, allowedOrigins, allowedTargets } =
+  const { id, signature_live, signature_test, allowedOrigins, allowedTargets } =
     application;
+
+  // TODO: we are using application.id as the billing group, but we should
+  // use the subscription id instead (in the future)
+  const billing_group = id;
 
   const data = {
     // TODO: get plan data
@@ -23,16 +27,17 @@ export default async function sync(application: Application) {
   const expires_at = day().add(3, "year").unix();
 
   // test
-  sync_record(signature_test, "test", expires_at, data);
+  sync_record(signature_test, "test", billing_group, expires_at, data);
 
   // live
-  sync_record(signature_live, "live", expires_at, data);
+  sync_record(signature_live, "live", billing_group, expires_at, data);
 }
 
 function sync_record(
-  signature,
-  type,
-  expires_at,
+  signature: string,
+  type: "live" | "test",
+  billing_group: string,
+  expires_at: number,
   data: {
     plan: string;
     allowedOrigins: string[];
@@ -47,6 +52,7 @@ function sync_record(
       allowed_targets: data.allowedTargets,
     },
     active: true,
+    billing_group,
     expires_at,
     synced_at: day().unix(),
   };

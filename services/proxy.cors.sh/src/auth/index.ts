@@ -18,7 +18,7 @@ export async function authorization(
   // 2. anonymous localhost - only allow requests from localhost, rate limited by fixed rate
   //   - uses ip as id
   // 3. temporary key - allow requests from anywhere (unless expired), rate limited by fixed rate
-  //   - uses api key + ip as id
+  //   - uses api key
   // 4. signed key - allow requests from anywhere (unless configured), rate limited by purchased plan
   //   // TODO:
   //   - uses api key as subscription id
@@ -38,7 +38,7 @@ export async function authorization(
     const authorization: AuthorizationInfo = {
       authorized: false,
       id,
-      plan: "anonymous",
+      tier: "anonymous",
     };
     res.locals.authorization = authorization;
     next();
@@ -57,7 +57,7 @@ export async function authorization(
     const authorization: AuthorizationInfo = {
       authorized: true,
       id: ip,
-      plan: "unlimited",
+      tier: "unlimited",
       skip_rate_limit: true,
     };
     res.locals.authorization = authorization;
@@ -71,11 +71,11 @@ export async function authorization(
       // TODO: explicit handling for test / live key
       const verified = await verify_synced_key(signature);
       if (verified) {
-        const { plan } = verified;
+        const { plan, billing_group } = verified;
         const authorization: AuthorizationInfo = {
           authorized: true,
-          id: signature,
-          plan: plan,
+          id: billing_group,
+          tier: plan,
         };
         res.locals.authorization = authorization;
         next();
@@ -95,8 +95,8 @@ export async function authorization(
       if (verified) {
         const authorization: AuthorizationInfo = {
           authorized: true,
-          id: signature + ip,
-          plan: "temp",
+          id: signature,
+          tier: "free",
         };
         res.locals.authorization = authorization;
         next();
@@ -115,7 +115,7 @@ export async function authorization(
         const authorization: AuthorizationInfo = {
           authorized: true,
           id: signature,
-          plan: "2022.t1",
+          tier: "2022.t1",
         };
         res.locals.authorization = authorization;
         next();
@@ -134,7 +134,7 @@ export async function authorization(
 export interface AuthorizationInfo {
   authorized: boolean;
   id: string | "demo";
-  plan: "anonymous" | "temp" | "free" | "unlimited" | "2022.t1" | "2023.t1";
+  tier: "anonymous" | "free" | "unlimited" | "2022.t1" | "2023.t1";
   skip_rate_limit?: boolean;
 }
 

@@ -7,6 +7,7 @@ export interface KeyInfo {
     allowed_targets: string[];
   };
   active: boolean;
+  billing_group: string;
   expires_at: number;
   synced_at: number;
 }
