@@ -5,10 +5,98 @@ const HOST =
     ? "https://services.cors.sh"
     : "http://localhost:4021";
 
-const _signed_client = Axios.create({
-  baseURL: HOST,
-  withCredentials: true,
-});
+export class Client {
+  private _client: AxiosInstance;
+  constructor(credentials: { "x-cors-service-checkout-session-id"?: string }) {
+    this._client = Axios.create({
+      baseURL: HOST,
+      headers: {
+        ...credentials,
+      },
+    });
+  }
+
+  async onboardingWithEmail({ email }: { email: string }) {
+    try {
+      return (
+        await this._client.post<OnboardingApplication>(
+          "/onboarding/with-email",
+          { email }
+        )
+      ).data;
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        switch (e.response?.status) {
+          case 409:
+            throw new AlreadySignedUp();
+          case 429:
+            throw new OnboardingApiKeyAlreadyRequested();
+        }
+      }
+    }
+  }
+
+  async onboardingWithForm({
+    name,
+    allowedOrigins = [],
+    priceId,
+  }: {
+    name?: string;
+    allowedOrigins?: string[];
+    priceId?: string;
+  }) {
+    return (
+      await this._client.post<OnboardingApplication>("/onboarding/with-form", {
+        name: name,
+        allowedOrigins: allowedOrigins,
+        priceId: priceId,
+      })
+    ).data;
+  }
+
+  async getOnboardingApplication(id: string) {
+    return (await this._client.get<OnboardingApplication>(`/onboarding/${id}`))
+      .data;
+  }
+
+  async convertApplication(onboarding_id: string, checkout_session_id: string) {
+    return (
+      await this._client.post<ApplicationWithApiKey>(
+        `/onboarding/${onboarding_id}/convert`,
+        {
+          checkout_session_id,
+        }
+      )
+    ).data;
+  }
+
+  async createApplication(
+    payload: CreateApplicationRequest
+  ): Promise<CreateAplicationResponse> {
+    const { data } = await this._client.post<CreateAplicationResponse>(
+      "/applications",
+      payload
+    );
+    return data;
+  }
+
+  async getApplication(id: string): Promise<ApplicationDetail> {
+    return (await this._client.get<ApplicationDetail>(`/applications/${id}`))
+      .data;
+  }
+
+  async listApplications(): Promise<Application[]> {
+    return (await this._client.get<Application[]>("/applications")).data;
+  }
+
+  async deleteApplication(id: string) {
+    await this._client.delete(`/applications/${id}`);
+  }
+
+  async updateApplication(id: string, payload: UpdateApplicationRequest) {
+    await this._client.put(`/applications/${id}`, payload);
+  }
+}
 
 /**
  * client that is used for signing in the user.
@@ -39,21 +127,6 @@ export async function signin({ grida_token }: { grida_token: string }) {
   }
 }
 
-async function getOnboardingApiKey({ email }: { email: string }) {
-  try {
-    return (await _signed_client.post("/start-key/with-email", { email })).data;
-  } catch (e) {
-    if (e instanceof AxiosError) {
-      switch (e.response?.status) {
-        case 409:
-          throw new AlreadySignedUp();
-        case 429:
-          throw new OnboardingApiKeyAlreadyRequested();
-      }
-    }
-  }
-}
-
 export class AlreadySignedUp extends Error {
   constructor() {
     super("already signed up");
@@ -77,6 +150,14 @@ export interface Application {
   allowedOrigins: string[];
 }
 
+export interface OnboardingApplication {
+  id: string;
+  email: string;
+  name?: string;
+  allowedOrigins: string[];
+  priceId?: string;
+}
+
 export type ApplicationWithApiKey = Application & {
   apikey_test: string;
   apikey_live: string;
@@ -88,49 +169,4 @@ export type CreateAplicationResponse = ApplicationWithApiKey;
 
 export type UpdateApplicationRequest = Application;
 
-async function createApplication(
-  payload: CreateApplicationRequest
-): Promise<CreateAplicationResponse> {
-  const { data } = await _signed_client.post<CreateAplicationResponse>(
-    "/applications",
-    payload
-  );
-  return data;
-}
-
-async function getApplication(id: string): Promise<ApplicationDetail> {
-  return (await _signed_client.get<ApplicationDetail>(`/applications/${id}`))
-    .data;
-}
-
-async function listApplications(): Promise<Application[]> {
-  return (await _signed_client.get<Application[]>("/applications")).data;
-}
-
-async function deleteApplication(id: string) {
-  await _signed_client.delete(`/applications/${id}`);
-}
-
-async function updateApplication(
-  id: string,
-  payload: UpdateApplicationRequest
-) {
-  await _signed_client.put(`/applications/${id}`, payload);
-}
-
-export default {
-  ..._signed_client,
-  getOnboardingApiKey,
-  createApplication,
-  getApplication,
-  listApplications,
-  deleteApplication,
-  updateApplication,
-} as AxiosInstance & {
-  getOnboardingApiKey: typeof getOnboardingApiKey;
-  createApplication: typeof createApplication;
-  getApplication: typeof getApplication;
-  listApplications: typeof listApplications;
-  deleteApplication: typeof deleteApplication;
-  updateApplication: typeof updateApplication;
-};
+export default new Client({});

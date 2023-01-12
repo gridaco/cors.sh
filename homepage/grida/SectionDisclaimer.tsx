@@ -62,7 +62,6 @@ const RootWrapperSectionDisclaimer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 40px;
-  margin-bottom: 120px;
 `;
 
 const Disclaimer = styled.span`
@@ -75,7 +74,8 @@ const Disclaimer = styled.span`
 `;
 
 const Text = styled.span`
-  color: rgba(0, 0, 0, 0.65);
+  color: white;
+  opacity: 0.35;
   text-overflow: ellipsis;
   font-size: 14px;
   font-family: "Roboto Mono", sans-serif;

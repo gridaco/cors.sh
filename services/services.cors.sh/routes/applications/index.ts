@@ -1,6 +1,10 @@
+import { Application } from "@prisma/client";
 import * as express from "express";
 import { prisma } from "../../clients";
-import { sign_live_key, sign_temporary_key, sign_test_key } from "../../keygen";
+import {
+  createApplication,
+  signApplication,
+} from "../../controllers/applications";
 
 const router = express.Router();
 
@@ -15,28 +19,40 @@ router.get("/", async (req, res) => {
   res.json(applications);
 });
 
-// create a new application
-router.post("/", async (req, res) => {
-  //
-  const { name } = req.body;
-  const application = await prisma.application.create({
-    data: {
-      name: name,
+// get a single application
+router.get("/:id", async (req, res) => {
+  const id = req.params.id;
+  const application = await prisma.application.findFirst({
+    where: {
+      id: id,
       owner: {
-        connect: {
-          id: res.locals.customer.id,
-        },
+        id: res.locals.customer.id as string,
       },
     },
   });
 
-  const payload = {
-    ...application,
-    apikey_test: sign_test_key(application.id),
-    apukey_live: sign_live_key(application.id),
-  };
+  const signed = await signApplication(application);
 
-  res.json(payload);
+  if (!application) {
+    return res.status(404).json({ error: "application not found" });
+  }
+
+  res.json(msak(signed));
+});
+
+// create a new application
+router.post("/", async (req, res) => {
+  //
+  const { name } = req.body;
+
+  const app = await createApplication({
+    name,
+    owner: res.locals.customer,
+  });
+
+  const signed = await signApplication(app);
+
+  res.json(msak(signed));
 });
 
 router.put("/:id", async (req, res) => {
@@ -52,5 +68,22 @@ router.put("/:id", async (req, res) => {
 
   res.json({ success: true }); // or.. updated body?
 });
+
+function msak(
+  signed: Application & {
+    apikey_test: string;
+    apikey_live: string;
+  }
+) {
+  return {
+    id: signed.id,
+    name: signed.name,
+    allowedOrigins: signed.allowedOrigins,
+    allowedTargets: signed.allowedTargets,
+    // available once
+    apikey_test: signed.apikey_test,
+    apikey_live: signed.apikey_live,
+  };
+}
 
 export default router;

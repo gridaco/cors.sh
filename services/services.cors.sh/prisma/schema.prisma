@@ -13,37 +13,70 @@ generator client {
 
 model Application {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  name           String
+  name           String   @default("Untitled")
   allowedOrigins String[]
   allowedTargets String[]
 
   owner   Customer @relation(fields: [ownerId], references: [id])
   ownerId String   @db.ObjectId
+
+  archivedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  // follows the user's plan + 1Mo
+  // if user is using a monthly plan, it will be now + 2Mo (initially)
+  // everytime the subscription is renewed, it will be end date + 1Mo
+  expiresAt DateTime?
+
+  // signature for live api key
+  signature_live String @unique
+  // signature for test api key
+  signature_test String @unique
+
+  @@map("applications")
 }
 
-model TemporaryApplication {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  email String @unique
-  key   String @unique
+model OnboardingApplications {
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  email          String     @unique
+  name           String?
+  allowedOrigins String[]   @default([])
+  priceId        String?
+  key            String     @unique
+  emailSentAt    DateTime[] @default([])
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  // now + n hours
+  expiresAt DateTime
+
+  @@map("applications_onboarding")
 }
 
 // grida workspace <> stripe customer
 model Customer {
-  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  email         String        @unique
+  emailVerified Boolean       @default(false)
+  stripeId      String        @unique
   // grida workspace (user) id
-  workspaceId   String         @unique
-  subscriptions Subscription[]
-  applicatopms  Application[]
+  // workspaceId   String         @unique
+  // subscriptions Subscription[]
+  applications  Application[]
+  createdAt     DateTime      @default(now())
+
+  @@map("customers")
 }
 
-model Subscription {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  customer       Customer @relation(fields: [customerId], references: [id])
-  customerId     String   @db.ObjectId
-  // stripe subscription id
-  subscriptionId String   @unique
-  // price id from stripe (product is not saved in db.)
-  priceId        String
+// model Subscription {
+//   @@map("subscriptions")
+//   id             String   @id @default(auto()) @map("_id") @db.ObjectId
+//   customer       Customer @relation(fields: [customerId], references: [id])
+//   customerId     String   @db.ObjectId
+//   // stripe subscription id
+//   subscriptionId String   @unique
+//   // price id from stripe (product is not saved in db.)
+//   priceId        String
 
-  subscribedAt DateTime
-}
+//   createdAt DateTime @default(now())
+// }

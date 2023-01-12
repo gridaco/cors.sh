@@ -1,0 +1,58 @@
+# Welcome to serverless. Read the docs
+# https://serverless.com/framework/docs/
+
+service: cors-proxy-authorizer
+useDotenv: true
+custom:
+  customDomain:
+    domainName: auth.proxy.cors.sh
+    basePath: ""
+    stage: ${opt:stage, self:provider.stage}
+    createRoute53Record: false
+    # enabled only for production - configured by package.json script with --domain flag.
+    enabled: ${param:domain, false}
+
+  serverless-offline:
+    httpPort: 4022
+    noPrependStageInUrl: true
+
+provider:
+  name: aws
+  memorySize: 128
+  runtime: nodejs14.x
+  apiGateway:
+    shouldStartNameWithService: true
+    binaryMediaTypes:
+      - "*/*"
+    endpointType: regional
+  region: us-west-1
+  environment:
+    # managed by service.cors.sh
+    DYNAMODB_TABLE_SERVICE_KEYS: "$cors-proxy-service-keys-${opt:stage, self:provider.stage}"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        # this service only needs to read the service keys
+        - dynamodb:GetItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE_SERVICE_KEYS}"
+
+# The `functions` block defines what code to deploy
+functions:
+  api:
+    handler: handler.authorize
+    maximumEventAge: 60
+    maximumRetryAttempts: 0
+    timeout: 12
+    events:
+      - http:
+          path: /{proxy+}
+          method: any
+      - http:
+          path: /
+          method: get
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-plugin-optimize
+  - serverless-offline
+  - serverless-domain-manager

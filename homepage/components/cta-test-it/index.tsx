@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Select from "react-select";
 import Axios, { Method } from "axios";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 type TMethod = "GET" | "POST" | "PUT" | "DELETE";
 
@@ -43,15 +43,36 @@ const style = {
     border: 0,
     // This line disable the blue border
     boxShadow: "none",
+    backgroundColor: "transparent",
+    fontFamily: `"Source Code Pro", monospace`,
   }),
 };
 
-export function TestitCta() {
+export function TestItOutCta({
+  onChange,
+}: {
+  onChange?: (value: string) => void;
+}) {
   const [url, setUrl] = useState("");
   const [selectedOption, setSelectedOption] = useState({
     value: "GET",
     label: "GET",
   });
+
+  const [isValid, setIsValid] = useState(true);
+
+  useEffect(() => {
+    if (url === "") {
+      return;
+    }
+
+    try {
+      new URL(url);
+      setIsValid(true);
+    } catch (e) {
+      setIsValid(false);
+    }
+  }, [url]);
 
   const onsend = () => {
     Axios.request({
@@ -59,7 +80,7 @@ export function TestitCta() {
       url: "https://proxy.cors.sh/" + url,
     })
       .then(() => {
-        toast(
+        toast.success(
           <>
             Request {selectedOption.value} to {url} succeeded.
             <br />
@@ -78,7 +99,7 @@ export function TestitCta() {
         );
       })
       .catch((e) => {
-        toast(
+        toast.error(
           <>
             Request {selectedOption.value} to {url}{" "}
             <i
@@ -86,7 +107,7 @@ export function TestitCta() {
                 color: "red",
               }}
             >
-              failed with {e.response.status}
+              failed with {e.response?.status}
             </i>
           </>,
           {
@@ -119,7 +140,7 @@ export function TestitCta() {
         </MethodSelect>
         <RequestInputAsInput
           type="text"
-          placeholder="https://example.com"
+          placeholder="https://acme.com"
           value={url}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -128,10 +149,13 @@ export function TestitCta() {
           }}
           onChange={(e) => {
             setUrl(e.target.value);
+            onChange?.(e.target.value);
           }}
         />
       </InputGroup>
-      <ButtonAsButton onClick={onsend}>Send</ButtonAsButton>
+      <ButtonAsButton disabled={!isValid} onClick={onsend}>
+        Send
+      </ButtonAsButton>
     </RootWrapperCta>
   );
 }
@@ -144,7 +168,7 @@ const RootWrapperCta = styled.div`
   flex: none;
   gap: 14px;
   box-sizing: border-box;
-  height: 64px;
+  height: 48px;
 `;
 
 const InputGroup = styled.div`
@@ -173,14 +197,15 @@ const MethodSelect = styled.div`
   border-bottom-left-radius: 4px;
   align-self: stretch;
   width: 123px;
-  background-color: white;
+  background-color: transparent;
   box-sizing: border-box;
   flex-shrink: 0;
 `;
 
 const RequestInputAsInput = styled.input`
-  width: 400px;
-  background-color: white;
+  flex: 1;
+  width: 320px;
+  background-color: transparent;
   border-top-left-radius: 0px;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -190,7 +215,7 @@ const RequestInputAsInput = styled.input`
   border: none;
   color: black;
   font-size: 18px;
-  font-family: "Helvetica Neue", sans-serif;
+  font-family: "Source Code Pro", monospace;
   font-weight: 400;
   line-height: 98%;
   text-align: start;
@@ -202,20 +227,19 @@ const RequestInputAsInput = styled.input`
   ::placeholder {
     color: rgb(181, 181, 181);
     font-size: 18px;
-    font-family: "Helvetica Neue", sans-serif;
     font-weight: 400;
   }
 `;
 
 const ButtonAsButton = styled.button`
-  width: 151px;
+  padding: 0 21px;
   box-shadow: 0px 4px 48px 0px rgba(0, 0, 0, 0.12);
   background-color: black;
   border: solid 1px rgb(210, 210, 210);
   border-radius: 4px;
   color: white;
   font-size: 18px;
-  font-family: "Helvetica Neue", sans-serif;
+  font-family: "Source Code Pro", monospace;
   font-weight: 500;
   line-height: 98%;
   outline: none;

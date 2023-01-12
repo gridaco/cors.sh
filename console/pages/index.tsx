@@ -5,7 +5,7 @@ import { Logo } from "logo";
 import { FormPageLayout } from "@app/ui/layouts";
 import Head from "next/head";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
-import { UnderlineButton } from "components";
+import { UnderlineButton } from "@app/ui/components";
 
 export default function ConsoleIndex({
   applications,

@@ -2,59 +2,21 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { examples } from "k";
 
-/**
- * usage code snippet
- */
-const examples = {
-  fetch: `fetch('https://proxy.cors.sh/https://example.com', {
-    headers: {
-      'x-cors-api-key': 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-    }
-  })
-
-// or...
-functon fetchWithProxy(url, params){
-  return fetch(\`https://proxy.cors.sh/\${url}\`, 
-  { 
-    ...params,
-    headers: 
-    { 
-      ...params.headers,
-      'x-cors-api-key': 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
-    }
-  });
-}
-
-fetchWithProxy('https://example.com')
-  `,
-  axios: `import Axios from "axios";
-
-Axios.get('https://proxy.cors.sh/https://example.com', {
-  headers: {
-    'x-cors-api-key': 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-  }
-})
-
-// or...
-const client = Axios.create({
-  baseURL: 'https://proxy.cors.sh/' + 'https://example.com',
-  headers: {
-    'x-cors-api-key': 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-  }
-})
-
-client.get('/')
-`,
-} as const;
-
-export function DemoTerminal() {
+export function DemoTerminal({
+  target = "https://acme.com",
+}: {
+  target: string;
+}) {
   const [example, setExample] = React.useState<"fetch" | "axios">("fetch");
   const router = useRouter();
   return (
     <Wrapper>
       <Content>
-        <SyntaxHighlighter language="js">{examples[example]}</SyntaxHighlighter>
+        <SyntaxHighlighter language="js">
+          {examples[example](target)}
+        </SyntaxHighlighter>
       </Content>
       <Tabs>
         {Object.keys(examples).map((key) => {

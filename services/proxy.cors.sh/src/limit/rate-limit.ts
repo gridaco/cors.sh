@@ -2,20 +2,26 @@ import { Request, Response } from "express";
 import rateLimit from "express-rate-limit";
 import RedisStore from "rate-limit-redis";
 import { createClient } from "redis";
-import { validate_api_key } from "../auth/static-account-api-key-auth";
 import {
   RATE_LIMIT_FREE_ANONYMOUS_PER_HOUR,
   RATE_LIMIT_FREE_AUTHORIZED_PER_HOUR,
-  RATE_LIMIT_WINDOW_MS,
-  STATIC_CORS_ACCOUNT_API_KEY_HEADERS,
-  STATIC_CORS_ACCOUNT_API_KEY_HEADER_FOR_PAID_TIER,
 } from "../k";
-import { headerfrom } from "../_util/x-header";
+import type { AuthorizationInfo } from "../auth";
+
+// rather if locally ran by `sls offline`
+const IS_OFFLINE = process.env.IS_OFFLINE;
 
 const client = createClient({
   url: process.env.RATE_LIMIT_REDIS_URL,
   username: process.env.RATE_LIMIT_REDIS_USERNAME,
   password: process.env.RATE_LIMIT_REDIS_PASSWORD,
+  socket: IS_OFFLINE
+    ? {
+        // 10 minutes
+        connectTimeout: 10 * 60 * 1000,
+        keepAlive: 10 * 60 * 1000,
+      }
+    : undefined,
 
   // ... (see https://github.com/redis/node-redis/blob/master/docs/client-configuration.md)
 });
@@ -23,27 +29,63 @@ const client = createClient({
 // TODO: make sure connected
 client.connect();
 
-// window
-// if no api key
-// 1. ip if localhost
-// 2. host if not localhost
-// with api key
-// 1. 100 per hour if free tier
-// 2. no limit if paid tier
+/**
+ * shared for all rate limiters
+ * @returns
+ */
+const keygenerator = (req: Request, res: Response) => {
+  const { id } = (res.locals.authorization as AuthorizationInfo) ?? {};
+  // return ip by default
+  return id || req.ip;
+};
 
-const limiter = rateLimit({
+/**
+ * 429 handler
+ * Used by all rate limiters
+ */
+const excess_handler = (req: Request, res: Response, next) => {
+  const { authorized } = (res.locals.authorization as AuthorizationInfo) ?? {};
+  // 429 handler
+  if (authorized) {
+    res
+      .status(429)
+      .send(
+        "Too Many Requests.\nYou have reached the maximum number of requests per hour for Free tier. Please upgrade your plan to remove this limit."
+      );
+  } else {
+    res
+      .status(429)
+      .send(
+        "Too Many Requests.\nThis request is anonymous and rate limited. To upgrade, please add an api key at https://cors.sh"
+      );
+  }
+};
+
+const limiter_free_per_hour = rateLimit({
   // Rate limiter configuration
-  windowMs: RATE_LIMIT_WINDOW_MS,
+  windowMs: 60 * 1000 * 60, // 1 hour
   max: (req: Request, res: Response) => {
-    // the paid request will be skiped with `skip` configuration, set below only for free tier.
-    const apikey = headerfrom(req.headers, STATIC_CORS_ACCOUNT_API_KEY_HEADERS);
-    if (apikey && validate_api_key(apikey)) {
-      // free & autorized
-      return RATE_LIMIT_FREE_AUTHORIZED_PER_HOUR; // per hour
-    }
+    const { tier } = (res.locals.authorization as AuthorizationInfo) ?? {};
 
-    // anonymous (free)
-    return RATE_LIMIT_FREE_ANONYMOUS_PER_HOUR; // per hour
+    switch (tier) {
+      case "unlimited":
+        return Infinity;
+      case "free":
+        return RATE_LIMIT_FREE_AUTHORIZED_PER_HOUR; // per hour
+      case "anonymous":
+        return RATE_LIMIT_FREE_ANONYMOUS_PER_HOUR; // per hour
+      case "2022.t1":
+        // legacy, all free version
+        return RATE_LIMIT_FREE_AUTHORIZED_PER_HOUR; // per hour
+      case "2023.t1": {
+        // paid version
+        // no limit, passed by skip()
+        return Infinity;
+      }
+      default:
+        // anonymous (free)
+        return RATE_LIMIT_FREE_ANONYMOUS_PER_HOUR; // per hour
+    }
   },
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
@@ -52,65 +94,52 @@ const limiter = rateLimit({
       return true;
     }
 
-    // tmp --------- remove this after applications are registered via console.
-    // prettier-ignore
-    const __maybe_paid_apikey = headerfrom(req.headers, STATIC_CORS_ACCOUNT_API_KEY_HEADER_FOR_PAID_TIER);
-    if (__maybe_paid_apikey && validate_api_key(__maybe_paid_apikey)) {
-      return true;
+    let force_skip = false;
+
+    const { skip_rate_limit, tier } =
+      (res.locals.authorization as AuthorizationInfo) ?? {};
+
+    if (tier === "2023.t1") {
+      // since no monthly limit, skip the hourly limit for paid version
+      force_skip = true;
     }
-    // end:tmp -----
 
-    const _origin = req.headers["origin"];
-
-    // if requested from cors.sh, skip rate limiting
-    if (
-      _origin === "https://cors.sh/playground" ||
-      _origin === "https://cors.sh"
-    ) {
-      // don't rate limit for cors.sh (can this be forged?)
+    if (force_skip || skip_rate_limit) {
       return true;
     }
 
+    res.locals.rate_limit_handled = true;
     return false;
   },
-  keyGenerator: (req: Request, res: Response) => {
-    const apikey = headerfrom(req.headers, STATIC_CORS_ACCOUNT_API_KEY_HEADERS);
-    if (apikey && validate_api_key(apikey)) {
-      // if using apikey, use the api key as key. (is this secure? - yes. is this the best way? - maybe, for now at least.)
-      return apikey;
-    }
-
-    // if localhost, use ip.
-    // if not localhost, use host.
-    if (req.hostname == "localhost") {
-      return req.ip;
-    } else {
-      return req.hostname;
-    }
-
-    // return ip by default
-    return req.ip;
-  },
-  handler: (req: Request, res: Response, next) => {
-    // 429 handler
-    if (headerfrom(req.headers, STATIC_CORS_ACCOUNT_API_KEY_HEADERS)) {
-      res
-        .status(429)
-        .send(
-          "Too Many Requests.\nYou have reached the maximum number of requests per hour for Free tier. Please upgrade your plan to remove this limit."
-        );
-    } else {
-      res
-        .status(429)
-        .send(
-          "Too Many Requests.\nThis request is anonymous and rate limited. To upgrade, please add an api key at https://cors.sh"
-        );
-    }
-  },
+  keyGenerator: keygenerator,
+  handler: excess_handler,
   // Redis store configuration
   store: new RedisStore({
     sendCommand: (...args: string[]) => client.sendCommand(args),
   }),
 });
 
-export default limiter;
+// Consider: monthly rate limit might require bigger redis instance
+const limiter_paid_per_month = rateLimit({
+  // 28-day month
+  windowMs: 60 * 1000 * 60 * 24 * 28, // 28 days
+  max: 500000,
+  skip: (req: Request, res: Response) => {
+    if (req.method == "OPTIONS" || req.method == "HEAD") {
+      return true;
+    }
+
+    // if rate limit handled by hourly limiter, skip this one
+    return res.locals.rate_limit_handled;
+  },
+  keyGenerator: keygenerator,
+  handler: excess_handler,
+  store: new RedisStore({
+    sendCommand: (...args: string[]) => client.sendCommand(args),
+  }),
+});
+
+export default {
+  hourly: limiter_free_per_hour,
+  monthly: limiter_paid_per_month,
+};

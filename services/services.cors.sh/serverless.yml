@@ -5,6 +5,7 @@ plugins:
   - serverless-webpack-prisma
   - serverless-offline
   - serverless-domain-manager
+  - "@haftahave/serverless-ses-template"
 
 custom:
   customDomain:
@@ -13,21 +14,35 @@ custom:
     basePath: ""
     createRoute53Record: false
     stage: production
+    # enabled only for production - configured by package.json script with --domain flag.
+    enabled: ${param:domain, false}
+  sesTemplates:
+    addStage: true
   serverless-offline:
     httpPort: 4021
+    lambdaPort: 3021
     noPrependStageInUrl: true
   webpack:
-    includeModules: true
+    includeModules:
+      forceExclude:
+        - aws-sdk
 
 provider:
   name: aws
+  runtime: nodejs14.x
+  region: us-west-1
   environment:
     DATABASE_URL: ${env:DATABASE_URL}
     STRIPE_API_KEY: ${env:STRIPE_API_KEY}
     STRIPE_WEBHOOK_SECRET: ${env:STRIPE_WEBHOOK_SECRET}
     WEBHOST: ${env:WEBHOST}
-  runtime: nodejs12.x
-  region: us-west-1
+    API_KEY_TEMP_AES_KEY: ${env:API_KEY_TEMP_AES_KEY}
+    API_KEY_TEMP_AES_IV: ${env:API_KEY_TEMP_AES_IV}
+    API_KEY_TEST_HASH_SECRET: ${env:API_KEY_TEST_HASH_SECRET}
+    API_KEY_LIVE_HASH_SECRET: ${env:API_KEY_LIVE_HASH_SECRET}
+    SERVICE_JWT_SECRET: ${env:SERVICE_JWT_SECRET}
+    DYNAMODB_TABLE_SERVICE_KEYS: "${self:service}-keys-${opt:stage, self:provider.stage}"
+    STAGE: ${opt:stage, self:provider.stage}
   apiGateway:
     # https://stackoverflow.com/questions/61003311/serverless-i-image-upload-to-s3-broken-after-deploy-local-worked-only/61003498#61003498
     binaryMediaTypes:
@@ -37,7 +52,36 @@ provider:
     - Effect: Allow
       Action:
         - ses:SendEmail
+        - ses:SendTemplatedEmail
       Resource: "*"
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:DescribeTable
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE_SERVICE_KEYS}"
+
+resources:
+  Resources:
+    serviceKeysTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "${self:provider.environment.DYNAMODB_TABLE_SERVICE_KEYS}"
+        AttributeDefinitions:
+          - AttributeName: key
+            AttributeType: S
+        KeySchema:
+          - AttributeName: key
+            KeyType: HASH
+        ProvisionedThroughput:
+          # $0.000145 per RCU
+          ReadCapacityUnits: ${param:service-keys-rcu, 1}
+          # $0.000725 per WCU
+          WriteCapacityUnits: ${param:service-keys-wcu, 1}
 
 functions:
   main:

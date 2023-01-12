@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { TestitCta } from "../components";
+import { OnboardingCta } from "../components";
 import CheckFilled from "../components/icons/check-filled";
 import { Close } from "@mui/icons-material";
 
@@ -80,7 +80,7 @@ export function SectionHero() {
         </DescriptionAsP>
       </Headings>
       <Cta>
-        <TestitCta />
+        <OnboardingCta />
         <div style={{ height: 20 }} />
         <TryPlayground />
       </Cta>

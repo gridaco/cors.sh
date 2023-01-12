@@ -1,81 +1,85 @@
+import crypto from "crypto";
 import day from "dayjs";
-import jwt from "jsonwebtoken";
+
+const API_KEY_TEMP_AES_KEY = process.env.API_KEY_TEMP_AES_KEY;
+const _aes_key = Buffer.from(API_KEY_TEMP_AES_KEY, "hex");
+const API_KEY_TEMP_AES_IV: string = process.env.API_KEY_TEMP_AES_IV!;
+const _aes_iv = Buffer.from(API_KEY_TEMP_AES_IV, "hex");
+
+const API_KEY_TEST_HASH_SECRET = process.env.API_KEY_TEST_HASH_SECRET;
+const API_KEY_LIVE_HASH_SECRET = process.env.API_KEY_LIVE_HASH_SECRET;
+
+const API_KEY_HASH_SECRET_BY_TYPE = {
+  test: API_KEY_TEST_HASH_SECRET,
+  live: API_KEY_LIVE_HASH_SECRET,
+} as const;
 
 interface PermanentKey {
-  app_id: string;
+  signature: string;
   type: "test" | "live";
 }
 
-interface TemporaryKey {
-  /**
-   * use email address as app_id
-   */
-  app_id: string;
-  email: string;
-  type: "temporary";
-  expires_at: string;
-}
-
-// shared db
-interface ShardedApplicationAuhorizationTable {
-  app_id: string;
-  last_synced: number;
-  plan: string;
-}
-
-export function temporary_key(email: string): TemporaryKey {
-  return {
-    app_id: email,
-    email,
-    type: "temporary",
-    expires_at: day().add(1, "day").toISOString(),
-  };
-}
-
-const TMP_KEY_EXP_IN = "1d";
-const TMP_KEY_PREFIX = "tmp";
+const TMP_KEY_PREFIX = "temp";
 const TEST_KEY_PREFIX = "test";
 const LIVE_KEY_PREFIX = "live";
+const TMP_KEY_EXP_IN_DAYS = 3;
 
-export function sign_temporary_key(email: string) {
-  const payload = temporary_key(email);
-  return (
-    TMP_KEY_PREFIX +
-    "_" +
-    jwt.sign(payload, process.env.API_JWT_SECRET, {
-      expiresIn: TMP_KEY_EXP_IN,
-    })
-  );
-}
-
-export function test_key(appid: string): PermanentKey {
+function test_key(signature: string): PermanentKey {
   return {
-    app_id: appid,
+    signature,
     type: "test",
   };
 }
 
-export function live_key(appid: string): PermanentKey {
+function live_key(signature: string): PermanentKey {
   return {
-    app_id: appid,
+    signature,
     type: "live",
   };
 }
 
-export function sign_test_key(appid: string) {
-  return (
-    TEST_KEY_PREFIX +
-    "_" +
-    jwt.sign(test_key(appid), process.env.API_JWT_SECRET)
-  );
+export function sign_temporary_key() {
+  const expires_at = day().add(TMP_KEY_EXP_IN_DAYS, "day");
+
+  const token = expires_at.unix().toString();
+
+  // convert to complex string with aes
+  let cipher = crypto.createCipheriv("aes-256-cbc", _aes_key, _aes_iv);
+
+  // this may be considered as insecure. yes. it may be vulnerable to ciphertext attack,
+  // even though it is fine because we have a rate-limit for temporary api keys and it does not have a clear usecase. for hackers to take benefits from this.
+  let encrypted = cipher.update(token, "utf8", "hex") + cipher.final("hex");
+
+  return {
+    key: prefix("temp") + "_" + encrypted,
+    expires_at,
+  };
 }
 
-export function sign_live_key(appid: string) {
-  return (
-    LIVE_KEY_PREFIX +
-    "_" +
-    jwt.sign(live_key(appid), process.env.API_JWT_SECRET)
-  );
+export function sign(signature: string, type: "test" | "live") {
+  switch (type) {
+    case "test":
+      return sign_test_key(signature);
+    case "live":
+      return sign_live_key(signature);
+  }
+}
+
+export function sign_test_key(signature: string) {
+  const token = encrypt(test_key(signature), "test");
+  return {
+    key: prefix("test") + "_" + token,
+    token,
+  };
+}
+
+export function sign_live_key(signature: string) {
+  const token = encrypt(live_key(signature), "live");
+
+  return {
+    key: prefix("live") + "_" + token,
+    token,
+  };
 }
 
 //
@@ -90,4 +94,22 @@ export function validate_jwt(token: string) {
   } else {
     throw "Invalid token format";
   }
+}
+
+function prefix(type: "test" | "live" | "temp") {
+  switch (type) {
+    case "test":
+      return TEST_KEY_PREFIX;
+    case "live":
+      return LIVE_KEY_PREFIX;
+    case "temp":
+      return TMP_KEY_PREFIX;
+  }
+}
+
+function encrypt(data: string | object, type: "test" | "live") {
+  const key = API_KEY_HASH_SECRET_BY_TYPE[type];
+  const hmac = crypto.createHmac("sha256", key);
+  hmac.update(JSON.stringify(data));
+  return hmac.digest("hex");
 }

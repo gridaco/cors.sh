@@ -10,10 +10,11 @@ custom:
     stage: ${opt:stage, self:provider.stage}
     createRoute53Record: false
     # enabled only for production - configured by package.json script with --domain flag.
-    enabled: ${opt:domain, false}
+    enabled: ${param:domain, false}
 
   serverless-offline:
     httpPort: 4020
+    lambdaPort: 3020
     noPrependStageInUrl: true
 
 provider:
@@ -30,7 +31,17 @@ provider:
     RATE_LIMIT_REDIS_URL: ${env:RATE_LIMIT_REDIS_URL}
     RATE_LIMIT_REDIS_USERNAME: ${env:RATE_LIMIT_REDIS_USERNAME}
     RATE_LIMIT_REDIS_PASSWORD: ${env:RATE_LIMIT_REDIS_PASSWORD}
+    API_KEY_TEMP_AES_KEY: ${env:API_KEY_TEMP_AES_KEY}
+    API_KEY_TEMP_AES_IV: ${env:API_KEY_TEMP_AES_IV}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+    # for auth, managed by service.cors.sh
+    DYNAMODB_TABLE_SERVICE_KEYS: "cors-proxy-service-keys-${opt:stage, self:provider.stage}"
+  httpApi:
+    authorizers:
+      default:
+        identitySource:
+          - "method.request.header.x-cors-api-key"
+        managedExternally: true
 
 # The `functions` block defines what code to deploy
 functions:
@@ -43,6 +54,12 @@ functions:
       - http:
           path: /{proxy+}
           method: any
+          # authorizer:
+          #   name: cors-proxy-authorizer
+          #   identitySource: "method.request.header.x-cors-api-key"
+          #   type: token
+          #   resultTtlInSeconds: 3600 # 1 hour
+          #   arn: ${env:CORS_PROXY_AUTHORIZER_ARN}
       - http:
           path: /
           method: get

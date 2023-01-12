@@ -2,7 +2,7 @@ import * as express from "express";
 import router_payments from "./payments";
 import router_stripe_webhooks from "./webhooks-stripe";
 import router_applications from "./applications";
-import router_start_key from "./start-key";
+import router_onboarding from "./onboarding";
 import router_auth from "./auth";
 import cors from "cors";
 import { authMiddleware } from "../auth";
@@ -23,6 +23,6 @@ router.use(
   authMiddleware,
   router_applications
 );
-router.use("/start-key", cors_website_only, router_start_key);
+router.use("/onboarding", cors_website_only, router_onboarding);
 
 export default router;
