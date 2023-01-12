@@ -36,12 +36,6 @@ provider:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
     # for auth, managed by service.cors.sh
     DYNAMODB_TABLE_SERVICE_KEYS: "cors-proxy-service-keys-${opt:stage, self:provider.stage}"
-  httpApi:
-    authorizers:
-      default:
-        identitySource:
-          - "method.request.header.x-cors-api-key"
-        managedExternally: true
 
 # The `functions` block defines what code to deploy
 functions:
