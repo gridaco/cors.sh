@@ -66,11 +66,20 @@ export function sign(signature: string, type: "test" | "live") {
 }
 
 export function sign_test_key(signature: string) {
-  return prefix("test") + "_" + encrypt(test_key(signature), "test");
+  const token = encrypt(test_key(signature), "test");
+  return {
+    key: prefix("test") + "_" + token,
+    token,
+  };
 }
 
 export function sign_live_key(signature: string) {
-  return prefix("live") + "_" + encrypt(live_key(signature), "live");
+  const token = encrypt(live_key(signature), "live");
+
+  return {
+    key: prefix("live") + "_" + token,
+    token,
+  };
 }
 
 //

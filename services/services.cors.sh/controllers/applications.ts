@@ -2,6 +2,7 @@ import { prisma, stripe, emailWithTemplate } from "../clients";
 import { sign_live_key, sign_temporary_key, sign_test_key } from "../keygen";
 import { nanoid } from "nanoid";
 import type { Application, OnboardingApplications } from "@prisma/client";
+import sync from "../sync";
 
 type CreateOnboardingApplicationBody =
   | {
@@ -162,10 +163,10 @@ async function sendOnboardingEmail(
   return true;
 }
 
-export function signApplication(application: Application) {
+export async function signApplication(application: Application) {
   //
-  const apikey_test = sign_test_key(application.signature_test);
-  const apikey_live = sign_live_key(application.signature_live);
+  const { key: apikey_test } = sign_test_key(application.signature_test);
+  const { key: apikey_live } = sign_live_key(application.signature_live);
 
   const payload = {
     ...application,
@@ -218,6 +219,9 @@ export async function createApplication({
     },
   });
 
+  // once application is created and initially signed, sync to the keys table
+  await sync(updated);
+
   return updated;
 }
 
@@ -250,7 +254,10 @@ export async function convertApplication({
     owner: { id: customer.id },
   });
 
-  const signed = signApplication(application);
+  const signed = await signApplication(application);
+
+  // once application is created and initially signed, sync to the keys table
+  await sync(application);
 
   // send email to the user
   emailWithTemplate(
@@ -269,8 +276,6 @@ export async function convertApplication({
       console.error(e);
       // if email send fails with unknown email, set email verified to false.
     });
-
-  // TODO: once application is created, sync to the keys table
 
   return application;
 }
