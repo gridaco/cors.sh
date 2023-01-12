@@ -55,14 +55,15 @@ model OnboardingApplications {
 
 // grida workspace <> stripe customer
 model Customer {
-  id           String        @id @default(auto()) @map("_id") @db.ObjectId
-  email        String        @unique
-  stripeId     String        @unique
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  email         String        @unique
+  emailVerified Boolean       @default(false)
+  stripeId      String        @unique
   // grida workspace (user) id
   // workspaceId   String         @unique
   // subscriptions Subscription[]
-  applications Application[]
-  createdAt    DateTime      @default(now())
+  applications  Application[]
+  createdAt     DateTime      @default(now())
 
   @@map("customers")
 }
