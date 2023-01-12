@@ -1,5 +1,6 @@
 import * as express from "express";
 import { prisma, stripe } from "../../clients";
+import { getOnboardingApplication } from "../../controllers/applications";
 
 const router = express.Router();
 
@@ -13,9 +14,7 @@ router.get("/checkout/new", async (req, res) => {
 
   const { onboarding_id: _q_onboarding } = req.query;
 
-  const onboarding = await prisma.onboardingApplications.findUnique({
-    where: { id: _q_onboarding as string },
-  });
+  const onboarding = await getOnboardingApplication(_q_onboarding as string);
 
   if (!onboarding) {
     return res.status(400).json({ error: "invalid session" });
@@ -78,27 +77,50 @@ router.get("/success", async (req, res) => {
 
   // create customer
   // TODO: what if already exists?
-  const customer = await prisma.customer.create({
-    data: {
-      stripeId: stripe_customer_id as string,
-      email: email,
-    },
+
+  const customer_exists_with_same_email = await prisma.customer.findUnique({
+    where: { email },
   });
 
-  const _params = {
-    session_id: session_id as string,
-    onboarding_id: tmp?.id,
-    customer_id: customer.id,
-    application_id: tmp.id,
-  };
-  // prettier-ignore
-  Object.keys(_params).forEach((key) => _params[key] === undefined ? delete _params[key] : {});
+  if (customer_exists_with_same_email) {
+    // TODO: we'll need a better way to handle this since we need to test this with same email multiple times.
+    // we can't tell if the purchase is for the same user or not.
+    // yet, if the existing one is verified, we should protect it.
+    // if not, we should give the new one a chance.
+    const params = new URLSearchParams({
+      error: "identity_conflict",
+      message:
+        "Your payment was successful, but we detected a suspicious activity. Please contact customer support.",
+      session_id: session_id as string,
+      onboarding_id: tmp.id,
+      application_id: tmp.id,
+    });
+    const redirect_uri = `${WEBHOST}/onboarding/payment-success-with-issue?${params.toString()}`;
+    res.redirect(303, redirect_uri);
+  } else {
+    const customer = await prisma.customer.create({
+      data: {
+        stripeId: stripe_customer_id as string,
+        email: email,
+        emailVerified: false,
+      },
+    });
 
-  const params = new URLSearchParams(_params);
+    const _params = {
+      session_id: session_id as string,
+      onboarding_id: tmp?.id,
+      customer_id: customer.id,
+      application_id: tmp.id,
+    };
+    // prettier-ignore
+    Object.keys(_params).forEach((key) => _params[key] === undefined ? delete _params[key] : {});
 
-  const redirect_uri = `${WEBHOST}/onboarding/payment-success?${params.toString()}`;
+    const params = new URLSearchParams(_params);
 
-  res.redirect(303, redirect_uri);
+    const redirect_uri = `${WEBHOST}/onboarding/payment-success?${params.toString()}`;
+
+    res.redirect(303, redirect_uri);
+  }
 });
 
 router.get("/canceled", async (req, res) => {
