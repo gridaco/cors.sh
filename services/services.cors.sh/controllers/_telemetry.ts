@@ -10,5 +10,10 @@ export async function logNewOnboardingProc(data: OnboardingApplications) {
     email,
   };
   const message = blocks({ title, data: dataToLog });
-  await slack({ blocks: message });
+  try {
+    console.log("slack telemetry", dataToLog);
+    await slack({ blocks: message });
+  } catch (e) {
+    console.error("failed to log to slack", e);
+  }
 }

@@ -71,7 +71,7 @@ function pretty_key(key: string) {
 }
 
 export function slack({ blocks }: { blocks: Array<object> }) {
-  axios.post(
+  return axios.post(
     "https://slack.com/api/chat.postMessage",
     {
       blocks: blocks,
