@@ -3,6 +3,7 @@ import { sign_live_key, sign_temporary_key, sign_test_key } from "../keygen";
 import { nanoid } from "nanoid";
 import type { Application, OnboardingApplications } from "@prisma/client";
 import sync from "../sync";
+import { logNewOnboardingProc } from "./_telemetry";
 
 type CreateOnboardingApplicationBody =
   | {
@@ -83,6 +84,14 @@ export async function createOnboardingApplication(
     // send an email to the user
     const res = await sendOnboardingEmail(email, data);
     console.log("email sent", res);
+  }
+
+  // log event to slack
+  try {
+    await logNewOnboardingProc(data);
+  } catch (e) {
+    // not critical
+    console.error("failed to log new onboarding application", e);
   }
 
   return {

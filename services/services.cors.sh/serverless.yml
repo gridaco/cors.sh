@@ -41,6 +41,8 @@ provider:
     API_KEY_TEST_HASH_SECRET: ${env:API_KEY_TEST_HASH_SECRET}
     API_KEY_LIVE_HASH_SECRET: ${env:API_KEY_LIVE_HASH_SECRET}
     SERVICE_JWT_SECRET: ${env:SERVICE_JWT_SECRET}
+    SLACK_CHANNEL: ${env:SLACK_CHANNEL}
+    SLACK_TOKEN: ${env:SLACK_TOKEN}
     DYNAMODB_TABLE_SERVICE_KEYS: "${self:service}-keys-${opt:stage, self:provider.stage}"
     STAGE: ${opt:stage, self:provider.stage}
   apiGateway:
