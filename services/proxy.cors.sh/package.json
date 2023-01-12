@@ -7,7 +7,7 @@
         "deploy:prod": "yarn clean && source deploy/prod.sh",
         "deploy:staging": "yarn clean && && source deploy/staging.sh",
         "dev": "sls offline start",
-        "build": "yarn clean && sls package"
+        "build": "yarn clean && sls package --stage development"
     },
     "dependencies": {
         "aws-serverless-express": "^3.4.0",

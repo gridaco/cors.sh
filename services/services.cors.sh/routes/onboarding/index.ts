@@ -23,9 +23,6 @@ router.post("/with-email", async (req, res) => {
     email,
   });
 
-  // send an email to the user
-  // TODO:
-
   res.status(201).json(d);
 });
 

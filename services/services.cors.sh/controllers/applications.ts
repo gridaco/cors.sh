@@ -80,7 +80,8 @@ export async function createOnboardingApplication(
 
   if (email_available && send_onboarding_email_if_possible) {
     // send an email to the user
-    await sendOnboardingEmail(email, data);
+    const res = await sendOnboardingEmail(email, data);
+    console.log("email sent", res);
   }
 
   return {
