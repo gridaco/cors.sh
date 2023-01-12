@@ -36,6 +36,12 @@ provider:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
     # for auth, managed by service.cors.sh
     DYNAMODB_TABLE_SERVICE_KEYS: "cors-proxy-service-keys-${opt:stage, self:provider.stage}"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        # this service only needs to read the service keys
+        - dynamodb:GetItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE_SERVICE_KEYS}"
 
 # The `functions` block defines what code to deploy
 functions:
