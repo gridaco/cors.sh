@@ -8,4 +8,4 @@ console.log("Key:", key.toString("hex"));
 
 // Generate a 128-bit (16-byte) IV
 const iv = crypto.randomBytes(16);
-console.log("IV:", iv.toString("hex").slice(0, 16));
+console.log("IV:", iv.toString("hex"));

@@ -2,8 +2,8 @@ import crypto from "crypto";
 import day from "dayjs";
 
 const API_KEY_TEMP_AES_KEY = process.env.API_KEY_TEMP_AES_KEY;
-const API_KEY_TEMP_AES_IV: string = process.env.API_KEY_TEMP_AES_IV!;
 const _aes_key = Buffer.from(API_KEY_TEMP_AES_KEY, "hex");
+const API_KEY_TEMP_AES_IV: string = process.env.API_KEY_TEMP_AES_IV!;
 const _aes_iv = Buffer.from(API_KEY_TEMP_AES_IV, "hex");
 
 const API_KEY_TEST_HASH_SECRET = process.env.API_KEY_TEST_HASH_SECRET;
