@@ -47,8 +47,11 @@ app.use(
 // user agent middleware
 app.use(useragent.express());
 
-// main rate limiter
-app.use(limiter);
+// hourly rate limiter
+app.use(limiter.hourly);
+
+// monthly (28-day) rate limiter
+app.use(limiter.monthly);
 
 // -- execution order matters --
 // (1)
