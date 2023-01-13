@@ -1,19 +1,16 @@
 import type { OnboardingApplications } from "@prisma/client";
+import { prisma } from "../clients";
 import { slack, blocks } from "../clients/slack";
 
 export async function logNewOnboardingProc(data: OnboardingApplications) {
+  const total = await prisma.onboardingApplications.count();
   const { id, name, email } = data;
   const title = `New Onboarding Application`;
   const dataToLog = {
-    id,
     name,
     email,
+    total,
   };
   const message = blocks({ title, data: dataToLog });
-  try {
-    console.log("slack telemetry", dataToLog);
-    await slack({ blocks: message });
-  } catch (e) {
-    console.error("failed to log to slack", e);
-  }
+  await slack({ blocks: message });
 }
