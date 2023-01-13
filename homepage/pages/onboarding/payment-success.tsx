@@ -23,6 +23,17 @@ export default function PaymentSuccessPage({
   const [isBusy, setBusy] = React.useState(false);
   const router = useRouter();
 
+  useEffect(() => {
+    // GA4 conversion - Purchase
+    // @ts-ignore
+    window.gtag("event", "purchase", {
+      transaction_id: session,
+      value: 4,
+      currency: "USD",
+      //
+    });
+  }, []);
+
   const onNext = () => {
     setBusy(true);
     // convert to application.
