@@ -178,7 +178,7 @@ const HeadingAsH2 = styled.h2`
   text-align: center;
 `;
 
-const Desc = styled.span`
+const Desc = styled.p`
   color: rgba(0, 0, 0, 0.6);
   text-overflow: ellipsis;
   font-size: 21px;

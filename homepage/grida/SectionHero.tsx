@@ -75,9 +75,9 @@ export function SectionHero() {
           <br />
           cors errors?
         </HeadingAsH1>
-        <DescriptionAsP>
+        <Description>
           A Fast & Reliable CORS Proxy for your websites
-        </DescriptionAsP>
+        </Description>
       </Headings>
       <Cta>
         <OnboardingCta />
@@ -153,7 +153,7 @@ const HeadingAsH1 = styled.h1`
   text-align: left;
 `;
 
-const DescriptionAsP = styled.p`
+const Description = styled.h2`
   color: rgba(0, 0, 0, 0.6);
   text-overflow: ellipsis;
   font-size: 21px;
@@ -170,7 +170,7 @@ const Cta = styled.div`
   height: 66px;
 `;
 
-const FeatuersList = styled.div`
+const FeatuersList = styled.ul`
   display: flex;
   justify-content: flex-start;
   flex-direction: row;
@@ -180,11 +180,12 @@ const FeatuersList = styled.div`
   position: absolute;
   left: calc((calc((50% + -42px)) - 478px));
   top: 703px;
-  width: 956px;
   height: 24px;
+  margin: 0;
+  padding: 0;
 `;
 
-const Item = styled.div`
+const Item = styled.li`
   display: flex;
   justify-content: center;
   flex-direction: row;
