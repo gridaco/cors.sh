@@ -1,3 +1,4 @@
+import type { Customer } from "@prisma/client";
 import * as express from "express";
 import { prisma, stripe } from "../../clients";
 import { getOnboardingApplication } from "../../controllers/applications";
@@ -78,9 +79,14 @@ router.get("/success", async (req, res) => {
   // create customer
   // TODO: what if already exists?
 
-  const customer_exists_with_same_email = await prisma.customer.findUnique({
-    where: { email },
-  });
+  let customer_exists_with_same_email: Customer;
+  try {
+    customer_exists_with_same_email = await prisma.customer.findUnique({
+      where: { email },
+    });
+  } catch (e) {
+    console.error("Caught exeption while finding existing customer", e);
+  }
 
   if (customer_exists_with_same_email) {
     // TODO: we'll need a better way to handle this since we need to test this with same email multiple times.

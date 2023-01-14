@@ -1,6 +1,5 @@
 import * as express from "express";
 import Axios from "axios";
-import dayjs from "dayjs";
 import { prisma } from "../../clients";
 import { encode_jwt, SECURE_BROWSER_COOKIE_AUTH_KEY } from "../../auth";
 

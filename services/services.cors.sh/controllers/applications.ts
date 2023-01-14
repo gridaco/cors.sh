@@ -88,10 +88,9 @@ export async function createOnboardingApplication(
 
   // log event to slack
   try {
-    await logNewOnboardingProc(data);
+    !duplicated && (await logNewOnboardingProc(data));
   } catch (e) {
-    // not critical
-    console.error("failed to log new onboarding application", e);
+    console.error("failed to log new onboarding application", e); // not critical
   }
 
   return {
@@ -245,10 +244,12 @@ export async function convertApplication({
     checkout_session_id as string
   );
 
-  const { customer: stripe_customer_id } = checkout_session;
+  const { customer: stripe_customer } = checkout_session;
+  const stripe_customer_id =
+    typeof stripe_customer === "string" ? stripe_customer : stripe_customer.id;
 
   const customer = await prisma.customer.findUnique({
-    where: { stripeId: stripe_customer_id as string },
+    where: { stripeId: stripe_customer_id },
   });
 
   // place this right before application create since its a delete and cannot be undone. (reduce chance of error when it fails)
@@ -269,7 +270,7 @@ export async function convertApplication({
   await sync(application);
 
   // send email to the user
-  emailWithTemplate(
+  await emailWithTemplate(
     customer.email,
     `mail_cors_sh_onboarding_with_payment_success_${process.env.STAGE}`,
     {
