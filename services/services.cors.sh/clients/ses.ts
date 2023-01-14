@@ -15,19 +15,15 @@ interface EmailBody_Html {
 
 type EmailContent = EmailBody_Raw | EmailBody_Html;
 
-export async function emailWithTemplate(
-  to: string,
-  template: string,
-  data: object
-) {
-  await ses.sendTemplatedEmail({
+export function emailWithTemplate(to: string, template: string, data: object) {
+  return ses.sendTemplatedEmail({
     Destination: {
       ToAddresses: [to],
     },
     Source: SENDER_EMAIL,
     Template: template,
     TemplateData: JSON.stringify(data),
-  })
+  });
 }
 
 export async function email(

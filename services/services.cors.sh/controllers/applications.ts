@@ -3,7 +3,7 @@ import { sign_live_key, sign_temporary_key, sign_test_key } from "../keygen";
 import { nanoid } from "nanoid";
 import type { Application, OnboardingApplications } from "@prisma/client";
 import sync from "../sync";
-import { logNewOnboardingProc } from "./_telemetry";
+import { logNewOnboardingProc, logNewApplication } from "./_telemetry";
 
 type CreateOnboardingApplicationBody =
   | {
@@ -270,22 +270,28 @@ export async function convertApplication({
   await sync(application);
 
   // send email to the user
-  await emailWithTemplate(
-    customer.email,
-    `mail_cors_sh_onboarding_with_payment_success_${process.env.STAGE}`,
-    {
-      APPLICATIONNAME: tmp.name,
-      CODE_LIVE: signed.apikey_live,
-      CODE_TEST: signed.apikey_test,
-    }
-  )
-    .then(() => {
-      // set email verified to true
-    })
-    .catch((e) => {
-      console.error(e);
-      // if email send fails with unknown email, set email verified to false.
-    });
+  try {
+    await emailWithTemplate(
+      customer.email,
+      `mail_cors_sh_onboarding_with_payment_success_${process.env.STAGE}`,
+      {
+        APPLICATIONNAME: tmp.name,
+        CODE_LIVE: signed.apikey_live,
+        CODE_TEST: signed.apikey_test,
+      }
+    );
+    console.log("email sent", true);
+    //   // set email verified to true?
+  } catch (e) {
+    console.error("email failed", e);
+  }
+
+  // log event to slack
+  try {
+    await logNewApplication(signed);
+  } catch (e) {
+    console.error("failed to log new application", e); // not critical
+  }
 
   return application;
 }
