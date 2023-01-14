@@ -42,7 +42,12 @@ export function AppbarParentSite() {
     <RootWrapperAppbarParentSite href="https://grida.co" target="_blank">
       <Home>
         <Logo64>
-          <Image src="/grida-logo-white-128.png" width={25} height={25} />
+          <Image
+            src="/grida-logo-white-128.png"
+            alt="Grida Logo White"
+            width={25}
+            height={25}
+          />
         </Logo64>
         <Grida>Grida</Grida>
       </Home>

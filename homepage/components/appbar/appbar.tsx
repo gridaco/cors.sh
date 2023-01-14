@@ -50,7 +50,12 @@ export function Appbar() {
       <ContentFrame>
         <Leading>
           <Home>
-            <Image src={"/logo.svg"} height={20} width={100} />
+            <Image
+              alt="CORS.SH Logo (svg)"
+              src={"/logo.svg"}
+              height={20}
+              width={100}
+            />
           </Home>
           <Menus>
             <MenuItem label="Usage" href="#usage" />
