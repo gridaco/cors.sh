@@ -41,7 +41,7 @@ function SeoMeta() {
       <meta name="description" content="One CORS Proxy you'll ever need" />
       <meta
         name="keywords"
-        content="cors, cors proxy, cors proxy server, free cors proxy, soap, cors playground, cors-anywhere"
+        content="cors, cors proxy, cors proxy server, free cors proxy, soap, cors playground, cors-anywhere, cors anywhere alternative"
       />
       <meta property="og:image" content="/og:image.jpg" />
     </>
