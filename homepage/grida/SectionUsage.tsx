@@ -141,23 +141,6 @@ const Success = styled.div`
   height: 41px;
 `;
 
-const Frame575 = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  align-items: center;
-  flex: none;
-  gap: 10px;
-  box-sizing: border-box;
-  padding: 4px 0px 0px;
-`;
-
-const Frame574 = styled.img`
-  width: 15px;
-  height: 15px;
-  object-fit: cover;
-`;
-
 const FetchSuccess = styled.span`
   color: white;
   text-overflow: ellipsis;
