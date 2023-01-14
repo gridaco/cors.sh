@@ -1,0 +1,7 @@
+# Block all crawlers for /console
+User-agent: *
+Disallow: /console
+
+# Allow all crawlers
+User-agent: *
+Allow: /
