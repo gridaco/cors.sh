@@ -41,3 +41,10 @@ git submodule update --init --recursive
    We'll consistently optimize our service infra to keep the paid version affordable as possible.
 
 2. The original code behind cors proxy is by Rob wu's cors-anywhere and the playground is forked from hoppscotch. both licensed under MIT, and our project cors.sh is also licensed under MIT License.
+
+
+## TODOs
+
+- Cost optimization - make it more cheap & provide free version to all.
+- Management console - Enable usesrs to create projects as much as they want.
+- OSS Application pipeline - Make OSS developers to get their api key right-on and get verified later.
