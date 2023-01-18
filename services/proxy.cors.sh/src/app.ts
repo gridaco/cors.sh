@@ -54,6 +54,21 @@ app.use(limiter.hourly);
 app.use(limiter.monthly);
 
 // -- execution order matters --
+// (0)
+app.use((req, res, next) => {
+  // support 'x-strict-request-url'
+  // refer issue: https://github.com/gridaco/cors.sh/issues/38
+  const x_strict_request_url = req.headers["x-strict-request-url"];
+  if (x_strict_request_url && typeof x_strict_request_url === "string") {
+    // need prefix with '/' (required by cors_proxy to parse)
+    req.url = "/" + x_strict_request_url;
+    next();
+    return;
+  }
+
+  next();
+});
+
 // (1)
 app.use((req, res, next) => {
   if (res.headersSent) {
