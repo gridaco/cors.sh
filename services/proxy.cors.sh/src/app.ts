@@ -11,20 +11,27 @@ import { authorization } from "./auth";
 const app = express();
 
 const cors_proxy = corsProxy.createServer({
-  // https://github.com/Rob--W/cors-anywhere/issues/39
+  originBlacklist: [],
+  originWhitelist: [],
   requireHeader: ["origin", "x-requested-with"],
-  // requireHeader: [],
+  checkRateLimit: null,
   removeHeaders: [
     "cookie",
     "cookie2",
+    // Strip Heroku-specific headers
     "x-request-start",
     "x-request-id",
     "via",
     "connect-time",
     "total-route-time",
+    // Other Heroku added debug headers
+    // 'x-forwarded-for',
+    // 'x-forwarded-proto',
+    // 'x-forwarded-port',
   ],
   redirectSameOrigin: true,
   httpProxyOptions: {
+    // Do not add X-Forwarded-For, etc. headers, because Heroku already adds it.
     xfwd: false,
   },
 });
