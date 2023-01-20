@@ -1,5 +1,22 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { motion } from "framer-motion";
+/**
+ *
+ */
+function useSeoNotImportant() {
+  const [load, setLoad] = React.useState(false);
+
+  React.useEffect(() => {
+    // load after 5 seconds
+    setTimeout(() => {
+      setLoad(true);
+    }, 5000);
+  }, []);
+
+  return load;
+}
+
 /**
  * `<SectionDisclaimer>` ('section-disclaimer')
  * - [Open in Figma](https://figma.com/file/aPfdtNb1aGFIN9p05cmmVY?node-id=20:1965)
@@ -37,8 +54,18 @@ import styled from "@emotion/styled";
  * <!-- grida.meta.widget_declaration | engine : 0.0.1 | source : figma://aPfdtNb1aGFIN9p05cmmVY/20:1965 -->
  */
 export function SectionDisclaimer() {
+  const load = useSeoNotImportant();
+
+  if (!load) {
+    return <></>;
+  }
+
   return (
-    <RootWrapperSectionDisclaimer>
+    <RootWrapperSectionDisclaimer
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <Disclaimer>DISCLAIMER</Disclaimer>
       <Text>
         1. This project's intend is to serve developers a reliable cors proxy
@@ -56,7 +83,7 @@ export function SectionDisclaimer() {
   );
 }
 
-const RootWrapperSectionDisclaimer = styled.div`
+const RootWrapperSectionDisclaimer = styled(motion.div)`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -65,7 +92,8 @@ const RootWrapperSectionDisclaimer = styled.div`
 `;
 
 const Disclaimer = styled.span`
-  color: black;
+  color: white;
+  opacity: 0.5;
   text-overflow: ellipsis;
   font-size: 18px;
   font-family: "Roboto Mono", sans-serif;
