@@ -27,6 +27,12 @@ export function OnboardingCta() {
             Please check your <b>spam folder</b> as well
           </p>
         );
+
+        // log conversion (signup)
+        // @ts-ignore
+        window.gtag("event", "sign_up", {
+          method: "email",
+        });
       })
       .catch((e) => {
         toast.error(<p>Something went wrong</p>);
