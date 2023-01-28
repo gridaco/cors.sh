@@ -29,7 +29,6 @@ export default function GetstartedPage({ price: _price }: { price: string }) {
   const pricing_options = Object.values(pricing);
 
   const onPriceChange = (price: string) => {
-    console.log("price change", price);
     setPrice(price);
   };
 
@@ -51,6 +50,23 @@ export default function GetstartedPage({ price: _price }: { price: string }) {
 
   const onNextClick = useCallback(async () => {
     setIsBusy(true);
+
+    try {
+      // log begin_checkout event
+      const pricedata = pricing[price];
+
+      // @ts-ignore
+      window.gtag("event", "begin_checkout", {
+        value: pricedata.value,
+        currency: pricedata.currency,
+        items: [
+          {
+            item_id: pricedata.id,
+            item_name: pricedata.label,
+          },
+        ],
+      });
+    } catch (e) {}
 
     try {
       // create onboarding application
@@ -144,7 +160,7 @@ export default function GetstartedPage({ price: _price }: { price: string }) {
               }}
               //
               onChange={(e) => {
-                e && onPriceChange(e.value);
+                e && onPriceChange(e.id);
               }}
               value={pricing[price]}
               options={pricing_options}
@@ -178,19 +194,25 @@ export default function GetstartedPage({ price: _price }: { price: string }) {
 
 const pricing = {
   [k.PRICE_PERSONAL_PRO_MONTHLY]: {
-    value: k.PRICE_PERSONAL_PRO_MONTHLY,
+    id: k.PRICE_PERSONAL_PRO_MONTHLY,
     label: "Pro - $4/Mo",
+    value: 4,
+    currency: "USD",
   },
   [k.PRICE_PERSONAL_PRO_YEARLY]: {
-    value: k.PRICE_PERSONAL_PRO_YEARLY,
+    id: k.PRICE_PERSONAL_PRO_YEARLY,
     label: "Pro - $3/Mo (Pay annualy, save $12)",
+    value: 36,
+    currency: "USD",
   },
   [k.PRICE_ENTERPRISE_PRO_YEARLY]: {
-    value: k.PRICE_ENTERPRISE_PRO_YEARLY,
+    id: k.PRICE_ENTERPRISE_PRO_YEARLY,
     label: "Enterprise - $499/Yr",
+    value: 499,
+    currency: "USD",
   },
   // [k.PRICE_FREE_MONTHLY]: {
-  //   value: k.PRICE_FREE_MONTHLY,
+  //   id: k.PRICE_FREE_MONTHLY,
   //   label: "Free",
   // },
   // [k.PRICE_PAY_AS_YOU_GO]: {},
