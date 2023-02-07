@@ -6,10 +6,12 @@ assignees: [softmarshmallow]
 body:
 - type: checkboxes
   attributes:
-    label: You are applying for OSS program
+    label: You are applying for validated OSS program
     description: Please ensure your project is open to public.
     options:
-    - label: Yes my project is OSS licensed and open to public.
+    - label: My project is OSS licensed and open to public. (Must have LICENSE file)
+      required: true
+    - label: My project is has more than 10 ⭐️stars on Github, which is the required for this program.
       required: true
 - type: textarea
   attributes:
