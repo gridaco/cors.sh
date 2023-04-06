@@ -25,6 +25,16 @@ fetch("https://proxy.cors.sh/https://example.com/");
 - [gridaco/playground.cors.sh](https://github.com/gridaco/playground.cors.sh)
 - [hoppscotch/hoppscotch](https://github.com/hoppscotch/hoppscotch)
 
+
+## Projects using CORS.SH
+- https://github.com/IMGROOT2/algo
+- https://github.com/alejandroch1202/dollar-monitor
+- https://github.com/Iconem/search-satellite-imagery/
+- https://github.com/PavelLaptev/JSON-to-Figma
+- https://github.com/TomRadford/shootdrop
+
+
+
 ## Contributing
 
 ```bash
