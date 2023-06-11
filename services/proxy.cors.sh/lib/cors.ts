@@ -303,7 +303,7 @@ export const createServer = (options: OptionParams) => {
     "error",
     function (err: Error, _: http.IncomingMessage, res: http.ServerResponse) {
       if (process.env.NODE_ENV !== "production") {
-        console.error("Proxy error: ", err);
+        console.error("Proxy error: ", err, res);
       }
 
       if (res.headersSent) {
