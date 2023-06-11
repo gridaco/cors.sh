@@ -302,6 +302,10 @@ export const createServer = (options: OptionParams) => {
   proxy.on(
     "error",
     function (err: Error, _: http.IncomingMessage, res: http.ServerResponse) {
+      if (process.env.NODE_ENV !== "production") {
+        console.error("Proxy error: ", err);
+      }
+
       if (res.headersSent) {
         if (res.writableEnded === false) {
           res.end();
