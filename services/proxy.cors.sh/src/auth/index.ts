@@ -68,6 +68,19 @@ export async function authorization(
   switch (mode) {
     case "live":
     case "test": {
+      if (process.env.STAGE !== "production") {
+        // bypass auth check in dev
+        const authorization: AuthorizationInfo = {
+          authorized: true,
+          id: "dev",
+          tier: "unlimited",
+        };
+        res.locals.authorization = authorization;
+        next();
+        return;
+        //
+      }
+
       // TODO: explicit handling for test / live key
       const verified = await verify_synced_key(signature);
       if (verified) {

@@ -28,6 +28,7 @@ provider:
     endpointType: regional
   region: us-west-1
   environment:
+    STAGE: ${opt:stage, self:provider.stage}
     RATE_LIMIT_REDIS_URL: ${env:RATE_LIMIT_REDIS_URL}
     RATE_LIMIT_REDIS_USERNAME: ${env:RATE_LIMIT_REDIS_USERNAME}
     RATE_LIMIT_REDIS_PASSWORD: ${env:RATE_LIMIT_REDIS_PASSWORD}
