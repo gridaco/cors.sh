@@ -6,6 +6,16 @@ import { headerfrom } from "../_util/x-header";
 import { STATIC_CORS_ACCOUNT_API_KEY_HEADERS } from "../k";
 import * as legacy from "./legacy";
 
+function parseApiKey(req: express.Request): string | undefined | null {
+  const apikey_from_header = headerfrom(
+    req.headers,
+    STATIC_CORS_ACCOUNT_API_KEY_HEADERS
+  );
+  const apikey_from_query = req.query["cors_api_key"] as string;
+
+  return apikey_from_header || apikey_from_query;
+}
+
 export async function authorization(
   req: express.Request,
   res: express.Response,
@@ -30,7 +40,7 @@ export async function authorization(
     next();
   }
 
-  const apikey = headerfrom(req.headers, STATIC_CORS_ACCOUNT_API_KEY_HEADERS);
+  const apikey = parseApiKey(req);
 
   if (!apikey) {
     // no key, anonymous
