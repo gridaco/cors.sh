@@ -11,7 +11,19 @@ function parseApiKey(req: express.Request): string | undefined | null {
     req.headers,
     STATIC_CORS_ACCOUNT_API_KEY_HEADERS
   );
-  const apikey_from_query = req.query["cors_api_key"] as string;
+
+  const api_key_q = "cors_api_key";
+
+  // parsing from query requires parsing the url then, parsing the query, since the api call can contain the original url with their query.
+  let apikey_from_query;
+  try {
+    // since url starts with "/" we need to remove the first character, then decode the url
+    const url = decodeURI(req.url.slice(1));
+    const params = new URL(url).searchParams;
+    apikey_from_query = params.get(api_key_q);
+  } catch (e) {
+    apikey_from_query = req.query[api_key_q] as string;
+  }
 
   return apikey_from_header || apikey_from_query;
 }
