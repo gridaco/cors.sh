@@ -31,11 +31,11 @@ router.get("/:id", async (req, res) => {
     },
   });
 
-  const signed = await signApplication(application);
-
   if (!application) {
     return res.status(404).json({ error: "application not found" });
   }
+
+  const signed = await signApplication(application);
 
   res.json(msak(signed));
 });
