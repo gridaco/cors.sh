@@ -169,7 +169,7 @@ export async function authorization(
 export interface AuthorizationInfo {
   authorized: boolean;
   id: string | "demo";
-  tier: "anonymous" | "free" | "unlimited" | "2022.t1" | "2023.t1";
+  tier: "anonymous" | "free" | "unlimited" | "2022.t1" | "2023.t1" | "2023.t2";
   skip_rate_limit?: boolean;
 }
 

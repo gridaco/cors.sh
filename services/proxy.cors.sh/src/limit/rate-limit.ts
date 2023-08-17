@@ -5,6 +5,9 @@ import { createClient } from "redis";
 import {
   RATE_LIMIT_FREE_ANONYMOUS_PER_HOUR,
   RATE_LIMIT_FREE_AUTHORIZED_PER_HOUR,
+  RATE_LIMIT_PAID_PER_MONTH_DEFAULT,
+  RATE_LIMIT_PAID_PER_MONTH_T1,
+  RATE_LIMIT_PAID_PER_MONTH_T2,
 } from "../k";
 import type { AuthorizationInfo } from "../auth";
 
@@ -77,7 +80,8 @@ const limiter_free_per_hour = rateLimit({
       case "2022.t1":
         // legacy, all free version
         return RATE_LIMIT_FREE_AUTHORIZED_PER_HOUR; // per hour
-      case "2023.t1": {
+      case "2023.t1":
+      case "2023.t2": {
         // paid version
         // no limit, passed by skip()
         return Infinity;
@@ -119,11 +123,35 @@ const limiter_free_per_hour = rateLimit({
   }),
 });
 
+const MONTH28MS = 60 * 1000 * 60 * 24 * 28; // 28 days in ms
+
 // Consider: monthly rate limit might require bigger redis instance
 const limiter_paid_per_month = rateLimit({
   // 28-day month
-  windowMs: 60 * 1000 * 60 * 24 * 28, // 28 days
-  max: 500000,
+  windowMs: MONTH28MS,
+  // max: RATE_LIMIT_PAID_PER_MONTH_T1,
+  max: (req: Request, res: Response) => {
+    const { tier } = (res.locals.authorization as AuthorizationInfo) ?? {};
+
+    switch (tier) {
+      case "2023.t1": {
+        // paid version tier 1 ($4 / Mo)
+        return RATE_LIMIT_PAID_PER_MONTH_T1;
+      }
+      case "2023.t2": {
+        // paid version tier 2 ($20 / Mo)
+        return RATE_LIMIT_PAID_PER_MONTH_T2;
+      }
+      case "unlimited":
+        return Infinity;
+      case "anonymous": // anon, blocked by hourly limiter anyway
+      case "free": // free, blocked by hourly limiter anyway
+      case "2022.t1": // legacy, all free version
+      default:
+        // anonymous (free)
+        return RATE_LIMIT_PAID_PER_MONTH_DEFAULT; // per month
+    }
+  },
   skip: (req: Request, res: Response) => {
     if (req.method == "OPTIONS" || req.method == "HEAD") {
       return true;
