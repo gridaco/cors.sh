@@ -103,7 +103,7 @@ const limiter_free_per_hour = rateLimit({
     const { skip_rate_limit, tier } =
       (res.locals.authorization as AuthorizationInfo) ?? {};
 
-    if (tier === "2023.t1") {
+    if (tier === "2023.t1" || tier === "2023.t2") {
       // since no monthly limit, skip the hourly limit for paid version
       force_skip = true;
     }
