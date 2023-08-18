@@ -6,7 +6,7 @@ const TABLE = process.env.DYNAMODB_TABLE_SERVICE_KEYS!;
 
 export async function verify_synced_key(key: string): Promise<
   | {
-      plan: "2023.t1";
+      plan: "2023.t1" | "2023.t2";
       billing_group: string;
     }
   | false
@@ -17,10 +17,10 @@ export async function verify_synced_key(key: string): Promise<
     return false;
   }
 
-  const { active, expires_at, billing_group } = record;
+  const { active, expires_at, billing_group, plan } = record;
   if (active && expires_at > day().unix()) {
     return {
-      plan: "2023.t1",
+      plan: plan as any,
       billing_group,
     };
   }
