@@ -167,6 +167,7 @@ const limiter_paid_per_month = rateLimit({
   }),
 });
 
+// FIXME: - We have to merge the two limiters into one - seems the skip does not do what we thought it does (It always uses the hourly limiter. even for paid plan, causing it to be infinite)
 export default {
   hourly: limiter_free_per_hour,
   monthly: limiter_paid_per_month,
