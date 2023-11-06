@@ -5,8 +5,10 @@ import Image from 'next/image'
 
 
 export function Header() {
-  return <header className="fixed max-w-screen-xl m-auto left-0 right-0 top-0 p-4 pt-5 pb-5 z-10 w-full items-center justify-between font-mono text-sm lg:flex">
-    <span className="flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
+  return <header className="fixed max-w-screen-xl m-auto left-0 right-0 top-0 p-10 pt-5 pb-5 z-10 w-full items-center justify-between font-mono text-sm lg:flex">
+    <span className="flex gap-2 items-center w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
+      <Link href='https://grida.co'>Grida</Link>
+      /
       <Link href="/">
         <svg width="64" height="11" viewBox="0 0 64 11" fill="white" xmlns="http://www.w3.org/2000/svg">
           <path d="M10.0869 4.1537H7.12387C7.10286 3.91018 7.04682 3.68928 6.95576 3.49099C6.8682 3.29269 6.74561 3.12223 6.58801 2.9796C6.4339 2.83349 6.24652 2.72217 6.02587 2.64564C5.80522 2.56562 5.5548 2.52562 5.27461 2.52562C4.78427 2.52562 4.36924 2.6439 4.02951 2.88046C3.69328 3.11701 3.4376 3.4562 3.26248 3.89801C3.09086 4.33982 3.00505 4.87034 3.00505 5.48956C3.00505 6.14358 3.09262 6.69149 3.26773 7.1333C3.44636 7.57163 3.70378 7.90212 4.04001 8.12476C4.37624 8.34393 4.78077 8.45351 5.25359 8.45351C5.52328 8.45351 5.76494 8.42046 5.97859 8.35436C6.19223 8.28479 6.37786 8.18564 6.53547 8.05693C6.69308 7.92821 6.82091 7.7734 6.91898 7.5925C7.02055 7.40813 7.08885 7.20114 7.12387 6.97154L10.0869 6.99241C10.0519 7.44466 9.92404 7.9056 9.70339 8.37524C9.48273 8.8414 9.16927 9.27277 8.76299 9.66936C8.36022 10.0625 7.86113 10.379 7.26572 10.6191C6.67031 10.8591 5.97859 10.9791 5.19055 10.9791C4.20287 10.9791 3.31677 10.7687 2.53223 10.3477C1.7512 9.92679 1.13302 9.30756 0.677713 8.49004C0.225904 7.67252 0 6.67236 0 5.48956C0 4.29981 0.231158 3.29791 0.693474 2.48387C1.15579 1.66635 1.77922 1.04886 2.56375 0.631404C3.34829 0.210468 4.22389 0 5.19055 0C5.87001 0 6.49519 0.0921884 7.06608 0.276565C7.63697 0.460942 8.13782 0.73055 8.56861 1.08539C8.9994 1.43675 9.34614 1.86986 9.60882 2.38472C9.8715 2.89959 10.0309 3.48925 10.0869 4.1537Z" />
@@ -41,11 +43,9 @@ export function Header() {
           </button>
         </Link>
 
-        <div style={{ width: 40 }} />
+        <div style={{ width: 16 }} />
         <Link href="https://github.com/gridaco/cors.sh" target="_blank">
-          <button>
-            <GitHubLogoIcon />
-          </button>
+          <GitHubLogoIcon width={24} height={24} />
         </Link>
       </div>
     </div>
