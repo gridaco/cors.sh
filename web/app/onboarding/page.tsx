@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect } from "react";
 import {
   Button,
@@ -7,7 +8,7 @@ import {
 } from "@editor-ui/console";
 import Select from "react-select";
 import client from "@cors.sh/service-api";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import Head from "next/head";
 import { FormPageLayout } from "@app/ui/layouts";

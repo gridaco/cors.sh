@@ -14,7 +14,23 @@ import client from "@cors.sh/service-api";
 import * as k from "@/k";
 import { toast } from "react-hot-toast";
 
-export default function GetstartedPage({ price: _price }: { price: string }) {
+// eslint-disable-next-line @next/next/no-async-client-component
+export default async function GetstartedPage({ query }: {
+  query: {
+    price: string
+  }
+}) {
+  const { price: _q_price } = query;
+
+  const validate_price_id = (price_id: string | undefined): boolean => {
+    return price_id?.startsWith("price_") || false;
+  };
+
+  const _price = validate_price_id(_q_price)
+    ? _q_price
+    : k.PRICE_PERSONAL_PRO_MONTHLY;
+
+
   const [name, setName] = React.useState("");
   const [price, setPrice] = React.useState(_price);
   const [allowedOrigins, setAllowedOrigins] = React.useState("");
@@ -219,20 +235,3 @@ const pricing = {
   // [k.PRICE_PAY_AS_YOU_GO]: {},
 } as const;
 
-export async function getServerSideProps(context: any) {
-  const { price } = context.query;
-
-  const validate_price_id = (price_id: string | undefined): boolean => {
-    return price_id?.startsWith("price_") || false;
-  };
-
-  const _price = validate_price_id(price)
-    ? price
-    : k.PRICE_PERSONAL_PRO_MONTHLY;
-
-  return {
-    props: {
-      price: _price,
-    },
-  };
-}

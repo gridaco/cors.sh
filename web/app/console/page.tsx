@@ -8,10 +8,21 @@ import { ArrowRightIcon } from "@radix-ui/react-icons";
 import { UnderlineButton } from "@app/ui/components";
 
 export default function ConsoleIndex({
-  applications,
+
 }: {
-  applications: any[];
-}) {
+
+  }) {
+  const applications = [
+    {
+      id: "1",
+      name: "My app",
+    },
+    {
+      id: "2",
+      name: "My app 2",
+    },
+  ]
+
   return (
     <>
       <Head>
@@ -95,21 +106,3 @@ const ItemWrap = styled.div`
 
   transition: all 0.2s ease-in-out;
 `;
-
-export async function getServerSideProps(context: any) {
-  // fetch all my applications
-  return {
-    props: {
-      applications: [
-        {
-          id: "1",
-          name: "My app",
-        },
-        {
-          id: "2",
-          name: "My app 2",
-        },
-      ],
-    },
-  };
-}

@@ -4,6 +4,13 @@ import Head from "next/head";
 import React from "react";
 
 export default function ContinueOnboardingWithVerification() {
+  return {
+    redirect: {
+      destination: "/get-started",
+      permanent: false,
+    },
+  };
+
   return (
     <>
       <Head>
@@ -12,16 +19,4 @@ export default function ContinueOnboardingWithVerification() {
       <h1>Redirecting..</h1>
     </>
   );
-}
-
-export async function getServerSideProps() {
-  //
-  // TODO: fully implement.
-  // for now, redirect to get-started
-  return {
-    redirect: {
-      destination: "/get-started",
-      permanent: false,
-    },
-  };
 }
