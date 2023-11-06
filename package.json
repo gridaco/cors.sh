@@ -11,6 +11,7 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
+    "web",
     "homepage",
     "console",
     "packages/*",
