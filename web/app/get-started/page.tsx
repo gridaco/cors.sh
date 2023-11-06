@@ -1,3 +1,4 @@
+'use client'
 import React, { useCallback, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import { FormPageLayout } from "@app/ui/layouts";
@@ -10,7 +11,7 @@ import {
 } from "@editor-ui/console";
 import Select from "react-select";
 import client from "@cors.sh/service-api";
-import * as k from "../../k";
+import * as k from "@/k";
 import { toast } from "react-hot-toast";
 
 export default function GetstartedPage({ price: _price }: { price: string }) {
