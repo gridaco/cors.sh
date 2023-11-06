@@ -4,7 +4,7 @@ import { Pencil1Icon } from "@radix-ui/react-icons";
 import client, { ApplicationWithApiKey } from "@cors.sh/service-api";
 import { FormPageLayout, PageCloseButton } from "@app/ui/layouts";
 import { Button, TextFormField } from "@editor-ui/console";
-import { Logo } from "logo";
+import { Logo } from "@/components/logo";
 import { UnderlineButton } from "@app/ui/components";
 import { ApiKeyReveal } from "@app/ui/components";
 
@@ -33,7 +33,7 @@ export default function ApplicationDetailPage({
           placeholder="http://localhost:3000, https://my-site.com"
           helpText="You can add up to 3 urls of your site"
           value={application.allowedOrigins?.join(", ")}
-          // onChange={setAllowedOrigins}
+        // onChange={setAllowedOrigins}
         />
         <TextFormField
           readonly
@@ -41,7 +41,7 @@ export default function ApplicationDetailPage({
           placeholder="http://localhost:3000, https://my-site.com"
           helpText="You can restrict target urls for extra security"
           value={application.allowedOrigins?.join(", ")}
-          // onChange={setAllowedOrigins}
+        // onChange={setAllowedOrigins}
         />
 
         <Button height={36}>Save</Button>

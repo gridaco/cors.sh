@@ -1,11 +1,37 @@
 'use client'
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
 
 import React from 'react';
 import { useMove } from '@use-gesture/react'
 import styled from "@emotion/styled"
 import Image from 'next/image';
+import { examples } from "@/k"
 
-export function HomeHoverCard() {
+export function HomeHoverCard1() {
+  return <div className='max-w-lg p-4 border border-white/10 rounded-xl'>
+    <div className='flex flex-row gap-2 justify-between'>
+      <Image src='/assets/home-demo-0-illust-0-web.png' width={100} height={90} alt='' />
+      <Image src='/assets/home-demo-0-illust-1-cloud.png' width={100} height={90} alt='' />
+      <Image src='/assets/home-demo-0-illust-2-server.png' width={100} height={90} alt='' />
+    </div>
+    <SyntaxHighlighter
+      customStyle={{
+        fontSize: 12,
+        borderRadius: 12,
+        background: '#08070E',
+        border: 'rgba(144, 175, 255, 0.1) 1px solid',
+      }}
+      language='javascript' style={{
+        ...dracula,
+      }}>
+      {examples.fetch('https://example.com')}
+    </SyntaxHighlighter>
+  </div >
+}
+
+export function HomeHoverCardV2() {
   const [{ x, y }, set] = React.useState({ x: 0, y: 0 });
 
   const bind = useMove(({ movement: [mx, my], memo }) => {

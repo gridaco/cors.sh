@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 
 export function Header() {
-  return <header className="fixed m-auto left-0 right-0 top-0 p-5 z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
+  return <header className="fixed max-w-screen-xl m-auto left-0 right-0 top-0 p-4 pt-5 pb-5 z-10 w-full items-center justify-between font-mono text-sm lg:flex">
     <span className="flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
       <Link href="/">
         <svg width="64" height="11" viewBox="0 0 64 11" fill="white" xmlns="http://www.w3.org/2000/svg">
@@ -23,28 +23,31 @@ export function Header() {
       <Link href='#example'>
         Example
       </Link>
-      <a>
-      </a>
       <Link href='#usage'>
         Usage
       </Link>
+      <Link href='/playground'>
+        Playground
+      </Link>
     </div>
     <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-      <div className='flex gap-4'>
-        <Link href='/playground'>
-          Playground
-        </Link>
+      <div className='flex gap-4 items-center'>
         <Link href='/pricing'>
           Pricing
         </Link>
         <Link href='/get-started'>
-          Get Started
+          <button className="bg-neutral-50 text-neutral-950 p-3 rounded-md">
+            Get Started
+          </button>
         </Link>
 
-
+        <div style={{ width: 40 }} />
+        <Link href="https://github.com/gridaco/cors.sh" target="_blank">
+          <button>
+            <GitHubLogoIcon />
+          </button>
+        </Link>
       </div>
-      <div style={{ width: 40 }} />
-      <GitHubLogoIcon />
     </div>
   </header>
 }
