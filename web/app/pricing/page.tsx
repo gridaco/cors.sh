@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import styled from "@emotion/styled";
-import Head from "next/head";
 import { FaqItem } from "@/components/faq";
 import { PricingCard } from "@/components/pricing";
 import { motion } from "framer-motion";
@@ -28,9 +27,6 @@ export default function Pricing() {
 
   return (
     <>
-      <Head>
-        <title>Pricing - The Bundle</title>
-      </Head>
       <Main>
         <motion.h1
           initial={{ opacity: 0, y: 12 }}
@@ -178,6 +174,8 @@ const Main = styled.main`
   min-height: 100vh;
 
   font-family: "Inter", sans-serif;
+
+  margin-top: 80px;
 
   h1 {
     margin-top: 80px;

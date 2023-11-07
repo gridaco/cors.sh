@@ -140,12 +140,12 @@ export default function GetstartedPage() {
           gap: 8,
         }}
       >
-        <h1>Get started</h1>
-        <p>
+        <h1 className="text-3xl font-bold">Get started</h1>
+        <p className="text-sm font-normal">
           Ready to use cors.sh? select your plan and let’s create your first
           project. <br />
         </p>
-        <p style={{ opacity: 0.5 }}>you can update the fields later</p>
+        <p className="text-xs font-normal opacity-50">*you can update the fields later</p>
       </div>
       <div className="form">
         <TextFormField
@@ -169,6 +169,11 @@ export default function GetstartedPage() {
             <Select
               id="pricing-select"
               instanceId="pricing-select"
+              styles={{
+                'menu': (provided: any) => ({
+                  background: 'black'
+                })
+              }}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   onEnter();
@@ -185,6 +190,7 @@ export default function GetstartedPage() {
         </FormFieldBase>
         <div style={{ height: 16 }} />
         <Button
+          color="white"
           disabled={!isValid || isBusy}
           onClick={onNextClick}
           height={"32px"}
