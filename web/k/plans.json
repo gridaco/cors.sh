@@ -1,0 +1,29 @@
+{
+  "personal": {
+    "id": "price_1NmmJbAvR3geCh5rhHxEElr2",
+    "price": {
+      "value": 19,
+      "currency": "usd",
+      "symbol": "$",
+      "interval": "month"
+    }
+  },
+  "team": {
+    "id": "price_1NmmLLAvR3geCh5rxm0cJof5",
+    "price": {
+      "value": 199,
+      "currency": "usd",
+      "symbol": "$",
+      "interval": "month"
+    }
+  },
+  "studio": {
+    "id": "price_1NmmLdAvR3geCh5roMwfT4Pk",
+    "price": {
+      "value": 499,
+      "currency": "usd",
+      "symbol": "$",
+      "interval": "month"
+    }
+  }
+}
