@@ -13,7 +13,7 @@ import LineMotion from '@/motions/electron';
 
 export function HomeCardExample() {
   return <HomeCardWrapper className='max-w-lg w-auto p-4 border border-white/10 rounded-xl flex flex-col gap-4 bg-black items-stretch'>
-    <div className='relative flex pl-8 pr-8 flex-row gap-2 justify-between select-none pointer-events-none'>
+    <div className='relative flex mt-10 pl-8 pr-8 flex-row gap-2 justify-between select-none pointer-events-none'>
       <div className='absolute inset-0 translate-y-1/2 ml-16 mr-16'>
         <LineMotion />
       </div>

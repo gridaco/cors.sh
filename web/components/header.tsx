@@ -26,22 +26,22 @@ export function Header() {
       </Link>
     </span>
     <div className='m-0 hidden md:flex gap-4 md:ml-10'>
-      <Link href='#example'>
+      {/* <Link href='#example'>
         Example
-      </Link>
-      <Link href='#usage'>
-        Usage
-      </Link>
+      </Link> */}
       <Link href='/playground'>
         Playground
+      </Link>
+      <Link href='/pricing'>
+        Pricing
       </Link>
     </div>
     <div className="flex-1" />
     <div className="fixed bottom-0 left-0 p-5 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black md:p-0 md:static md:h-auto md:w-auto md:bg-none">
       <div className='flex gap-4 items-center'>
-        <Link href='/pricing'>
-          Pricing
-        </Link>
+        {/* <Link href='/console'>
+          Console
+        </Link> */}
         <Link href='/get-started'>
           <button className="bg-none md:bg-neutral-50 text-inherit md:text-neutral-950 p-3 rounded-md">
             Get Started
