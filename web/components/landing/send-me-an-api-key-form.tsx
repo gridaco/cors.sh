@@ -46,7 +46,10 @@ export function SendMeAnApiKeyForm() {
 
   // 
   return (
-    <form className='flex flex-col md:flex-row gap-3'>
+    <form className='flex flex-col md:flex-row gap-3' onSubmit={(e) => {
+      e.preventDefault();
+      onsend();
+    }}>
       <input
         className='p-5 text-neutral-100 bg-neutral-900 rounded-sm outline-none focus:outline-neutral-900 flex-1 min-w-[200px]'
         type="email"
@@ -54,11 +57,6 @@ export function SendMeAnApiKeyForm() {
         placeholder="alice@acme.com"
         value={email}
         disabled={isBusy}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            onsend();
-          }
-        }}
         onChange={(e) => {
           setEmail(e.target.value);
         }}
