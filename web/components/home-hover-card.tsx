@@ -10,9 +10,25 @@ import Image from 'next/image';
 import { examples } from "@/k"
 import Link from 'next/link';
 import LineMotion from '@/motions/electron';
+import { motion } from 'framer-motion';
 
 export function HomeCardExample() {
-  return <HomeCardWrapper className='max-w-lg w-auto p-4 border border-white/10 rounded-xl flex flex-col gap-4 bg-black items-stretch'>
+  return <HomeCardWrapper
+    style={{
+      willChange: 'transform'
+    }}
+    initial={{
+      opacity: 0.0,
+      transform: "perspective(1000px) translateY(40px) rotateX(0deg) rotateY(0deg)",
+    }}
+    animate={{
+      opacity: 1,
+      transform: "perspective(1000px) translateY(0) rotateX(5deg) rotateY(-5deg)",
+    }}
+    whileHover={{
+      transform: "perspective(600px) rotateX(0deg) rotateY(0deg)",
+    }}
+    className='max-w-lg w-auto p-4 border border-white/10 rounded-xl flex flex-col gap-4 bg-black items-stretch'>
     <div className='relative flex mt-10 pl-8 pr-8 flex-row gap-2 justify-between select-none pointer-events-none'>
       <div className='absolute inset-0 translate-y-1/2 ml-16 mr-16'>
         <LineMotion />
@@ -44,7 +60,7 @@ export function HomeCardExample() {
   </HomeCardWrapper >
 }
 
-const HomeCardWrapper = styled.div`
+const HomeCardWrapper = styled(motion.div)`
   box-shadow: 0px 4px 128px 4px rgba(94, 154, 223, 0.16);
 `
 
