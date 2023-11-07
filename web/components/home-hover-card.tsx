@@ -1,6 +1,6 @@
 'use client'
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { atomDark as scheme } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 
 import React from 'react';
@@ -9,14 +9,19 @@ import styled from "@emotion/styled"
 import Image from 'next/image';
 import { examples } from "@/k"
 import Link from 'next/link';
+import LineMotion from '@/motions/electron';
 
 export function HomeCardExample() {
   return <HomeCardWrapper className='max-w-lg w-auto p-4 border border-white/10 rounded-xl flex flex-col gap-4 bg-black items-stretch'>
-    <div className='flex pl-8 pr-8 flex-row gap-2 justify-between select-none pointer-events-none'>
-      <Image src='/assets/home-demo-0-illust-0-web.png' width={100} height={90} alt='' />
-      <Image src='/assets/home-demo-0-illust-1-cloud.png' width={100} height={90} alt='' />
-      <Image src='/assets/home-demo-0-illust-2-server.png' width={100} height={90} alt='' />
+    <div className='relative flex pl-8 pr-8 flex-row gap-2 justify-between select-none pointer-events-none'>
+      <div className='absolute inset-0 translate-y-1/2 ml-16 mr-16'>
+        <LineMotion />
+      </div>
+      <Image className='z-10' src='/assets/home-demo-0-illust-0-web.png' width={100} height={90} alt='' />
+      <Image className='z-10' src='/assets/home-demo-0-illust-1-cloud.png' width={100} height={90} alt='' />
+      <Image className='z-10' src='/assets/home-demo-0-illust-2-server.png' width={100} height={90} alt='' />
     </div>
+
     <div className='text-[10px] lg:text-xs rounded-lg overflow-scroll max-w-xs md:max-w-sm lg:max-w-2xl' style={{
       background: '#08070E',
       border: 'rgba(144, 175, 255, 0.1) 1px solid'
@@ -26,11 +31,10 @@ export function HomeCardExample() {
         customStyle={{
           width: 'auto',
           background: 'transparent',
+          opacity: 0.8
         }}
-        language='javascript'
-        style={{
-          ...dracula,
-        }}>
+        language='typescript'
+        style={scheme}>
         {examples.fetch('https://example.com')}
       </SyntaxHighlighter>
     </div>

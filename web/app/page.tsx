@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <main className="max-w-screen-xl overflow-x-hidden m-auto flex min-h-screen flex-col items-center md:items-stretch justify-center p-10 text-center md:text-start">
       <div id='background' className='fixed -z-10 inset-0 select-none pointer-events-none'>
-        <Image src="/assets/background.svg" fill alt='' objectFit='cover' />
+        <Image src="/assets/background.svg" fill alt='background graphic' />
       </div>
       <div className='flex flex-col mb-40 mt-40 md:mb-0 md:mt-0 md:flex-row gap-20 justify-between items-center md:items-stretch'>
         <div className='flex flex-col gap-16 justify-center max-w-lg'>
