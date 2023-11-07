@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState } from "react";
-import { PricingCard } from "@/components/price-card";
 import * as k from "@/k";
 
 export function PricingCardsList({
@@ -35,7 +34,8 @@ export function PricingCardsList({
     >
       {k.prices.map((price, i) => (
         <div key={i}>
-          <PricingCard
+          TODO
+          {/* <PricingCard
             onClick={() => onSelected(price.id)}
             selected={selected === price.id}
             key={price.id}
@@ -49,7 +49,7 @@ export function PricingCardsList({
             onStartClick={() => {
               onGetStartedClick?.(price.id);
             }}
-          />
+          /> */}
         </div>
 
       ))}

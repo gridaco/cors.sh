@@ -9,7 +9,7 @@ import faqs from "@/k/faq.json";
 import plans_live from "@/k/plans.json";
 import plans_test from "@/k/plans.test.json";
 import { useRouter } from "next/navigation";
-// import { DemoDownloadCard } from "@/components/demo-download-card";
+import { FreeForOpensourceCard } from "@/components/free-for-opensource";
 
 const plans = process.env.NODE_ENV === "production" ? plans_live : plans_test;
 
@@ -130,20 +130,12 @@ export default function Pricing() {
           transition={{ duration: 0.5, delay: 0.3 }}
         />
         <motion.div
-          id="demo"
+          id="free"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
         >
-          <div style={{
-            width: 400,
-            height: 200,
-            background: 'red'
-          }}>
-
-            Free for OpenSource
-          </div>
-          {/* <DemoDownloadCard /> */}
+          <FreeForOpensourceCard />
         </motion.div>
         <motion.hr
           initial={{ opacity: 0, y: 12 }}
