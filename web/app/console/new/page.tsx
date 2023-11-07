@@ -1,4 +1,4 @@
-'use effect'
+'use client'
 
 import React, { useEffect } from "react";
 import { Button, TextFormField } from "@editor-ui/console";

@@ -1,10 +1,16 @@
+
+
 import React, { useEffect } from "react";
 import client from "@cors.sh/service-api";
 import { useRouter } from "next/router";
-import Head from "next/head";
 import { Button, TextFormField } from "@editor-ui/console";
 import { FormPageLayout, PageCloseButton } from "@app/ui/layouts";
 import { toast } from "react-hot-toast";
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: "CORS.SH - Complete"
+}
 
 // page redirected from stripe once the payment is successful
 export default function PaymentSuccessPage({
@@ -59,9 +65,7 @@ export default function PaymentSuccessPage({
 
   return (
     <>
-      <Head>
-        <title>CORS.SH - Complete</title>
-      </Head>
+
       <FormPageLayout>
         <PageCloseButton />
         <>

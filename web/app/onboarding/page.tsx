@@ -110,10 +110,7 @@ function SetupForm() {
           .map((origin) => origin.trim()),
       })
       .then((r) => {
-        router.push({
-          pathname: "[id]",
-          query: { id: r.id },
-        });
+        router.push(`/console/${r.id}`,);
       })
       .finally(() => {
         setIsBusy(false);
@@ -134,7 +131,7 @@ function SetupForm() {
 
   return (
     <>
-      <h1>Now, Let's configure your first application</h1>
+      <h1>Now, Let&apos;s configure your first application</h1>
       <div className="form">
         <TextFormField
           label="Application name"

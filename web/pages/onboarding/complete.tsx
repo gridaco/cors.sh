@@ -3,10 +3,10 @@ import styled from "@emotion/styled";
 import { Client, ApplicationWithApiKey } from "@cors.sh/service-api";
 import Head from "next/head";
 import { FormPageLayout, PageCloseButton } from "@app/ui/layouts";
-import { CollapsibleInfoCard } from "components";
+import { CollapsibleInfoCard } from "@/components/collapsible-info-card";
 import { UnderlineButton } from "@app/ui/components";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { examples } from "k";
+import { examples } from "@/k";
 import { ApiKeyReveal } from "@app/ui/components";
 
 export default function InitialOnboardingFinalPage({
@@ -34,7 +34,7 @@ export default function InitialOnboardingFinalPage({
                 opacity: 0.5,
               }}
             >
-              We've sent you an email with the api key.
+              We&apos;ve sent you an email with the api key.
               <br />
               Please check your inbox :)
             </small>
@@ -69,7 +69,7 @@ export default function InitialOnboardingFinalPage({
                   target={demo_target_url}
                 />
               </CollapsibleInfoCard>
-              {/* <CollapsibleInfoCard title="What's Next?">
+              <CollapsibleInfoCard title="What's Next?">
                 <h5>Useful resources</h5>
                 <ul>
                   <li>
@@ -88,7 +88,7 @@ export default function InitialOnboardingFinalPage({
                     </a>
                   </li>
                 </ul>
-              </CollapsibleInfoCard> */}
+              </CollapsibleInfoCard>
             </div>
           </div>
           <div style={{ height: 30 }} />
@@ -101,8 +101,8 @@ export default function InitialOnboardingFinalPage({
           >
             <i style={{ opacity: 0.5 }}>Thank you for using cors.sh 🙏</i>
 
-            {/* <UnderlineButton>Move to dashboard</UnderlineButton>
-            <UnderlineButton>I need help</UnderlineButton> */}
+            <UnderlineButton>Move to dashboard</UnderlineButton>
+            <UnderlineButton>I need help</UnderlineButton>
           </div>
         </>
       </FormPageLayout>
@@ -126,7 +126,7 @@ function MoreCodeExamples({
   return <CodeBlock language="js">{examples.axios(target, apikey)}</CodeBlock>;
 }
 
-const CodeBlock = styled(SyntaxHighlighter)`
+const CodeBlock = styled(SyntaxHighlighter as any)`
   max-height: 240px;
   font-size: 12px !important;
 `;

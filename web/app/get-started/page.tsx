@@ -1,6 +1,7 @@
 'use client'
+
 import React, { useCallback, useRef, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { FormPageLayout } from "@app/ui/layouts";
 import { validateUrls } from "@app/ui/utils";
 import {
@@ -13,14 +14,12 @@ import Select from "react-select";
 import client from "@cors.sh/service-api";
 import * as k from "@/k";
 import { toast } from "react-hot-toast";
+import { useSearchParams } from "next/navigation";
 
 // eslint-disable-next-line @next/next/no-async-client-component
-export default async function GetstartedPage({ query }: {
-  query: {
-    price: string
-  }
-}) {
-  const { price: _q_price } = query;
+export default function GetstartedPage() {
+  const searchParams = useSearchParams()
+  const _q_price = searchParams?.get("price") as string
 
   const validate_price_id = (price_id: string | undefined): boolean => {
     return price_id?.startsWith("price_") || false;

@@ -21,11 +21,13 @@ export function HomeCardExample() {
       background: '#08070E',
       border: 'rgba(144, 175, 255, 0.1) 1px solid'
     }}>
+      {/* @ts-ignore */}
       <SyntaxHighlighter
         customStyle={{
           background: 'transparent',
         }}
-        language='javascript' style={{
+        language='javascript'
+        style={{
           ...dracula,
         }}>
         {examples.fetch('https://example.com')}

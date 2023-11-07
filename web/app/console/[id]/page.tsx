@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { Pencil1Icon } from "@radix-ui/react-icons";
@@ -8,11 +9,20 @@ import { Logo } from "@/components/logo";
 import { UnderlineButton } from "@app/ui/components";
 import { ApiKeyReveal } from "@app/ui/components";
 
-export default function ApplicationDetailPage({
-  application,
-}: {
-  application: ApplicationWithApiKey;
+export default function ApplicationDetailPage({ params }: {
+  params: {
+    id: string;
+  }
 }) {
+
+  const application: ApplicationWithApiKey = {
+    id: params.id,
+    name: "my-portfolio-website",
+    apikey_live: "prod_1223-xasx-xxe2",
+    apikey_test: "test_xxasdj-xxd9-x2hx",
+    allowedOrigins: []
+  }
+
   return (
     <FormPageLayout>
       <PageCloseButton />
@@ -135,24 +145,3 @@ const TitleInputWrapper = styled.div`
     }
   }
 `;
-
-export async function getServerSideProps(context: any) {
-  const { id } = context.query;
-  // const application = await client.getApplication(id);
-  // return {
-  //   props: {
-  //     application,
-  //   },
-  // };
-
-  return {
-    props: {
-      application: {
-        id,
-        name: "my-portfolio-website",
-        apikey_live: "prod_1223-xasx-xxe2",
-        apikey_test: "test_xxasdj-xxd9-x2hx",
-      },
-    },
-  };
-}

@@ -1,7 +1,11 @@
 import React from "react";
+import type { Metadata } from 'next'
 import client from "@cors.sh/service-api";
 import { Button } from "@editor-ui/console";
-import Head from "next/head";
+
+export const metadata: Metadata = {
+  title: "CORS.SH - Problem with your subscription"
+}
 
 export default function PaymentSuccessButThereWasAProblem({
   error,
@@ -19,9 +23,6 @@ export default function PaymentSuccessButThereWasAProblem({
 }) {
   return (
     <>
-      <Head>
-        <title>CORS.SH - Problem with your subscription</title>
-      </Head>
       <div
         style={{
           display: "flex",
@@ -33,7 +34,7 @@ export default function PaymentSuccessButThereWasAProblem({
           textAlign: "center",
         }}
       >
-        <h1>There was a problem with your subscription - "{error}"</h1>
+        <h1>There was a problem with your subscription - &quot;{error}&quot;</h1>
 
         <div style={{ height: 40 }} />
         <p>{message}</p>

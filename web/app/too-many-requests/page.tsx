@@ -1,7 +1,9 @@
+'use client';
+
 import React from "react";
-import { PricingCardsList } from "../layouts/pricing-card-list";
-import { StepLayout } from "../layouts/step-layout";
-import * as k from "../k";
+import { PricingCardsList } from "@/layouts/pricing-card-list";
+import { StepLayout } from "@/layouts/step-layout";
+import * as k from "@/k";
 export default function TooMayRequestsPage() {
   return (
     <div>
