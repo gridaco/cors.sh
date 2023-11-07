@@ -25,11 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div suppressHydrationWarning>
-          <Toaster position="bottom-center" />
+        <div className='selection:bg-amber-500 selection:text-amber-900'>
+          <div suppressHydrationWarning>
+            <Toaster position="bottom-center" />
+          </div>
+          <Header />
+          {children}
         </div>
-        <Header />
-        {children}
       </body>
     </html>
   )
