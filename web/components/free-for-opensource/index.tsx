@@ -24,7 +24,7 @@ export function FreeForOpensourceCard() {
       <h2 className="text-4xl"><strong>Free </strong><span className="opacity-80 font-light">for Open Source</span></h2>
       <div className="flex flex-col gap-2 items-stretch">
         <button className="bg-white rounded-sm text-lg text-black/80 font-semibold w-auto p-2">
-          <Link href="https://github.com/gridaco/cors.sh/issues/new?template=apply-for-oss-program.yml">
+          <Link href="https://github.com/gridaco/cors.sh/issues/new?template=apply-for-oss-program.yml" target="_blank">
             Apply
           </Link>
         </button>

@@ -17,13 +17,14 @@ export function HomeCardExample() {
       <Image src='/assets/home-demo-0-illust-1-cloud.png' width={100} height={90} alt='' />
       <Image src='/assets/home-demo-0-illust-2-server.png' width={100} height={90} alt='' />
     </div>
-    <div className='text-[10px] lg:text-xs rounded-lg' style={{
+    <div className='text-[10px] lg:text-xs rounded-lg overflow-scroll' style={{
       background: '#08070E',
       border: 'rgba(144, 175, 255, 0.1) 1px solid'
     }}>
       {/* @ts-ignore */}
       <SyntaxHighlighter
         customStyle={{
+          width: 'auto',
           background: 'transparent',
         }}
         language='javascript'
