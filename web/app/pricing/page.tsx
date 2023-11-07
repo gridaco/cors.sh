@@ -42,24 +42,25 @@ export default function Pricing() {
         >
           <PricingCard
             style={price_size.normal}
-            plan="Personal"
+            plan="Monthly Billing"
             price={{
-              value: plans.personal.price.value,
-              currency: plans.personal.price.symbol,
+              value: plans.pro.price.value,
+              currency: plans.pro.price.symbol,
               unit: "/Mo",
             }}
-            desc={"Billed annually or $25 month-to-moth"}
             features={
               <>
-                <li>Single Seat</li>
-                <li>4K Resolution</li>
-                <li>Royalty-free License</li>
+                {
+                  plans.pro.features.map((t, i) => (
+                    <li key={i}>{t}</li>
+                  ))
+                }
               </>
             }
             action={
               <button
                 onClick={() => {
-                  onUpgradeClick(plans.personal.id);
+                  onUpgradeClick(plans.pro.id);
                 }}
               >
                 Get Started
@@ -68,25 +69,26 @@ export default function Pricing() {
           />
           <PricingCard
             style={price_size.highlighted}
-            plan="Team"
+            plan="Annual Billing"
             price={{
-              value: plans.team.price.value,
-              currency: plans.team.price.symbol,
+              value: plans.pro2.price.value,
+              currency: plans.pro2.price.symbol,
               unit: "/Mo",
             }}
             desc={"Annual billing only"}
             features={
               <>
-                <li>Unlimited Seats</li>
-                <li>4K Resolution</li>
-                <li>Royalty-free License</li>
-                <li>Access Blender Files</li>
+                {
+                  plans.pro2.features.map((t, i) => (
+                    <li key={i}>{t}</li>
+                  ))
+                }
               </>
             }
             action={
               <button
                 onClick={() => {
-                  onUpgradeClick(plans.team.id);
+                  onUpgradeClick(plans.pro2.id);
                 }}
               >
                 Get Started
@@ -95,24 +97,26 @@ export default function Pricing() {
           />
           <PricingCard
             style={price_size.normal}
-            plan="Studio"
+            plan="Enterprise"
             desc="Annual billing only"
             price={{
-              value: plans.studio.price.value,
-              currency: plans.studio.price.symbol,
-              unit: "/Mo",
+              value: plans.enterprise.price.value,
+              currency: plans.enterprise.price.symbol,
+              unit: "/Year",
             }}
             features={
               <>
-                <li>Extended Studio License</li>
-                <li>8K Resolution</li>
-                <li>Access Blender Files</li>
+                {
+                  plans.enterprise.features.map((t, i) => (
+                    <li key={i}>{t}</li>
+                  ))
+                }
               </>
             }
             action={
               <button
                 onClick={() => {
-                  onUpgradeClick(plans.studio.id);
+                  onUpgradeClick(plans.enterprise.id);
                 }}
               >
                 Get Started
