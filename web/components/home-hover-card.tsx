@@ -11,13 +11,13 @@ import { examples } from "@/k"
 import Link from 'next/link';
 
 export function HomeCardExample() {
-  return <HomeCardWrapper className='max-w-lg w-auto p-4 border border-white/10 rounded-xl flex flex-col gap-2 bg-black'>
-    <div className='flex flex-row gap-2 justify-between select-none pointer-events-none'>
+  return <HomeCardWrapper className='max-w-lg w-auto p-4 border border-white/10 rounded-xl flex flex-col gap-4 bg-black items-stretch'>
+    <div className='flex pl-8 pr-8 flex-row gap-2 justify-between select-none pointer-events-none'>
       <Image src='/assets/home-demo-0-illust-0-web.png' width={100} height={90} alt='' />
       <Image src='/assets/home-demo-0-illust-1-cloud.png' width={100} height={90} alt='' />
       <Image src='/assets/home-demo-0-illust-2-server.png' width={100} height={90} alt='' />
     </div>
-    <div className='text-[10px] lg:text-xs rounded-lg overflow-scroll' style={{
+    <div className='text-[10px] lg:text-xs rounded-lg overflow-scroll max-w-xs md:max-w-sm lg:max-w-2xl' style={{
       background: '#08070E',
       border: 'rgba(144, 175, 255, 0.1) 1px solid'
     }}>
