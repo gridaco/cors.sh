@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from 'next'
 import client from "@cors.sh/service-api";
 import { Button } from "@editor-ui/console";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "CORS.SH - Problem with your subscription"
@@ -50,9 +51,9 @@ export default function PaymentSuccessButThereWasAProblem({
         </code>
 
         <div style={{ height: 40 }} />
-        <a href={`mailto:hello@grida.co`}>
+        <Link href={`https://cors.sh/contact`}>
           <Button>Contact Support</Button>
-        </a>
+        </Link>
       </div>
     </>
   );
