@@ -21,10 +21,10 @@
     "name": "Pro - Annually",
     "desc": "Annual billing only",
     "price": {
-      "value": 36,
+      "value": 3,
       "currency": "usd",
       "symbol": "$",
-      "interval": "year"
+      "interval": "month"
     },
     "features": [
       "Up to 500,000 requests per month",
