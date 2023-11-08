@@ -8,7 +8,7 @@ import {
 } from "@editor-ui/console";
 import Select from "react-select";
 import client from "@cors.sh/service-api";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import Head from "next/head";
 import { FormPageLayout } from "@app/ui/layouts";
@@ -16,6 +16,7 @@ import { validateUrls } from "@app/ui/utils";
 import { motion } from "framer-motion";
 
 export default function NewApplicationPage() {
+  redirect("/")
   const router = useRouter();
   const [step, setStep] = React.useState<"signin" | "setup">("signin");
 

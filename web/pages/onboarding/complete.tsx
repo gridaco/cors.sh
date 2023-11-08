@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { Client, ApplicationWithApiKey } from "@cors.sh/service-api";
 import Head from "next/head";
-import { FormPageLayout, PageCloseButton } from "@app/ui/layouts";
+import { FormPageLayout } from "@app/ui/layouts";
 import { CollapsibleInfoCard } from "@/components/collapsible-info-card";
 import { UnderlineButton } from "@app/ui/components";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { examples } from "@/k";
 import { ApiKeyReveal } from "@app/ui/components";
+import Link from "next/link";
 
 export default function InitialOnboardingFinalPage({
   application,
@@ -23,7 +24,6 @@ export default function InitialOnboardingFinalPage({
         <title>CORS.SH - Complete</title>
       </Head>
       <FormPageLayout>
-        <PageCloseButton />
         <>
           <h1>
             Extend your api call with <u>proxy.cors.sh</u>
@@ -101,8 +101,12 @@ export default function InitialOnboardingFinalPage({
           >
             <i style={{ opacity: 0.5 }}>Thank you for using cors.sh 🙏</i>
 
-            <UnderlineButton>Move to dashboard</UnderlineButton>
-            <UnderlineButton>I need help</UnderlineButton>
+            {/* <UnderlineButton>Move to dashboard</UnderlineButton> */}
+            <Link href="/contact">
+              <UnderlineButton>
+                I need help
+              </UnderlineButton>
+            </Link>
           </div>
         </>
       </FormPageLayout>
@@ -184,7 +188,7 @@ export async function getServerSideProps(context: any) {
   if (!app) {
     return {
       redirect: {
-        destination: "/console",
+        destination: "/",
         permanent: false,
       },
     };

@@ -102,20 +102,11 @@ export default function PaymentSuccessPage({
 export async function getServerSideProps(context: any) {
   const { session_id, application_id, customer_id, onboarding_id } =
     context.query;
-  if (!session_id) {
+  if (!session_id || !onboarding_id) {
     // invalid entry
     return {
       redirect: {
         destination: "/",
-        permanent: false,
-      },
-    };
-  }
-
-  if (!onboarding_id) {
-    return {
-      redirect: {
-        destination: "/console",
         permanent: false,
       },
     };
