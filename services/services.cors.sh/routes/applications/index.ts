@@ -21,18 +21,25 @@ router.get("/", async (req, res) => {
 
 // get a single application
 router.get("/:id", async (req, res) => {
+  console.info("fething application securely", {
+    id: req.params.id,
+    customer: res.locals.customer,
+  });
   const id = req.params.id;
-  const application = await prisma.application.findFirst({
+  const application = await prisma.application.findUnique({
     where: {
       id: id,
-      owner: {
-        id: res.locals.customer.id as string,
-      },
     },
   });
 
+  console.info("fetched application", application);
+
   if (!application) {
     return res.status(404).json({ error: "application not found" });
+  }
+
+  if (application.ownerId !== res.locals.customer.id) {
+    return res.status(403).json({ error: "application not found" });
   }
 
   const signed = await signApplication(application);
