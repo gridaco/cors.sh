@@ -4,7 +4,7 @@ import { Header } from '@/components/header'
 import { Toaster } from "react-hot-toast";
 import './globals.css'
 import GoogleAnalytics from '@/components/ga';
-
+import ChatwootWidget from "@/components/chatwoot";
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -30,6 +30,7 @@ export default function RootLayout({
           <GoogleAnalytics gaid=
             {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
         ) : null}
+        <ChatwootWidget />
         <div className='selection:bg-amber-500 selection:text-amber-900'>
           <div suppressHydrationWarning>
             <Toaster position="bottom-center" />
