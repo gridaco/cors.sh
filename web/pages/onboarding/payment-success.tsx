@@ -1,5 +1,3 @@
-
-
 import React, { useEffect } from "react";
 import client from "@cors.sh/service-api";
 import { useRouter } from "next/router";
@@ -32,7 +30,7 @@ export default function PaymentSuccessPage({
   useEffect(() => {
     // GA4 conversion - Purchase
     // @ts-ignore
-    window.gtag("event", "purchase", {
+    window.gtag?.("event", "purchase", {
       transaction_id: session,
       value: 4,
       currency: "USD",
@@ -67,7 +65,6 @@ export default function PaymentSuccessPage({
     <>
 
       <FormPageLayout>
-        <PageCloseButton />
         <>
           <h1>Thank you for your subscription</h1>
           <p className="description">

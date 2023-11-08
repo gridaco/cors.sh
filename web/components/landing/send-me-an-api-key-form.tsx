@@ -32,7 +32,7 @@ export function SendMeAnApiKeyForm() {
 
         // log conversion (signup)
         // @ts-ignore
-        window.gtag("event", "sign_up", {
+        window.gtag?.("event", "sign_up", {
           method: "email",
         });
       })

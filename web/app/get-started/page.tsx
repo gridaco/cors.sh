@@ -68,7 +68,7 @@ export default function GetstartedPage() {
       const pricedata = (k.plans as any)[price];
 
       // @ts-ignore
-      window.gtag("event", "begin_checkout", {
+      window.gtag?.("event", "begin_checkout", {
         value: pricedata.value,
         currency: pricedata.currency,
         items: [
