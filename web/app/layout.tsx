@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { Header } from '@/components/header'
 import { Toaster } from "react-hot-toast";
 import './globals.css'
+import GoogleAnalytics from '@/components/ga';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,6 +26,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+          <GoogleAnalytics gaid=
+            {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+        ) : null}
         <div className='selection:bg-amber-500 selection:text-amber-900'>
           <div suppressHydrationWarning>
             <Toaster position="bottom-center" />
