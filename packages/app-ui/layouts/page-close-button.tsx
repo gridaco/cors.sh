@@ -1,15 +1,15 @@
 import React from "react";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import { Cross2Icon } from "@radix-ui/react-icons";
 
 export function PageCloseButton() {
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <button
       className="close"
       onClick={() => {
-        router.replace("/");
+        // router.replace("/");
       }}
     >
       <Cross2Icon />

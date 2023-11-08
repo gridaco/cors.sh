@@ -1,0 +1,54 @@
+{
+  "pro": {
+    "id": "price_1LbnTwAvR3geCh5rZm9v8CAy",
+    "name": "Pro - Monthly",
+    "price": {
+      "value": 4,
+      "currency": "usd",
+      "symbol": "$",
+      "interval": "month"
+    },
+    "features": [
+      "Up to 500,000 requests per month",
+      "500GB Bandwidth",
+      "Unlimited Projects",
+      "No hourly request limit",
+      "Up to 6mb per request"
+    ]
+  },
+  "pro2": {
+    "id": "price_1LbnV4AvR3geCh5rMEwJ5Zf1",
+    "name": "Pro - Annually",
+    "desc": "Annual billing only",
+    "price": {
+      "value": 36,
+      "currency": "usd",
+      "symbol": "$",
+      "interval": "year"
+    },
+    "features": [
+      "Up to 500,000 requests per month",
+      "500GB Bandwidth",
+      "Unlimited Projects",
+      "No hourly request limit",
+      "Up to 6mb per request"
+    ]
+  },
+  "enterprise": {
+    "id": "price_1MNTlpAvR3geCh5r3gqzq2s7",
+    "name": "Enterprise",
+    "price": {
+      "value": 499,
+      "currency": "usd",
+      "symbol": "$",
+      "interval": "year"
+    },
+    "features": [
+      "Up to 10,000,000 requests per month",
+      "1TB Bandwidth",
+      "Unlimited Projects",
+      "No hourly request limit",
+      "Max 6mb per request"
+    ]
+  }
+}

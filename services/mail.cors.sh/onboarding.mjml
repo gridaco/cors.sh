@@ -71,7 +71,7 @@
         <mj-image src="https://s3.us-west-1.amazonaws.com/cors.sh-public-resources/branding/CORS.SH-black.svg" height="24px" />
         <mj-text color="rgba(0, 0, 0, 0.5)">
           <small>
-            <a href="https://grida.co">A Grida Product</a> | <a href="mailto:hello@grida.co">Contact</a>
+            <a href="https://grida.co">A Grida Product</a> | <a href="https://cors.sh/contact">Contact</a>
           </small>
         </mj-text>
       </mj-column>

@@ -1,6 +1,8 @@
+"use client";
 import styled from "@emotion/styled";
 
 export const FormPageLayout = styled.div`
+  font-family: sans-serif;
   display: flex;
   flex-direction: column;
   margin: auto;
