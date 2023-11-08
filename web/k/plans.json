@@ -1,6 +1,6 @@
 {
   "pro": {
-    "id": "price_1NmmWUAvR3geCh5rEwiNi7bb",
+    "id": "price_1LbnTwAvR3geCh5rZm9v8CAy",
     "price": {
       "value": 4,
       "currency": "usd",
@@ -16,7 +16,7 @@
     ]
   },
   "pro2": {
-    "id": "price_1NmmXDAvR3geCh5r2DAgOCSw",
+    "id": "price_1LbnV4AvR3geCh5rMEwJ5Zf1",
     "desc": "Annual billing only",
     "price": {
       "value": 36,
@@ -33,7 +33,7 @@
     ]
   },
   "enterprise": {
-    "id": "price_1NmmXPAvR3geCh5rC3QyvtBX",
+    "id": "price_1MNTlpAvR3geCh5r3gqzq2s7",
     "price": {
       "value": 499,
       "currency": "usd",

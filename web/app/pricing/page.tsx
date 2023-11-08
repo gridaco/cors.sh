@@ -75,7 +75,7 @@ export default function Pricing() {
               currency: plans.pro2.price.symbol,
               unit: "/Mo",
             }}
-            desc={"Annual billing only"}
+            desc={"Save 25% with Annual Billing"}
             features={
               <>
                 {
@@ -180,6 +180,7 @@ const Main = styled.main`
   font-family: "Inter", sans-serif;
 
   margin-top: 80px;
+  margin-bottom: 80px;
 
   h1 {
     margin-top: 80px;
