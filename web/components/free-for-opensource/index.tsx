@@ -7,7 +7,7 @@ const oss_features = [
 ]
 
 export function FreeForOpensourceCard() {
-  return <div className="max-w-screen-lg border w-[940px] border-white/10 flex flex-row justify-between gap-42 rounded-md p-12 pl-20 pr-20">
+  return <div className="max-w-screen-lg border w-auto md:w-[940px] border-white/10 flex gap-20 flex-col-reverse justify-center md:flex-row md:justify-between md:gap-0 rounded-md p-12 pl-20 pr-20">
     <div className="flex-1 flex flex-col gap-7">
       {oss_features.map((t, i) => (
         <li key={i} className="flex gap-4 items-center">
