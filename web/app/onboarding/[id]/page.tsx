@@ -1,15 +1,11 @@
 // TODO: rename this route to /onboarding/continue?id=
 
 import Head from "next/head";
+import { redirect } from "next/navigation";
 import React from "react";
 
 export default function ContinueOnboardingWithVerification() {
-  return {
-    redirect: {
-      destination: "/get-started",
-      permanent: false,
-    },
-  };
+  redirect("/get-started");
 
   return (
     <>
