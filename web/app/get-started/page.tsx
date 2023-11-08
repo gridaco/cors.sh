@@ -15,6 +15,9 @@ import client from "@cors.sh/service-api";
 import * as k from "@/k";
 import { toast } from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
+import { MiniPlanSelect } from "@/components/pricing/mini";
+import Link from "next/link";
+import { motion } from "framer-motion";
 
 // eslint-disable-next-line @next/next/no-async-client-component
 export default function GetstartedPage() {
@@ -27,7 +30,7 @@ export default function GetstartedPage() {
 
   const _price = validate_price_id(_q_price)
     ? _q_price
-    : k.PRICE_PERSONAL_PRO_MONTHLY;
+    : k.plans.pro.id;
 
 
   const [name, setName] = React.useState("");
@@ -42,15 +45,8 @@ export default function GetstartedPage() {
 
   const router = useRouter();
 
-  const pricing_options = Object.values(pricing);
-
   const onPriceChange = (price: string) => {
     setPrice(price);
-  };
-
-  const onTypeKey = (key: string) => {
-    // todo: validate key via api
-    setValid(key.length > 10);
   };
 
   const onEnter = () => {
@@ -69,7 +65,7 @@ export default function GetstartedPage() {
 
     try {
       // log begin_checkout event
-      const pricedata = pricing[price];
+      const pricedata = (k.plans as any)[price];
 
       // @ts-ignore
       window.gtag("event", "begin_checkout", {
@@ -99,37 +95,28 @@ export default function GetstartedPage() {
 
       const onboarding_id = application.id;
 
+      // switch (stateRef.current) {
+      //   case k.PRICE_FREE_MONTHLY: {
+      //     // the free plan does not require payments, so we can skip to create new project right away.
+      //     redirect =
+      //       window.location.protocol + window.location.host + "/console/new";
+      //     break;
+      //   }
+      // }
+
       // redirect user to payment page
-      let redirect;
-      switch (stateRef.current) {
-        case k.PRICE_PAY_AS_YOU_GO: {
-          // TODO: add stripe integration.
-          redirect = "https://forms.gle/GXDGPAoM9fhZrQh77";
-          break;
-        }
-        case k.PRICE_FREE_MONTHLY: {
-          // the free plan does not require payments, so we can skip to create new project right away.
-          redirect =
-            window.location.protocol + window.location.host + "/console/new";
-          break;
-        }
-        default: {
-          let params = new URLSearchParams();
-          params.append("onboarding_id", onboarding_id);
-          // TODO: multiple search params not supported by accounts.grida.co?redirect_uri=x
+      let params = new URLSearchParams();
+      params.append("onboarding_id", onboarding_id);
+      // TODO: multiple search params not supported by accounts.grida.co?redirect_uri=x
 
-          redirect = k.SERVER_URL + "/payments/checkout/new" + "?" + params;
-
-          break;
-        }
-      }
+      const redirect = k.SERVER_URL + "/payments/checkout/new" + "?" + params;
 
       router.replace(redirect);
     } catch (e) {
       toast.error("Oops. something went wrong. please try again.");
       setIsBusy(false);
     }
-  }, [name, allowedOrigins, price]);
+  }, [price, name, allowedOrigins, router]);
 
   return (
     <FormPageLayout>
@@ -164,50 +151,44 @@ export default function GetstartedPage() {
         />
         {/* pricing plan select */}
 
-        <FormFieldBase style={{ width: "100%" }}>
-          <FormFieldLabel>Plan</FormFieldLabel>
-          <div style={{ flex: 1, alignSelf: "stretch" }}>
-            <Select
-              id="pricing-select"
-              instanceId="pricing-select"
-              // 
-              styles={{
-                control: (base, state) => ({
-                  ...base,
-                  background: 'transparent',
-                  color: 'white',
-                  outline: "none",
-                  borderColor: "rgba(255, 255, 255, 0.2)",
-                  "&:hover": {
-                    // borderColor: state.isFocused ? "red" : "blue"
+        <motion.div
+          style={{
+            display: isValid ? "block" : "none",
+          }}
+          variants={{
+            hidden: { opacity: 0, y: 10 },
+            visible: { opacity: 1, y: 0 },
+          }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={isValid ? "visible" : "hidden"}
+          transition={{ delay: 0.2, duration: 0.5 }}
+        >
+          <FormFieldBase style={{ width: "100%" }}>
+            <div className="flex items-center justify-between self-stretch">
+              <FormFieldLabel>Plan</FormFieldLabel>
+              <Link className="underline text-xs" target="_blank" href="/pricing">View Pricing</Link>
+            </div>
+            <div style={{ flex: 1, alignSelf: "stretch" }}>
+              <MiniPlanSelect
+                onChange={(id) => {
+                  onPriceChange(id);
+                }}
+                value={price}
+                options={[
+                  {
+                    id: k.plans.pro.id,
+                    label: <span>$3 / Mo<br />Annual Billing</span>,
+                    content: <>Save 25% with annual billing</>
+                  },
+                  {
+                    id: k.plans.pro2.id,
+                    label: <span>$4 / Mo<br />Monthly Billing</span>,
+                    content: <>-</>
                   }
-                }),
-                'menu': (provided: any) => ({
-                  ...provided,
-                  background: 'black'
-                }),
-                'option': (provided: any, state: any) => ({
-                  ...provided,
-                  background: 'transparent',
-                  '&:focus': {
-                    background: 'white'
-                  }
-                })
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  onEnter();
-                }
-              }}
-              //
-              onChange={(e) => {
-                e && onPriceChange(e.id);
-              }}
-              value={pricing[price]}
-              options={pricing_options}
-            />
-          </div>
-        </FormFieldBase>
+                ]} />
+            </div>
+          </FormFieldBase>
+        </motion.div>
         <div style={{ height: 16 }} />
         <Button
           color="white"
@@ -218,45 +199,6 @@ export default function GetstartedPage() {
           Continue
         </Button>
       </div>
-    </FormPageLayout>
-
-    // <StepLayout
-    //   title="Get started"
-    //   description="Ready to use cors.sh? select your plan and let’s create your first project."
-    //   onNextClick={onNextClick}
-    //   nextPromptLabel="Sign in with Grida and continue"
-    // >
-    //   <PricingCardsList
-    //     onPriceChange={onPriceChange}
-    //     initialSelection={price}
-    //   />
-    // </StepLayout>
+    </FormPageLayout >
   );
 }
-
-const pricing = {
-  [k.PRICE_PERSONAL_PRO_MONTHLY]: {
-    id: k.PRICE_PERSONAL_PRO_MONTHLY,
-    label: "Pro - $4/Mo",
-    value: 4,
-    currency: "USD",
-  },
-  [k.PRICE_PERSONAL_PRO_YEARLY]: {
-    id: k.PRICE_PERSONAL_PRO_YEARLY,
-    label: "Pro - $3/Mo (Pay annualy, save $12)",
-    value: 36,
-    currency: "USD",
-  },
-  [k.PRICE_ENTERPRISE_PRO_YEARLY]: {
-    id: k.PRICE_ENTERPRISE_PRO_YEARLY,
-    label: "Enterprise - $499/Yr",
-    value: 499,
-    currency: "USD",
-  },
-  // [k.PRICE_FREE_MONTHLY]: {
-  //   id: k.PRICE_FREE_MONTHLY,
-  //   label: "Free",
-  // },
-  // [k.PRICE_PAY_AS_YOU_GO]: {},
-} as const;
-

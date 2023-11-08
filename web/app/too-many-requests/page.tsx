@@ -1,7 +1,6 @@
 'use client';
 
 import React from "react";
-import { PricingCardsList } from "@/layouts/pricing-card-list";
 import * as k from "@/k";
 import Link from "next/link";
 
@@ -18,13 +17,6 @@ export default function TooMayRequestsPage() {
         </p>
       </div>
       <div className="h-20" />
-      {/* <PricingCardsList
-        enableIndividualActions={false}
-        // fallback to personal plan
-        initialSelection={k.PRICE_PERSONAL_PRO_MONTHLY}
-        onGetStartedClick={() => { }}
-      />
-      <div className="h-20" /> */}
       <Link href="/console">
         <button className="bg-neutral-50 text-neutral-950 p-5 rounded-sm">Sign-in to continue</button>
       </Link>

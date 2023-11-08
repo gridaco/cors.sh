@@ -4,13 +4,11 @@ import styled from "@emotion/styled";
 import { FaqItem } from "@/components/faq";
 import { PricingCard } from "@/components/pricing";
 import { motion } from "framer-motion";
-import faqs from "@/k/faq.json";
-import plans_live from "@/k/plans.json";
-import plans_test from "@/k/plans.test.json";
 import { useRouter } from "next/navigation";
 import { FreeForOpensourceCard } from "@/components/free-for-opensource";
+import { plans } from "@/k";
+import faqs from "@/k/faq.json";
 
-const plans = process.env.NODE_ENV === "production" ? plans_live : plans_test;
 
 const price_size = {
   normal: { width: 220, height: 340 } as const,
