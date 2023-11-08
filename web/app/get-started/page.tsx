@@ -150,6 +150,7 @@ export default function GetstartedPage() {
       <div className="form">
         <TextFormField
           label="Application name"
+          autoFocus
           placeholder="my-portfolio-website"
           onEnter={onEnter}
           onChange={setName}
@@ -169,9 +170,28 @@ export default function GetstartedPage() {
             <Select
               id="pricing-select"
               instanceId="pricing-select"
+              // 
               styles={{
+                control: (base, state) => ({
+                  ...base,
+                  background: 'transparent',
+                  color: 'white',
+                  outline: "none",
+                  borderColor: "rgba(255, 255, 255, 0.2)",
+                  "&:hover": {
+                    // borderColor: state.isFocused ? "red" : "blue"
+                  }
+                }),
                 'menu': (provided: any) => ({
+                  ...provided,
                   background: 'black'
+                }),
+                'option': (provided: any, state: any) => ({
+                  ...provided,
+                  background: 'transparent',
+                  '&:focus': {
+                    background: 'white'
+                  }
                 })
               }}
               onKeyDown={(e) => {

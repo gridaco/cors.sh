@@ -123,7 +123,7 @@ const PricingCardWrapper = styled(motion.div)`
 
   button {
     box-shadow: 0px 4px 24px 2px rgba(var(--card-box-shadow-rgb), 0.2);
-    background: var(--card-button-background);
+    background: white;
     border: solid 1px rgba(120, 120, 120, 0.8);
     border-radius: 4px;
     padding: 8px 10px;
@@ -131,7 +131,7 @@ const PricingCardWrapper = styled(motion.div)`
     font-weight: 600;
     outline: none;
     cursor: pointer;
-    color: rgb(var(--foreground-inverted-rgb));
+    color: black;
 
     :hover {
       opacity: 0.8;
