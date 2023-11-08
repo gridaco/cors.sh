@@ -8,12 +8,13 @@ export function HomeBackground() {
   return (
     <motion.div
       transition={{
-        delay: 0.5,
-        duration: 5,
+        delay: 0.2,
+        duration: 2,
+        ease: 'easeOut'
       }}
       initial={{
         opacity: 0.1,
-        scale: 1.1
+        scale: 1.3
       }}
       animate={{
         opacity: 1,
