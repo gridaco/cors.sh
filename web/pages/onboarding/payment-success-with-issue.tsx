@@ -23,7 +23,9 @@ export default function PaymentSuccessButThereWasAProblem({
   };
 }) {
   return (
-    <>
+    <main style={{
+      fontFamily: "Inter, sans-serif",
+    }}>
       <div
         style={{
           display: "flex",
@@ -51,11 +53,11 @@ export default function PaymentSuccessButThereWasAProblem({
         </code>
 
         <div style={{ height: 40 }} />
-        <Link href={`https://cors.sh/contact`}>
+        <Link href={`/contact`}>
           <Button>Contact Support</Button>
         </Link>
       </div>
-    </>
+    </main>
   );
 }
 

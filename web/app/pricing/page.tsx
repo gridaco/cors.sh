@@ -8,20 +8,17 @@ import { useRouter } from "next/navigation";
 import { FreeForOpensourceCard } from "@/components/free-for-opensource";
 import { plans } from "@/k";
 import faqs from "@/k/faq.json";
+import Link from "next/link";
 
 
 const price_size = {
-  normal: { width: 220, height: 340 } as const,
-  highlighted: { width: 234, height: 380 } as const,
+  normal: { width: 280, height: 380 } as const,
+  highlighted: { width: 300, height: 420 } as const,
 } as const;
 
 export default function Pricing() {
   const router = useRouter();
 
-  const onUpgradeClick = (price: string) => {
-    // POST
-    router.push(`/checkout/sessions?price=${price}`);
-  };
 
   return (
     <>
@@ -30,7 +27,7 @@ export default function Pricing() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          Choose your plan
+          Get started with $3/Mo
         </motion.h1>
         <motion.section
           className="pricing-table section"
@@ -56,13 +53,11 @@ export default function Pricing() {
               </>
             }
             action={
-              <button
-                onClick={() => {
-                  onUpgradeClick(plans.pro.id);
-                }}
-              >
-                Get Started
-              </button>
+              <Link href={`/get-started?price=${plans.pro.id}`}>
+                <button>
+                  Get Started
+                </button>
+              </Link>
             }
           />
           <PricingCard
@@ -84,13 +79,11 @@ export default function Pricing() {
               </>
             }
             action={
-              <button
-                onClick={() => {
-                  onUpgradeClick(plans.pro2.id);
-                }}
-              >
-                Get Started
-              </button>
+              <Link href={`/get-started?price=${plans.pro.id}`}>
+                <button>
+                  Get Started
+                </button>
+              </Link>
             }
           />
           <PricingCard
@@ -112,13 +105,11 @@ export default function Pricing() {
               </>
             }
             action={
-              <button
-                onClick={() => {
-                  onUpgradeClick(plans.enterprise.id);
-                }}
-              >
-                Get Started
-              </button>
+              <Link href={`/get-started?price=${plans.pro.id}`}>
+                <button>
+                  Get Started
+                </button>
+              </Link>
             }
           />
         </motion.section>
@@ -164,7 +155,7 @@ export default function Pricing() {
             ))}
           </motion.div>
         </motion.section>
-      </Main>
+      </Main >
     </>
   );
 }

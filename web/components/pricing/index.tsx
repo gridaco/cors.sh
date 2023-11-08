@@ -43,7 +43,9 @@ export function PricingCard({
         <span className="desc">{features}</span>
       </section>
       <div style={{ minHeight: 20, flex: 1 }} />
-      {action}
+      <div className="self-start">
+        {action}
+      </div>
       <span className="dot" />
     </PricingCardWrapper>
   );
@@ -115,10 +117,8 @@ const PricingCardWrapper = styled(motion.div)`
   }
 
   .desc {
-    font-size: 13px;
     font-weight: 500;
-    text-align: left;
-    opacity: 0.5;
+    opacity: 0.8;
   }
 
   button {

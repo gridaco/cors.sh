@@ -1,10 +1,10 @@
 [
   {
-    "q": "If I cancel, Will I still be able to use downloaded image",
-    "a": "Yes, you are allowed to use downloaded image even after you cancel your subscription. But you will not be able to get any updates."
+    "q": "Can I use CORS.SH Proxy for multiple websites?",
+    "a": "Yes, with single subscription, you are able to use CORS.SH Proxy for multiple websites unlimitedly, unless it exceeds the quota."
   },
   {
-    "q": "What is Royalty-Free License?",
-    "a": "Royalty-Free license allows you to use the image for personal and commercial purposes. You can use the image for unlimited time and unlimited copies. You are not allowed to resell or redistribute the image."
+    "q": "How can I Apply to OSS Progam?",
+    "a": "Any Open-source projects with 5 stars is capable to apply to OSS Program."
   }
 ]
