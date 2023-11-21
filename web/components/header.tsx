@@ -6,7 +6,7 @@ import { SlashIcon } from "@radix-ui/react-icons"
 
 export function Header() {
   return <header className="fixed max-w-screen-xl m-auto left-0 right-0 top-0 p-10 pt-5 pb-5 z-10 w-full items-center justify-between font-mono text-sm md:flex">
-    <span className="flex gap-2 items-center w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit md:static md:w-auto  md:rounded-xl md:border md:bg-gray-200 md:p-4 md:dark:bg-zinc-800/30">
+    <span className="flex gap-2 items-center w-full justify-center border-b border-gray-800 bg-gradient-to-b from-black pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit md:static md:w-auto  md:rounded-xl md:border md:p-4 md:bg-gray-950 md:dark:bg-zinc-800/30">
       <Link href='https://grida.co' target="_blank">
         <svg width="16" height="16" viewBox="0 0 264 267" fill="white" xmlns="http://www.w3.org/2000/svg">
           <path fillRule="evenodd" clipRule="evenodd" d="M87 133C87 87.7448 121.161 50.4683 165.103 45.5503C150.12 18.3945 121.208 0 88 0C39.5653 0 0.269752 39.1298 0.00138286 87.5014L0 87.5V88V180L88.5 266.5L87 175V133ZM175 179.5L175.5 88C223.596 88 262.68 126.584 263.487 174.487L263.5 174.5V176V266L175 179.5Z" />
@@ -37,7 +37,7 @@ export function Header() {
       </Link>
     </div>
     <div className="flex-1" />
-    <div className="fixed bottom-0 left-0 p-5 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black md:p-0 md:static md:h-auto md:w-auto md:bg-none">
+    <div className="fixed bottom-0 left-0 p-5 flex h-48 w-full items-end justify-center bg-gradient-to-t from-black via-gray dark:from-black dark:via-black md:p-0 md:static md:h-auto md:w-auto md:bg-none">
       <div className='flex gap-4 items-center'>
         {/* <Link href='/console'>
           Console

@@ -7,6 +7,8 @@ import { motion } from 'framer-motion';
 export function HomeBackground() {
   return (
     <motion.div
+      id='background'
+      className='fixed -z-50 inset-0 select-none pointer-events-none'
       transition={{
         delay: 0.2,
         duration: 2,
@@ -20,7 +22,7 @@ export function HomeBackground() {
         opacity: 1,
         scale: 1
       }}
-      id='background' className='fixed -z-10 inset-0 select-none pointer-events-none'>
+    >
       <div
 
         className='inset-0 flex items-center justify-center'>
