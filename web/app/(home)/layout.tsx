@@ -2,9 +2,10 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Header } from '@/components/header'
 import { Toaster } from "react-hot-toast";
-import './globals.css'
 import GoogleAnalytics from '@/components/ga';
 import ChatwootWidget from "@/components/chatwoot";
+import '../globals.css'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {

@@ -7,7 +7,7 @@ import { UnderlineButton } from "@app/ui/components";
 
 
 export const metadata: Metadata = {
-  title: "CORS.SH - Console",
+  title: "Dashboard",
 }
 
 export default function ConsoleIndex() {
