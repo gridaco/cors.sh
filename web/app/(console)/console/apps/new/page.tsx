@@ -1,10 +1,14 @@
 'use client'
 
 import React, { useEffect } from "react";
-import { Button, TextFormField } from "@editor-ui/console";
+import {
+  // Button,
+  TextFormField
+} from "@editor-ui/console";
 import client from "@cors.sh/service-api";
 import { useRouter } from "next/navigation";
 import { FormPageLayout } from "@app/ui/layouts";
+import { Button } from "@radix-ui/themes"
 
 export default function NewApplicationPage() {
   const router = useRouter();
@@ -47,9 +51,13 @@ export default function NewApplicationPage() {
   }, [name, allowedOrigins]);
 
   return (
-    <FormPageLayout>
-      <h1>Create new application</h1>
-      <div className="form">
+    <main className="p-4 container mx-auto">
+      <header className="mt-20 flex flex-row items-center justify-between">
+        <h1 className="text-4xl font-bold">
+          Create new application
+        </h1>
+      </header>
+      <form className="mt-20 flex flex-col gap-4 max-w-screen-sm">
         <TextFormField
           label="Project Name"
           placeholder="my-portfolio-website"
@@ -63,13 +71,14 @@ export default function NewApplicationPage() {
         />
         <div style={{ height: 16 }} />
         <Button
+          className="rounded px-4 py-3 cursor-pointer bg-black text-white dark:bg-white dark:text-black"
           disabled={!isValid || isBusy}
           onClick={onCreateNewClick}
-          height={"32px"}
+        // height={"32px"}
         >
           Create Project
         </Button>
-      </div>
-    </FormPageLayout>
+      </form>
+    </main>
   );
 }

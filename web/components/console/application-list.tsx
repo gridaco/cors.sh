@@ -4,13 +4,6 @@ import styled from "@emotion/styled";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
-export const ApplicationList = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  width: 100%;
-  gap: 8px;
-`;
 
 export function ApplicationItem({
   id,
@@ -22,14 +15,12 @@ export function ApplicationItem({
   allowedOrigins?: string[];
 }) {
   return (
-    <Link href={`/${id}`}>
-      <ItemWrap>
-        <span>
-          {name} ({id})
-        </span>
-        <ArrowRightIcon />
-      </ItemWrap>
-    </Link>
+    <ItemWrap>
+      <span>
+        {name} ({id})
+      </span>
+      <ArrowRightIcon />
+    </ItemWrap>
   );
 }
 

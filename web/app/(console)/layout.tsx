@@ -1,11 +1,14 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Toaster } from "react-hot-toast";
-import '../globals.console.css'
 import GoogleAnalytics from '@/components/ga';
 import ChatwootWidget from "@/components/chatwoot";
 import { Heading, Link, Theme } from '@radix-ui/themes';
-import { GearIcon, GitHubLogoIcon, MagnifyingGlassIcon, OpenInNewWindowIcon } from '@radix-ui/react-icons';
+import { GearIcon, GitHubLogoIcon, MagnifyingGlassIcon, OpenInNewWindowIcon, QuestionMarkCircledIcon } from '@radix-ui/react-icons';
+import '../globals.console.css'
+
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -56,9 +59,15 @@ export default function RootLayout({
 
 function Sidebar() {
   return <div className="border-r border-black/5">
-    <Heading className="p-4">
-      CORS.SH
-    </Heading>
+    <header className="p-4 hover:bg-gray-500/10">
+      <Link href='/console'>
+        <Image
+          src="/logo.svg"
+          alt="CORS.SH"
+          width={100}
+          height={32} />
+      </Link>
+    </header>
     <div className="flex-1 p-4 flex flex-col gap-2 min-w-[240px]">
       <NavItem href="/console">
         <GearIcon />
@@ -68,9 +77,21 @@ function Sidebar() {
         <GearIcon />
         Apps
       </NavItem>
-      <NavItem href="/console/events">
+      <NavItem href="/console/plans">
         <GearIcon />
-        Events
+        Plans
+      </NavItem>
+      <NavItem href="/console/usage">
+        <GearIcon />
+        Usage
+      </NavItem>
+      <NavItem href="/docs" target="_blank">
+        <QuestionMarkCircledIcon />
+        Docs
+      </NavItem>
+      <NavItem href="/faq" target="_blank">
+        <QuestionMarkCircledIcon />
+        FAQ
       </NavItem>
       <NavItem href="https://github.com/gridaco/cors.sh" target="_blank">
         <GitHubLogoIcon />
@@ -83,7 +104,7 @@ function Sidebar() {
 function NavItem({ children, ...props }: React.PropsWithChildren<React.ComponentProps<typeof Link>>) {
   return (
     <Link
-      className="flex flex-row items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-md transition-colors"
+      className="flex flex-row items-center gap-2 px-4 py-2 hover:bg-gray-500/10 rounded-md transition-colors"
       {...props}
     >
       {children}

@@ -18,23 +18,17 @@ const applications = [
   },
 ]
 
-export default function ConsoleHome() {
+export default function AppsPage() {
 
   return (
     <main className="p-4">
       <header className="mt-20 flex flex-row items-center justify-between">
-        <h1 className="text-4xl font-bold">
-          Dashboard
-        </h1>
         <Link href="/console/apps/new">
           <button className="px-5 py-3 rounded-md bg-black dark:bg-white text-white dark:text-white">
             New Application
           </button>
         </Link>
       </header>
-      <h2 className="text-2xl font-bold">
-        Usage
-      </h2>
       <div className="mt-20">
         <div className="flex">
           {applications.map((application) => (
@@ -44,11 +38,6 @@ export default function ConsoleHome() {
           ))}
         </div>
       </div>
-      <section>
-        <h2 className="text-2xl font-bold">
-          Integrations
-        </h2>
-      </section>
     </main>
   );
 }
