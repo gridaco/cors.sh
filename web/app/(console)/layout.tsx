@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Toaster } from "react-hot-toast";
-import '../globals.css'
+import '../globals.console.css'
 import GoogleAnalytics from '@/components/ga';
 import ChatwootWidget from "@/components/chatwoot";
 import { Heading, Link, Theme } from '@radix-ui/themes';
