@@ -1,9 +1,8 @@
-import * as express from "express";
+// LEGACY
 import Axios from "axios";
 import { prisma } from "../../clients";
-import { encode_jwt, SECURE_BROWSER_COOKIE_AUTH_KEY } from "../../auth";
-
-const router = express.Router();
+import { encode_jwt, SECURE_BROWSER_COOKIE_AUTH_KEY } from "@/lib/auth";
+import { NextResponse } from "next/server";
 
 const authclient = Axios.create({
   baseURL: "https://accounts.services.grida.co",
@@ -12,11 +11,14 @@ const authclient = Axios.create({
 // user signin with grida, retrieve oauth token from grida, sends it here,
 // this service will check the token, if valid, it will generate a new token for the user,
 // and send it back to the client with secure, http only cookie.
-router.post("signin", async (req, res) => {
-  const authorization = req.headers["proxy-authorization"];
+export async function POST(req: Request) {
+  const authorization = req.headers.get("proxy-authorization");
+
   if (!authorization) {
-    res.status(401).json({ error: "no authorization header" });
-    return;
+    return NextResponse.json(
+      { error: "no authorization header" },
+      { status: 401 }
+    );
   }
 
   // authenticate via accounts.grida.co
@@ -38,20 +40,25 @@ router.post("signin", async (req, res) => {
   const jwt = encode_jwt(customer.id);
 
   // set secure cookie when authorized.
-  res
-    .cookie(SECURE_BROWSER_COOKIE_AUTH_KEY, jwt, {
-      signed: true,
-      domain: ".cors.sh",
-      secure: true,
-      httpOnly: true,
-      sameSite: "strict",
-      // no expiration. it is a secure cookie, that only has access to cors.sh. let's keep it this way for now.
-      // expires: null
-    })
-    .json({
+  NextResponse.json(
+    {
       success: true,
       customer: customer,
-    });
-});
-
-export default router;
+    },
+    {
+      status: 200,
+      headers: {
+        "set-cookie": `${SECURE_BROWSER_COOKIE_AUTH_KEY}=${jwt}; Domain=.cors.sh; Path=/; Secure; HttpOnly; SameSite=Strict;`,
+        // .cookie(SECURE_BROWSER_COOKIE_AUTH_KEY, jwt, {
+        //   signed: true,
+        //   domain: ".cors.sh",
+        //   secure: true,
+        //   httpOnly: true,
+        //   sameSite: "strict",
+        //   // no expiration. it is a secure cookie, that only has access to cors.sh. let's keep it this way for now.
+        //   // expires: null
+        // })
+      },
+    }
+  );
+}
