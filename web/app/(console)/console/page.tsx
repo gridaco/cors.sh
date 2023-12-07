@@ -52,3 +52,12 @@ export default function ConsoleHome() {
     </main>
   );
 }
+
+
+function IntegrationGuideCard() {
+  return (
+    <div>
+
+    </div>
+  )
+}
