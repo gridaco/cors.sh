@@ -1,5 +1,4 @@
 import { verify } from "./jwt";
-import { Request, Response } from "express";
 import { prisma, stripe } from "../clients";
 import { SECURE_BROWSER_COOKIE_AUTH_KEY } from "./key";
 
@@ -30,7 +29,9 @@ export async function authMiddleware(req: Request, res: Response, next) {
 }
 
 async function checoutSessionAuthorizer(req: Request) {
-  const checkout_session_id = req.headers["x-cors-service-checkout-session-id"];
+  const checkout_session_id = req.headers.get(
+    "x-cors-service-checkout-session-id"
+  );
   if (!checkout_session_id) {
     return false;
   }
