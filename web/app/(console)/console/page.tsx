@@ -49,6 +49,13 @@ export default function ConsoleHome() {
           Integrations
         </h2>
       </section>
+      <section>
+        <h2 className="text-2xl font-bold">
+          <Link href="/signout">
+            Sign out
+          </Link>
+        </h2>
+      </section>
     </main>
   );
 }

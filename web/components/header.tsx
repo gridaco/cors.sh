@@ -2,6 +2,7 @@ import React from "react"
 import { GitHubLogoIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
 import { SlashIcon } from "@radix-ui/react-icons"
+import HeaderUserActions from "./header-user-actions"
 
 
 export function Header() {
@@ -39,14 +40,7 @@ export function Header() {
     <div className="flex-1" />
     <div className="fixed bottom-0 left-0 p-5 flex h-48 w-full items-end justify-center bg-gradient-to-t from-black via-gray dark:from-black dark:via-black md:p-0 md:static md:h-auto md:w-auto md:bg-none">
       <div className='flex gap-4 items-center'>
-        {/* <Link href='/console'>
-          Console
-        </Link> */}
-        <Link href='/get-started'>
-          <button className="bg-none md:bg-neutral-50 text-inherit md:text-neutral-950 p-3 rounded-md">
-            Get Started
-          </button>
-        </Link>
+        <HeaderUserActions />
 
         <div style={{ width: 16 }} />
         <Link href="https://github.com/gridaco/cors.sh" target="_blank">
