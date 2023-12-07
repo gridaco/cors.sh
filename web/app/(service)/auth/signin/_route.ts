@@ -1,6 +1,5 @@
 // LEGACY
 import Axios from "axios";
-import { prisma } from "../../clients";
 import { encode_jwt, SECURE_BROWSER_COOKIE_AUTH_KEY } from "@/lib/auth";
 import { NextResponse } from "next/server";
 

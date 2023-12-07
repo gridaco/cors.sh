@@ -1,5 +1,5 @@
 import { stripe } from "@/lib/clients";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const WEBHOST = process.env.WEBHOST;
 const WEBURL_CONSOLE = WEBHOST + "/console";
@@ -19,5 +19,5 @@ export async function POST(request: NextRequest) {
     return_url: returnUrl,
   });
 
-  res.redirect(303, portalSession.url);
+  return NextResponse.redirect(portalSession.url, { status: 303 });
 }
