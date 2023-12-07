@@ -1,3 +1,4 @@
+/*
 // LEGACY
 import Axios from "axios";
 import { encode_jwt, SECURE_BROWSER_COOKIE_AUTH_KEY } from "@/lib/auth";
@@ -61,3 +62,8 @@ export async function POST(req: Request) {
     }
   );
 }
+*/
+
+const dummy = () => {};
+
+export default dummy;

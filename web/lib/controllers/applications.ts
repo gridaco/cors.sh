@@ -1,9 +1,9 @@
-import { prisma, stripe, emailWithTemplate } from "../clients";
+import { stripe, emailWithTemplate } from "../clients";
 import { sign_live_key, sign_temporary_key, sign_test_key } from "../keygen";
 import { nanoid } from "nanoid";
-import type { Application, OnboardingApplications } from "@prisma/client";
 import sync from "../sync";
 import { logNewOnboardingProc, logNewApplication } from "./_telemetry";
+import { Application, OnboardingApplication } from "@/types/app";
 
 type CreateOnboardingApplicationBody =
   | {
@@ -45,10 +45,10 @@ export async function createOnboardingApplication(
 
   const { key: tmpkey, expires_at } = sign_temporary_key();
 
-  let data: OnboardingApplications;
+  let data: OnboardingApplication;
 
   // check if email exists
-  let duplicated: OnboardingApplications | null = null;
+  let duplicated: OnboardingApplication | null = null;
   if (email_available) {
     duplicated = await prisma.onboardingApplications.findUnique({
       where: { email: email },
@@ -122,7 +122,7 @@ export async function getOnboardingApplication(id: string) {
 
 async function sendOnboardingEmail(
   email: string,
-  application?: OnboardingApplications
+  application?: OnboardingApplication
 ) {
   if (!application) {
     application = await prisma.onboardingApplications.findUnique({
@@ -134,13 +134,13 @@ async function sendOnboardingEmail(
     return false;
   }
 
-  const { key, emailSentAt } = application;
+  const { key, email_sent_at } = application;
 
   // if the last interaction is within 1 minutes, ignore the request
-  if (emailSentAt && emailSentAt.length > 0) {
-    const lastSentAt = emailSentAt[emailSentAt.length - 1];
+  if (email_sent_at && email_sent_at.length > 0) {
+    const lastSentAt = email_sent_at[email_sent_at.length - 1];
     if (lastSentAt) {
-      const diff = new Date().getTime() - lastSentAt.getTime();
+      const diff = new Date().getTime() - new Date(lastSentAt).getTime();
       if (diff < 60000) {
         return false;
       }
@@ -169,6 +169,39 @@ async function sendOnboardingEmail(
   });
 
   return true;
+}
+
+export async function getApplication(id: string) {
+  const application = await prisma.application.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
+  return application;
+}
+
+export async function getMyApplications(customerId: string) {
+  const applications = await prisma.application.findMany({
+    where: {
+      ownerId: customerId,
+    },
+  });
+
+  return applications;
+}
+
+export async function updateApplication(id: string, data: Application) {
+  const application = await prisma.application.update({
+    where: {
+      id: id,
+    },
+    data: {
+      ...data,
+    },
+  });
+
+  return application;
 }
 
 export async function signApplication(application: Application) {

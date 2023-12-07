@@ -1,9 +1,13 @@
-// import type { Customer } from "@prisma/client";
-// import { prisma } from "../../clients";
 import { stripe } from "@/lib/clients";
+import { getOnboardingApplication } from "@/lib/controllers/applications";
+import { createCustomer, getCustomerWithEmail } from "@/lib/customers";
+import { Database } from "@/types/supabase";
 import { NextResponse, type NextRequest } from "next/server";
 
+type Customer = Database['public']['Tables']['customers']['Row']
+
 const WEBHOST = process.env.WEBHOST;
+
 
 export async function GET(request: NextRequest) {
 
@@ -27,23 +31,20 @@ export async function GET(request: NextRequest) {
   // (if user has one.)
 
   // remove
-  const tmp = await prisma.onboardingApplications.findUnique({
-    where: { id: onboarding_id as string },
-  });
+  const tmp = await getOnboardingApplication(onboarding_id as string);
+  const _email = tmp.email;
 
   // if onboarding's email is placeholded. get email from checkout via stripe
-  const email = tmp.email.endsWith("@unknown-users.cors.sh")
+  const email = _email.endsWith("@unknown-users.cors.sh")
     ? customer_email ?? customer_details.email
-    : tmp.email;
+    : _email;
 
   // create customer
   // TODO: what if already exists?
 
   let customer_exists_with_same_email: Customer;
   try {
-    customer_exists_with_same_email = await prisma.customer.findUnique({
-      where: { email },
-    });
+    customer_exists_with_same_email = await getCustomerWithEmail(email)
   } catch (e) {
     console.error("Caught exeption while finding existing customer", e);
   }
@@ -53,24 +54,24 @@ export async function GET(request: NextRequest) {
     // we can't tell if the purchase is for the same user or not.
     // yet, if the existing one is verified, we should protect it.
     // if not, we should give the new one a chance.
-    const params = new URLSearchParams({
+    const _params = {
       error: "identity_conflict",
       message:
         "Your payment was successful, but we detected a suspicious activity. Please contact customer support.",
       session_id: session_id as string,
       onboarding_id: tmp.id,
       application_id: tmp.id,
-    });
+    }
+    const params = new URLSearchParams(_params);
     const redirect_uri = `${WEBHOST}/onboarding/payment-success-with-issue?${params.toString()}`;
     return NextResponse.redirect(redirect_uri, { status: 303 });
   } else {
-    const customer = await prisma.customer.create({
-      data: {
-        stripeId: stripe_customer_id as string,
-        email: email,
-        emailVerified: false,
-      },
+
+    const customer = await createCustomer({
+      stripe_customer_id: stripe_customer_id as string,
+      email,
     });
+
 
     const _params = {
       session_id: session_id as string,

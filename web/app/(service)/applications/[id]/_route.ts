@@ -1,6 +1,8 @@
-// import { Application } from "@prisma/client";
-// import { prisma } from "../../clients";
-import { signApplication } from "@/lib/controllers/applications";
+import {
+  getApplication,
+  signApplication,
+  updateApplication,
+} from "@/lib/controllers/applications";
 import { mask } from "@/lib/mask";
 import { NextResponse } from "next/server";
 
@@ -17,11 +19,8 @@ export async function GET(
     id,
     customer: res.locals.customer,
   });
-  const application = await prisma.application.findUnique({
-    where: {
-      id: id,
-    },
-  });
+
+  const application = await getApplication(id);
 
   console.info("fetched application", application);
 
@@ -43,16 +42,9 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   const data = await request.json();
-  const id = params;
+  const { id } = params;
 
-  await prisma.application.update({
-    where: {
-      id: id,
-    },
-    data: {
-      ...data,
-    },
-  });
+  await updateApplication(id, data);
 
   return NextResponse.json({ success: true }); // or.. updated body?
 }

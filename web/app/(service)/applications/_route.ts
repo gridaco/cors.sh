@@ -1,7 +1,6 @@
-// import { Application } from "@prisma/client";
-// import { prisma } from "../../clients";
 import {
   createApplication,
+  getMyApplications,
   signApplication,
 } from "@/lib/controllers/applications";
 import { mask } from "@/lib/mask";
@@ -11,11 +10,7 @@ import { NextResponse } from "next/server";
  * list all my applications
  */
 export async function GET() {
-  const applications = await prisma.application.findMany({
-    where: {
-      ownerId: res.locals.customer.id,
-    },
-  });
+  const applications = await getMyApplications(res.locals.customer.id);
 
   return NextResponse.json(applications);
 }

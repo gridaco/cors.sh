@@ -12,6 +12,7 @@
     "**/node_modules": true,
     "**/.build": true,
     "**/.lock": true,
+    "**/.archives": true,
     "**/*.code-search": true
   }
 }
