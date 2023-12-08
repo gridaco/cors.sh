@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import day from "dayjs";
 
-const API_KEY_TEMP_AES_KEY = process.env.API_KEY_TEMP_AES_KEY;
+const API_KEY_TEMP_AES_KEY = process.env.API_KEY_TEMP_AES_KEY!;
 const _aes_key = Buffer.from(API_KEY_TEMP_AES_KEY, "hex");
 const API_KEY_TEMP_AES_IV: string = process.env.API_KEY_TEMP_AES_IV!;
 const _aes_iv = Buffer.from(API_KEY_TEMP_AES_IV, "hex");
@@ -108,7 +108,7 @@ function prefix(type: "test" | "live" | "temp") {
 }
 
 function encrypt(data: string | object, type: "test" | "live") {
-  const key = API_KEY_HASH_SECRET_BY_TYPE[type];
+  const key = API_KEY_HASH_SECRET_BY_TYPE[type]!;
   const hmac = crypto.createHmac("sha256", key);
   hmac.update(JSON.stringify(data));
   return hmac.digest("hex");

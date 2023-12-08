@@ -3,7 +3,7 @@ import Axios, { AxiosInstance, AxiosError } from "axios";
 const HOST =
   process.env.NODE_ENV === "production"
     ? "https://services.cors.sh"
-    : "http://localhost:4021";
+    : "/api";
 
 export class Client {
   private _client: AxiosInstance;

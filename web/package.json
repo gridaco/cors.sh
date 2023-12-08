@@ -19,6 +19,7 @@
     "@use-gesture/react": "^10.3.0",
     "add": "^2.0.6",
     "copy-to-clipboard": "^3.3.3",
+    "dayjs": "^1.11.10",
     "framer-motion": "^10.16.4",
     "next": "14.0.1",
     "prismjs": "^1.29.0",
