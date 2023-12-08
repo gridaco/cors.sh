@@ -1,6 +1,7 @@
 import { verify } from "./jwt";
-import { prisma, stripe } from "../clients";
+import { stripe } from "../clients";
 import { SECURE_BROWSER_COOKIE_AUTH_KEY } from "./key";
+import { supabase } from "../supabase";
 
 // since the secure cookie cannot be forged, we have no additional validation on the jwt from client's secure http only cookie.
 // the possible hacking scenario is..
@@ -42,11 +43,11 @@ async function checoutSessionAuthorizer(req: Request) {
 
   const { customer: stripe_customer_id } = checkout_session;
 
-  const customer = await prisma.customer.findUnique({
-    where: {
-      stripeId: stripe_customer_id as string,
-    },
-  });
+  const { data: customer } = await supabase
+    .from("customers")
+    .select("*")
+    .eq("stripe_id", stripe_customer_id)
+    .single();
 
   if (!customer) {
     return false;
@@ -65,11 +66,12 @@ async function standardAuthorizer(req: Request): Promise<false | { customer }> {
 
   try {
     const customerid = verify(authorization);
-    const customer = await prisma.customer.findUnique({
-      where: {
-        id: customerid,
-      },
-    });
+
+    const { data: customer } = await supabase
+      .from("customers")
+      .select("*")
+      .eq("id", customerid)
+      .single();
 
     return {
       customer,

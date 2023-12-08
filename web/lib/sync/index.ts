@@ -1,8 +1,8 @@
 import AWS from "aws-sdk";
 import * as keygen from "../keygen";
 import type { KeyInfo } from "./type";
-import type { Application } from "@prisma/client";
 import day from "dayjs";
+import { Application } from "@/types/app";
 
 const db = new AWS.DynamoDB.DocumentClient();
 

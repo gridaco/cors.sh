@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 import sync from "../sync";
 import { logNewOnboardingProc, logNewApplication } from "./_telemetry";
 import { Application, OnboardingApplication } from "@/types/app";
+import { supabase } from "../supabase";
 
 type CreateOnboardingApplicationBody =
   | {
@@ -24,7 +25,7 @@ export async function createOnboardingApplication(
   let email_available = false;
   let email: string;
   let name: string;
-  let allowedOrigins: string[];
+  let allowedOrigins: string[] = [];
   let priceId: string;
 
   switch (body.type) {
@@ -50,34 +51,40 @@ export async function createOnboardingApplication(
   // check if email exists
   let duplicated: OnboardingApplication | null = null;
   if (email_available) {
-    duplicated = await prisma.onboardingApplications.findUnique({
-      where: { email: email },
-    });
+    const { data } = await supabase
+      .from("applications_onboarding")
+      .select("*")
+      .eq("email", email)
+      .single();
+
+    duplicated = data;
   }
 
   // if duplicated, update the existing one with the new key.
   if (duplicated) {
     // if the last interaction is within 5 minutes, ignore the request
-    if (duplicated.updatedAt) {
+    if (duplicated.updated_at) {
     }
-    data = await prisma.onboardingApplications.update({
-      where: { id: duplicated.id },
-      data: {
-        // this will be renewed since the signature contains the expiration time
-        key: tmpkey,
-      },
-    });
+
+    const { data: _data } = await supabase
+      .from("applications_onboarding")
+      .update({ key: tmpkey })
+      .eq("id", duplicated.id)
+      .select()
+      .single();
+
+    data = _data;
   } else {
-    data = await prisma.onboardingApplications.create({
-      data: {
+    const { data: _data } = await supabase
+      .from("applications_onboarding")
+      .insert({
         key: tmpkey,
         email: email,
         name: name,
-        allowedOrigins: allowedOrigins ?? [],
-        expiresAt: expires_at.toDate(),
-        priceId,
-      },
-    });
+        allowed_origins: allowedOrigins ?? [],
+        expires_at: expires_at.toDate(),
+        price_id: priceId,
+      });
   }
 
   if (email_available && send_onboarding_email_if_possible) {
@@ -99,25 +106,29 @@ export async function createOnboardingApplication(
     // key: "omitted"
     email: data.email,
     name: data.name,
-    allowedOrigins: data.allowedOrigins,
-    priceId: data.priceId,
+    allowedOrigins: data.allowed_origins,
+    priceId: data.price_id,
   };
 }
 
 export async function getOnboardingApplication(id: string) {
-  return await prisma.onboardingApplications.findUnique({
-    where: { id: id },
-    select: {
-      // omit private data
-      id: true,
-      name: true,
-      email: true,
-      allowedOrigins: true,
-      priceId: true,
-      createdAt: true,
-      updatedAt: true,
-    },
-  });
+  const { data } = await supabase
+    .from("applications_onboarding")
+    .select(
+      `
+        id,
+        name,
+        email,
+        allowed_origins,
+        price_id,
+        created_at,
+        updated_at
+      `
+    )
+    .eq("id", id)
+    .single();
+
+  return data;
 }
 
 async function sendOnboardingEmail(
@@ -125,9 +136,13 @@ async function sendOnboardingEmail(
   application?: OnboardingApplication
 ) {
   if (!application) {
-    application = await prisma.onboardingApplications.findUnique({
-      where: { email: email },
-    });
+    const { data } = await supabase
+      .from("applications_onboarding")
+      .select("*")
+      .eq("email", email)
+      .single();
+
+    application = data;
   }
 
   if (!application) {
@@ -159,49 +174,49 @@ async function sendOnboardingEmail(
   );
 
   // update the tmp app
-  await prisma.onboardingApplications.update({
-    where: { id: application.id },
-    data: {
-      emailSentAt: {
-        push: new Date(),
-      },
-    },
-  });
+  await supabase
+    .from("applications_onboarding")
+    .update({
+      email_sent_at: [
+        ...(application.email_sent_at ?? []),
+        new Date().toISOString(),
+      ],
+    })
+    .eq("id", application.id);
 
   return true;
 }
 
 export async function getApplication(id: string) {
-  const application = await prisma.application.findUnique({
-    where: {
-      id: id,
-    },
-  });
+  const { data } = await supabase
+    .from("applications")
+    .select("*")
+    .eq("id", id)
+    .single();
 
-  return application;
+  return data;
 }
 
 export async function getMyApplications(customerId: string) {
-  const applications = await prisma.application.findMany({
-    where: {
-      ownerId: customerId,
-    },
-  });
+  const { data } = await supabase
+    .from("applications")
+    .select("*")
+    .eq("owner_id", customerId);
+
+  const applications = data;
 
   return applications;
 }
 
 export async function updateApplication(id: string, data: Application) {
-  const application = await prisma.application.update({
-    where: {
-      id: id,
-    },
-    data: {
-      ...data,
-    },
-  });
+  const { data: _data } = await supabase
+    .from("applications")
+    .update(data)
+    .eq("id", id)
+    .select()
+    .single();
 
-  return application;
+  return data;
 }
 
 export async function signApplication(application: Application) {
@@ -224,41 +239,41 @@ export async function createApplication({
   allowedOrigins,
   owner,
 }: {
-  id?: string;
+  id?: number;
   name: string;
   allowedOrigins?: string[];
-  owner: { id: string };
+  owner: { id: number };
 }) {
   const placeholder_test = nanoid(10);
   const placeholder_live = nanoid(10);
 
-  const application = await prisma.application.create({
-    data: {
+  const { data: application } = await supabase
+    .from("applications")
+    .insert({
       id: id,
       name: name,
       signature_test: placeholder_test,
       signature_live: placeholder_live,
-      allowedOrigins: allowedOrigins ?? [],
-      owner: {
-        connect: {
-          id: owner.id,
-        },
-      },
-    },
-  });
+      allowed_origins: allowedOrigins ?? [],
+      owner_id: owner.id,
+    })
+    .select()
+    .single();
 
   const salt_test = nanoid(10);
   const salt_live = nanoid(10);
   const signature_test = application.id + salt_test;
   const signature_live = application.id + salt_live;
 
-  const updated = await prisma.application.update({
-    where: { id: application.id },
-    data: {
+  const { data: updated } = await supabase
+    .from("applications")
+    .update({
       signature_test,
       signature_live,
-    },
-  });
+    })
+    .eq("id", application.id)
+    .select()
+    .single();
 
   // once application is created and initially signed, sync to the keys table
   await sync(updated);
@@ -281,19 +296,24 @@ export async function convertApplication({
   const stripe_customer_id =
     typeof stripe_customer === "string" ? stripe_customer : stripe_customer.id;
 
-  const customer = await prisma.customer.findUnique({
-    where: { stripeId: stripe_customer_id },
-  });
+  const { data: customer } = await supabase
+    .from("customers")
+    .select("*")
+    .eq("stripe_id", stripe_customer_id)
+    .single();
 
   // place this right before application create since its a delete and cannot be undone. (reduce chance of error when it fails)
-  const tmp = await prisma.onboardingApplications.delete({
-    where: { id: onboarding_id as string },
-  });
+  const { data: tmp } = await supabase
+    .from("applications_onboarding")
+    .delete()
+    .eq("id", onboarding_id as string)
+    .select()
+    .single();
 
   const application = await createApplication({
     id: tmp.id,
     name: tmp.name || "Untitled",
-    allowedOrigins: tmp.allowedOrigins,
+    allowedOrigins: tmp.allowed_origins,
     owner: { id: customer.id },
   });
 
