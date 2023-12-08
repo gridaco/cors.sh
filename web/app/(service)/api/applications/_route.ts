@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     owner: { id: customer_id },
   });
 
-  const signed = await signApplication(app);
+  const signed = await signApplication(app!);
 
   return NextResponse.json(mask(signed));
 }
