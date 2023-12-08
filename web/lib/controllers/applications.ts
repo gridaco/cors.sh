@@ -1,22 +1,22 @@
 import { stripe, emailWithTemplate } from "../clients";
 import { sign_live_key, sign_temporary_key, sign_test_key } from "../keygen";
 import { nanoid } from "nanoid";
-import sync from "../sync";
+// import sync from "../sync";
 import { logNewOnboardingProc, logNewApplication } from "./_telemetry";
 import { Application, OnboardingApplication } from "@/types/app";
 import { supabase } from "../supabase";
 
 type CreateOnboardingApplicationBody =
   | {
-      type: "with-form";
-      name: string;
-      allowedOrigins: string[];
-      priceId: string;
-    }
+    type: "with-form";
+    name: string;
+    allowedOrigins: string[];
+    priceId: string;
+  }
   | {
-      type: "with-email";
-      email: string;
-    };
+    type: "with-email";
+    email: string;
+  };
 
 export async function createOnboardingApplication(
   body: CreateOnboardingApplicationBody,
@@ -101,13 +101,13 @@ export async function createOnboardingApplication(
   }
 
   return {
-    id: data.id,
+    id: data!.id,
     // omit the key since it also works as a verification code for faster signup
     // key: "omitted"
-    email: data.email,
-    name: data.name,
-    allowedOrigins: data.allowed_origins,
-    priceId: data.price_id,
+    email: data!.email,
+    name: data!.name,
+    allowedOrigins: data!.allowed_origins,
+    priceId: data!.price_id,
   };
 }
 
@@ -142,7 +142,7 @@ async function sendOnboardingEmail(
       .eq("email", email)
       .single();
 
-    application = data;
+    if (data) application = data;
   }
 
   if (!application) {
@@ -262,8 +262,8 @@ export async function createApplication({
 
   const salt_test = nanoid(10);
   const salt_live = nanoid(10);
-  const signature_test = application.id + salt_test;
-  const signature_live = application.id + salt_live;
+  const signature_test = application!.id + salt_test;
+  const signature_live = application!.id + salt_live;
 
   const { data: updated } = await supabase
     .from("applications")
@@ -271,12 +271,13 @@ export async function createApplication({
       signature_test,
       signature_live,
     })
-    .eq("id", application.id)
+    .eq("id", application!.id)
     .select()
     .single();
 
   // once application is created and initially signed, sync to the keys table
-  await sync(updated);
+  // TODO:
+  // await sync(updated);
 
   return updated;
 }
@@ -320,7 +321,8 @@ export async function convertApplication({
   const signed = await signApplication(application);
 
   // once application is created and initially signed, sync to the keys table
-  await sync(application);
+  // TODO:
+  // await sync(application);
 
   // send email to the user
   try {

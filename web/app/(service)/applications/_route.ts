@@ -9,8 +9,9 @@ import { NextResponse } from "next/server";
 /**
  * list all my applications
  */
-export async function GET() {
-  const applications = await getMyApplications(res.locals.customer.id);
+export async function GET(request: Request) {
+  const customer_id = Number(request.headers.get("x-cors-service-customer-id") as string);
+  const applications = await getMyApplications(customer_id);
 
   return NextResponse.json(applications);
 }
@@ -18,12 +19,13 @@ export async function GET() {
 /**
  * create a new application
  */
-export async function POST() {
-  const { name } = req.body;
+export async function POST(request: Request) {
+  const customer_id = Number(request.headers.get("x-cors-service-customer-id") as string);
+  const { name } = await request.json();
 
   const app = await createApplication({
     name,
-    owner: res.locals.customer,
+    owner: { id: customer_id },
   });
 
   const signed = await signApplication(app);

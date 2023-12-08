@@ -1,7 +1,10 @@
-import { verify } from "./jwt";
+// import { verify } from "./jwt";
+// import { SECURE_BROWSER_COOKIE_AUTH_KEY } from "./key";
 import { stripe } from "../clients";
-import { SECURE_BROWSER_COOKIE_AUTH_KEY } from "./key";
 import { supabase } from "../supabase";
+import { NextResponse } from "next/server";
+import { createServerClient, CookieOptions } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
 // since the secure cookie cannot be forged, we have no additional validation on the jwt from client's secure http only cookie.
 // the possible hacking scenario is..
@@ -9,24 +12,22 @@ import { supabase } from "../supabase";
 // 2. the hacker finds out the customer id of services.cors.sh
 // 3. the hacker sets the cookie with the jwt token, and the customer id.
 // - seems secure enough for now.
-export async function authMiddleware(req: Request, res: Response, next) {
+export async function authMiddleware(req: Request, res: Response) {
   const _1 = await standardAuthorizer(req);
   if (_1) {
     const { customer } = _1;
-    res.locals.customer = customer;
-    next();
-    return;
+    res.headers.set("x-cors-service-customer-id", String(customer.id));
+    return res;
   }
 
   const _2 = await checoutSessionAuthorizer(req);
   if (_2) {
     const { customer } = _2;
-    res.locals.customer = customer;
-    next();
-    return;
+    res.headers.set("x-cors-service-customer-id", String(customer.id));
+    return res;
   }
 
-  return res.status(401).json({ error: "Unauthorized" });
+  return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 }
 
 async function checoutSessionAuthorizer(req: Request) {
@@ -46,7 +47,7 @@ async function checoutSessionAuthorizer(req: Request) {
   const { data: customer } = await supabase
     .from("customers")
     .select("*")
-    .eq("stripe_id", stripe_customer_id)
+    .eq("stripe_id", stripe_customer_id as string)
     .single();
 
   if (!customer) {
@@ -59,24 +60,42 @@ async function checoutSessionAuthorizer(req: Request) {
 }
 
 async function standardAuthorizer(req: Request): Promise<false | { customer }> {
-  const authorization = req.signedCookies?.[SECURE_BROWSER_COOKIE_AUTH_KEY];
-  if (!authorization) {
-    return false;
+  const cookieStore = cookies();
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value;
+        },
+        set(name: string, value: string, options: CookieOptions) {
+          cookieStore.set({ name, value, ...options });
+        },
+        remove(name: string, options: CookieOptions) {
+          cookieStore.set({ name, value: "", ...options });
+        },
+      },
+    }
+  );
+
+  const { data } = await supabase.auth.getUser();
+  const user = data.user;
+
+  if (!user) {
+    return false
   }
 
-  try {
-    const customerid = verify(authorization);
-
-    const { data: customer } = await supabase
-      .from("customers")
-      .select("*")
-      .eq("id", customerid)
-      .single();
-
-    return {
-      customer,
-    };
-  } catch (e) {
-    return false;
+  // TODO: fetch customer
+  const { data: customer } = await supabase
+    .from("customers")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+  if (!customer) {
+    return false
   }
+
+  return customer
 }

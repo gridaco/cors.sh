@@ -13,28 +13,29 @@ export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  const id = params;
+  const { id } = params;
 
-  console.info("fething application securely", {
-    id,
-    customer: res.locals.customer,
-  });
+  const customer_id = Number(request.headers.get("x-cors-service-customer-id") as string);
 
   const application = await getApplication(id);
 
-  console.info("fetched application", application);
-
   if (!application) {
-    return res.status(404).json({ error: "application not found" });
+    return NextResponse.json(
+      { error: "application not found" },
+      { status: 404 }
+    );
   }
 
-  if (application.ownerId !== res.locals.customer.id) {
-    return res.status(403).json({ error: "application not found" });
+  if (application.owner_id !== customer_id) {
+    return NextResponse.json(
+      { error: "application not found" },
+      { status: 403 }
+    );
   }
 
   const signed = await signApplication(application);
 
-  res.json(mask(signed));
+  return NextResponse.json(mask(signed));
 }
 
 export async function PUT(
