@@ -26,7 +26,7 @@ export async function createOnboardingApplication(
   let email: string;
   let name: string;
   let allowedOrigins: string[] = [];
-  let priceId: string;
+  let priceId: string | undefined;
 
   switch (body.type) {
     case "with-email": {
@@ -73,7 +73,7 @@ export async function createOnboardingApplication(
       .select()
       .single();
 
-    data = _data;
+    if (_data) data = _data;
   } else {
     const { data: _data } = await supabase
       .from("applications_onboarding")
@@ -82,20 +82,20 @@ export async function createOnboardingApplication(
         email: email,
         name: name,
         allowed_origins: allowedOrigins ?? [],
-        expires_at: expires_at.toDate(),
+        expires_at: expires_at.toISOString(),
         price_id: priceId,
       });
   }
 
   if (email_available && send_onboarding_email_if_possible) {
     // send an email to the user
-    const res = await sendOnboardingEmail(email, data);
+    const res = await sendOnboardingEmail(email, data!);
     console.log("email sent", res);
   }
 
   // log event to slack
   try {
-    !duplicated && (await logNewOnboardingProc(data));
+    !duplicated && (await logNewOnboardingProc(data!));
   } catch (e) {
     console.error("failed to log new onboarding application", e); // not critical
   }
@@ -197,7 +197,7 @@ export async function getApplication(id: string) {
   return data;
 }
 
-export async function getMyApplications(customerId: string) {
+export async function getMyApplications(customerId: number) {
   const { data } = await supabase
     .from("applications")
     .select("*")
@@ -295,7 +295,7 @@ export async function convertApplication({
 
   const { customer: stripe_customer } = checkout_session;
   const stripe_customer_id =
-    typeof stripe_customer === "string" ? stripe_customer : stripe_customer.id;
+    typeof stripe_customer === "string" ? stripe_customer : stripe_customer!.id;
 
   const { data: customer } = await supabase
     .from("customers")
@@ -312,13 +312,13 @@ export async function convertApplication({
     .single();
 
   const application = await createApplication({
-    id: tmp.id,
-    name: tmp.name || "Untitled",
-    allowedOrigins: tmp.allowed_origins,
-    owner: { id: customer.id },
+    id: tmp!.id,
+    name: tmp!.name || "Untitled",
+    allowedOrigins: tmp!.allowed_origins || [],
+    owner: { id: customer!.id },
   });
 
-  const signed = await signApplication(application);
+  const signed = await signApplication(application!);
 
   // once application is created and initially signed, sync to the keys table
   // TODO:
@@ -327,10 +327,10 @@ export async function convertApplication({
   // send email to the user
   try {
     await emailWithTemplate(
-      customer.email,
+      customer!.email!,
       `mail_cors_sh_onboarding_with_payment_success_${process.env.STAGE}`,
       {
-        APPLICATIONNAME: tmp.name,
+        APPLICATIONNAME: tmp!.name,
         CODE_LIVE: signed.apikey_live,
         CODE_TEST: signed.apikey_test,
       }

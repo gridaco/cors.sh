@@ -21,9 +21,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "invalid session" }, { status: 400 });
   }
 
-  const { priceId } = onboarding;
+  const { price_id } = onboarding;
 
-  const price = await stripe.prices.retrieve(priceId, {
+  const price = await stripe.prices.retrieve(price_id!, {
     expand: ["product"],
   });
 
@@ -46,5 +46,5 @@ export async function GET(request: NextRequest) {
     cancel_url: `${PROTOCOL}://${host}/payments/canceled?session_id={CHECKOUT_SESSION_ID}&${extra_params}`,
   });
 
-  return NextResponse.redirect(session.url, { status: 303 });
+  return NextResponse.redirect(session.url!, { status: 303 });
 }
