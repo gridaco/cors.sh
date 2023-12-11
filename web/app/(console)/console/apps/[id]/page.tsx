@@ -72,7 +72,7 @@ function EditableTitle({ initialValue = "" }: { initialValue?: string }) {
       ref.current?.focus();
       ref.current?.setSelectionRange(0, text.length);
     }
-  }, [editing]);
+  }, [editing, text.length]);
 
   return (
     <TitleInputWrapper>
