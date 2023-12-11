@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/clients";
 
-// TODO: V3 - need sprt of `express.raw({ type: "application/json" })` equivalent
+
 export async function POST(request: Request) {
-  let event: any = request.body;
+  // raw body for webhook signing
+  let event: any = await request.text();
 
   if (!event) {
     return NextResponse.error();
@@ -21,8 +22,8 @@ export async function POST(request: Request) {
     const signature = request.headers.get("stripe-signature");
     try {
       event = stripe.webhooks.constructEvent(
-        request.body,
-        signature,
+        event,
+        signature!,
         endpointSecret
       );
     } catch (err: any) {
