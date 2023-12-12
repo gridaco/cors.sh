@@ -5,7 +5,7 @@ import { Toaster } from "react-hot-toast";
 import GoogleAnalytics from '@/components/ga';
 import ChatwootWidget from "@/components/chatwoot";
 import { Heading, Link, Theme } from '@radix-ui/themes';
-import { GearIcon, GitHubLogoIcon, MagnifyingGlassIcon, OpenInNewWindowIcon, QuestionMarkCircledIcon } from '@radix-ui/react-icons';
+import { FileTextIcon, GearIcon, GitHubLogoIcon, HomeIcon, LayersIcon, LightningBoltIcon, MagnifyingGlassIcon, OpenInNewWindowIcon, QuestionMarkCircledIcon, RocketIcon } from '@radix-ui/react-icons';
 import '../globals.console.css'
 
 
@@ -60,38 +60,44 @@ export default function RootLayout({
 function Sidebar() {
   return <div className="border-r border-black/5">
     <header className="p-4 hover:bg-gray-500/10">
-      <Link href='/console'>
-        <Image
-          src="/logo.svg"
-          alt="CORS.SH"
-          width={100}
-          height={32} />
-      </Link>
+      <div className='h-10'>
+        <Link href='/console'>
+          <Image
+            src="/logo.svg"
+            alt="CORS.SH"
+            width={100}
+            height={32} />
+        </Link>
+      </div>
     </header>
     <div className="flex-1 p-4 flex flex-col gap-2 min-w-[240px]">
       <NavItem href="/console">
-        <GearIcon />
+        <HomeIcon />
         Dashboard
       </NavItem>
       <NavItem href="/console/apps">
-        <GearIcon />
+        <LayersIcon />
         Apps
       </NavItem>
-      <NavItem href="/console/plans">
-        <GearIcon />
-        Plans
-      </NavItem>
       <NavItem href="/console/usage">
-        <GearIcon />
+        <LightningBoltIcon />
         Usage
       </NavItem>
       <NavItem href="/docs" target="_blank">
-        <QuestionMarkCircledIcon />
+        <FileTextIcon />
         Docs
       </NavItem>
-      <NavItem href="/faq" target="_blank">
+      <NavItem href="/docs/faq" target="_blank">
         <QuestionMarkCircledIcon />
         FAQ
+      </NavItem>
+      <NavItem href="/console/plans">
+        <RocketIcon />
+        Plans
+      </NavItem>
+      <NavItem href="/console/settings">
+        <GearIcon />
+        Settings
       </NavItem>
       <NavItem href="https://github.com/gridaco/cors.sh" target="_blank">
         <GitHubLogoIcon />

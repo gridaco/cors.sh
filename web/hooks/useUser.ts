@@ -5,17 +5,18 @@ import { User } from "@supabase/supabase-js";
 
 export function useUser() {
   const [user, setUser] = useState<User | null>(null);
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
 
   useEffect(() => {
-    const supabase = createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
-
-    supabase.auth.getUser().then((res) => {
-      setUser(res.data.user);
+    supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
     });
-  }, []);
+  }, [supabase]);
+
+  if (!user) return null;
 
   return {
     ...user,

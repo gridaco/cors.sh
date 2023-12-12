@@ -1,8 +1,4 @@
-'use client'
-
-import styled from "@emotion/styled";
-import { ArrowRightIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
+import { ArrowRightIcon, LayersIcon } from "@radix-ui/react-icons";
 
 
 export function ApplicationItem({
@@ -15,33 +11,20 @@ export function ApplicationItem({
   allowedOrigins?: string[];
 }) {
   return (
-    <ItemWrap>
-      <span>
-        {name} ({id})
+    <div
+      className="flex flex-col items-start justify-between cursor-pointer rounded-md px-5 py-3 hover:bg-gray-500/10 transition-colors duration-200 ease-in-out"
+    >
+      <div className="flex flex-row gap-2 items-center justify-between">
+        <span className="text-md font-semibold">
+          {name} ({id})
+        </span>
+        <ArrowRightIcon />
+      </div>
+      <span className="text-gray-400 text-sm">
+        {allowedOrigins?.map((u) => (
+          <span key={u}>{u}</span>
+        ))}
       </span>
-      <ArrowRightIcon />
-    </ItemWrap>
+    </div>
   );
 }
-
-const ItemWrap = styled.div`
-  flex: 1;
-  display: flex;
-  cursor: pointer;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: center;
-  flex: none;
-  border-radius: 4px;
-  border: solid 1px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-  padding: 21px;
-
-  &:hover {
-    border: solid 1px rgba(0, 0, 0, 0.1);
-    background-color: rgba(0, 0, 0, 0.02);
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
-  }
-
-  transition: all 0.2s ease-in-out;
-`;

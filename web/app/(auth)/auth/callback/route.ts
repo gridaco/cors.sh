@@ -47,6 +47,10 @@ export async function GET(request: NextRequest) {
     );
   }
 
+  if (data.user!.app_metadata['customer_id']) {
+    return NextResponse.redirect(host + "/console");
+  }
+
   // URL to redirect to after sign in process completes
   return NextResponse.redirect(host + "/");
 }

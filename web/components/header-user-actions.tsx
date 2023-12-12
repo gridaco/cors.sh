@@ -10,9 +10,13 @@ export default function HeaderUserActions() {
 
   return <>
     {
-      user && (
+      user ? (
         <Link href='/console'>
           Console
+        </Link>
+      ) : (
+        <Link href='/signin'>
+          Sign in
         </Link>
       )
     }

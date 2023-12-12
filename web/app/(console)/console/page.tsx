@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import type { Metadata } from 'next'
 import { ApplicationItem } from "@/components/console/application-list";
+import BarChart from "@/components/charts/bar-chart";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -21,7 +22,7 @@ const applications = [
 export default function ConsoleHome() {
 
   return (
-    <main className="p-4">
+    <main className="p-10">
       <header className="mt-20 flex flex-row items-center justify-between">
         <h1 className="text-4xl font-bold">
           Dashboard
@@ -32,11 +33,18 @@ export default function ConsoleHome() {
           </button>
         </Link>
       </header>
-      <h2 className="text-2xl font-bold">
-        Usage
-      </h2>
+      <section className="mt-12">
+        <header className="mb-8">
+          <h2 className="text-2xl font-bold">
+            Usage
+          </h2>
+        </header>
+        <BarChart width={400} height={300} />
+      </section>
       <div className="mt-20">
-        <div className="flex">
+        <div
+          className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
           {applications.map((application) => (
             <Link key={application.id} href={`/console/apps/${application.id}`}>
               <ApplicationItem {...application} />
@@ -44,27 +52,55 @@ export default function ConsoleHome() {
           ))}
         </div>
       </div>
-      <section>
+      <section className="mt-12">
         <h2 className="text-2xl font-bold">
-          Integrations
+          QuickStarts
         </h2>
+        <div
+          className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
+          {quick_starts.map((d, i) => {
+            return <QuickStartCard {...d} key={i} />
+          })}
+        </div>
       </section>
-      <section>
-        <h2 className="text-2xl font-bold">
-          <Link href="/signout">
-            Sign out
-          </Link>
-        </h2>
-      </section>
+
     </main>
   );
 }
 
+const quick_starts = [
+  {
+    title: "Ticktok",
+    description: "Learn how to integrate Ticktok API with your application",
+  },
+  {
+    title: "Shopify",
+    description: "Learn how to integrate Ticktok API with your application",
+  },
+  {
+    title: "Your Server",
+    description: "Learn how to integrate CORS Proxy to your own server",
+  },
+] as const
 
-function IntegrationGuideCard() {
+function QuickStartCard({
+  icon,
+  title,
+  description,
+}: {
+  icon?: React.ReactNode;
+  title: string;
+  description: string;
+}) {
   return (
-    <div>
-
-    </div>
+    <button className="bg-white dark:bg-neutral-900 rounded-md p-4 flex flex-col items-start justify-start text-start">
+      <h5 className="text-lg font-bold">
+        {title}
+      </h5>
+      <p className="text-sm mt-2">
+        {description}
+      </p>
+    </button>
   )
 }
