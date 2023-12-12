@@ -8,7 +8,15 @@ export default function SettingsPage() {
           Settings
         </h1>
       </header>
-      <section>
+      <section className="mt-12">
+        <h2 className="text-lg font-semibold">
+          Members
+        </h2>
+        <p className="text-sm">
+          Invite members to your organization.
+        </p>
+      </section>
+      <section className="mt-12">
         <Link href="/signout">
           <button
             className="px-5 py-3 rounded-md text-red-500 bg-red-50"
