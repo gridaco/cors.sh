@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import type { Metadata } from 'next'
-import { ApplicationItem } from "@/components/console/application-list";
+import { ApplicationItem } from "@/components/console/application-item";
 
 export const metadata: Metadata = {
   title: "Dashboard",

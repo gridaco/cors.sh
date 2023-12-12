@@ -1,4 +1,4 @@
-import { ArrowRightIcon, LayersIcon } from "@radix-ui/react-icons";
+import { ArrowRightIcon, GlobeIcon, LayersIcon } from "@radix-ui/react-icons";
 
 
 export function ApplicationItem({
@@ -15,6 +15,7 @@ export function ApplicationItem({
       className="flex flex-col items-start justify-between cursor-pointer rounded-md px-5 py-3 hover:bg-gray-500/10 transition-colors duration-200 ease-in-out"
     >
       <div className="flex flex-row gap-2 items-center justify-between">
+        <GlobeIcon />
         <span className="text-md font-semibold">
           {name} ({id})
         </span>

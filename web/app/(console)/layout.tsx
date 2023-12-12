@@ -77,11 +77,11 @@ function Sidebar() {
       </NavItem>
       <NavItem href="/console/apps">
         <LayersIcon />
-        Apps
+        Applications
       </NavItem>
       <NavItem href="/console/usage">
         <LightningBoltIcon />
-        Usage
+        Usage & Plans
       </NavItem>
       <NavItem href="/docs" target="_blank">
         <FileTextIcon />
@@ -90,10 +90,6 @@ function Sidebar() {
       <NavItem href="/docs/faq" target="_blank">
         <QuestionMarkCircledIcon />
         FAQ
-      </NavItem>
-      <NavItem href="/console/plans">
-        <RocketIcon />
-        Plans
       </NavItem>
       <NavItem href="/console/settings">
         <GearIcon />
