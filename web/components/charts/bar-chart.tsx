@@ -3,7 +3,6 @@
 import React, { useMemo } from 'react';
 import { Bar } from '@visx/shape';
 import { Group } from '@visx/group';
-import { GradientTealBlue } from '@visx/gradient';
 import letterFrequency, { LetterFrequency } from '@visx/mock-data/lib/mocks/letterFrequency';
 import { scaleBand, scaleLinear } from '@visx/scale';
 
@@ -48,8 +47,6 @@ export default function BarChart({ width, height, events = false }: BarsProps) {
 
   return width < 10 ? null : (
     <svg width={width} height={height}>
-      <GradientTealBlue id="teal" />
-      <rect width={width} height={height} fill="url(#teal)" rx={14} />
       <Group top={verticalMargin / 2}>
         {data.map((d) => {
           const letter = getLetter(d);
@@ -64,7 +61,7 @@ export default function BarChart({ width, height, events = false }: BarsProps) {
               y={barY}
               width={barWidth}
               height={barHeight}
-              fill="rgba(23, 233, 217, .5)"
+              fill="rgba(50, 50, 200, 1)"
               onClick={() => {
                 if (events) alert(`clicked: ${JSON.stringify(Object.values(d))}`);
               }}

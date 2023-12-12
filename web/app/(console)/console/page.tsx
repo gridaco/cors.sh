@@ -3,6 +3,9 @@ import Link from "next/link";
 import type { Metadata } from 'next'
 import { ApplicationItem } from "@/components/console/application-list";
 import BarChart from "@/components/charts/bar-chart";
+import { Prism } from "@/components/prism";
+import { examples } from "@/k";
+import { ChartCard } from "@/components/charts/cart-card";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -39,7 +42,9 @@ export default function ConsoleHome() {
             Usage
           </h2>
         </header>
-        <BarChart width={400} height={300} />
+        <ChartCard label="Requests">
+          <BarChart width={400} height={300} />
+        </ChartCard>
       </section>
       <div className="mt-20">
         <div
@@ -56,6 +61,13 @@ export default function ConsoleHome() {
         <h2 className="text-2xl font-bold">
           QuickStarts
         </h2>
+        <div>
+          <Prism style={{
+            fontSize: 14,
+          }}>
+            {examples.fetch('https://example.com')}
+          </Prism>
+        </div>
         <div
           className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
         >

@@ -1,4 +1,5 @@
 import BarChart from "@/components/charts/bar-chart"
+import { ChartCard } from "@/components/charts/cart-card"
 import React from "react"
 
 export default function UsagePage() {
@@ -9,7 +10,9 @@ export default function UsagePage() {
           Usage
         </h1>
       </header>
-      <BarChart width={400} height={300} />
+      <ChartCard label="Requests">
+        <BarChart width={400} height={300} />
+      </ChartCard>
     </main>
   )
 }
