@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { TextFormField } from "@editor-ui/console";
 import client from "@cors.sh/service-api";
 import { useRouter } from "next/navigation";
+import { Form, FormButton, FormFooter, FormHeader, FormRow } from "@/console/form";
 
 export default function NewApplicationPage() {
   const router = useRouter();
@@ -47,12 +48,8 @@ export default function NewApplicationPage() {
 
   return (
     <main className="p-4 container mx-auto">
-      <header className="mt-20 flex flex-row items-center justify-between">
-        <h1 className="text-4xl font-bold">
-          New Application
-        </h1>
-      </header>
-      <form className="mt-20 flex flex-col gap-4 max-w-screen-sm" method="POST" action="/api/applications">
+      <CreateApplicationForm />
+      {/* <form method="POST" action="/api/applications">
         <TextFormField
           label="Project Name"
           placeholder="my-portfolio-website"
@@ -72,7 +69,48 @@ export default function NewApplicationPage() {
         >
           Create Project
         </button>
-      </form>
+      </form> */}
     </main>
   );
+}
+
+function CreateApplicationForm() {
+  return (
+    <Form>
+      <FormHeader >
+        <h1 className="text-md font-medium">
+          Create a new application
+        </h1>
+        <p className="mt-4 text-sm opacity-50">
+          Your project will have its own dedicated instance and full postgres database.
+          <br />
+          An API will be set up so you can easily interact with your new database.
+        </p>
+      </FormHeader>
+      <FormRow label="Name">
+        <TextFormField
+          placeholder="my-portfolio-website"
+        />
+      </FormRow>
+      <FormRow label="Whitelist Origins" noborder>
+        <TextFormField
+          placeholder="http://localhost:3000, https://my-site.com"
+          helpText="Register URLs where the api will be originated from. Use comma to separate."
+        />
+      </FormRow>
+      <FormFooter >
+        <div className="flex items-center justify-between">
+          <FormButton variant="secondary">
+            Cancel
+          </FormButton>
+          <div className="flex items-center gap-4">
+            <p className="text-xs opacity-50">You can rename your project later</p>
+            <FormButton>
+              Create Project
+            </FormButton>
+          </div>
+        </div>
+      </FormFooter>
+    </Form>
+  )
 }
