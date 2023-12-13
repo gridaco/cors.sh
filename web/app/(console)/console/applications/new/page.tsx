@@ -47,7 +47,7 @@ export default function NewApplicationPage() {
   }, [name, allowedOrigins]);
 
   return (
-    <main className="p-4 container mx-auto">
+    <main className="p-10 container mx-auto">
       <CreateApplicationForm />
       {/* <form method="POST" action="/api/applications">
         <TextFormField

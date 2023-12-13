@@ -4,7 +4,7 @@ import React from "react"
 
 export default function UsagePage() {
   return (
-    <main className="p-10">
+    <main className="p-10 container mx-auto">
       <header className="mt-20 flex flex-row items-center justify-between">
         <h1 className="text-4xl font-bold">
           Usage

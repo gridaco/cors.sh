@@ -24,7 +24,7 @@ export default function ApplicationDetailPage({ params }: {
   }
 
   return (
-    <main className="p-4 container mx-auto">
+    <main className="p-10 container mx-auto">
       <Form>
         <FormHeader>
           {application.name}

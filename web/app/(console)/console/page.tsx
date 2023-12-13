@@ -26,7 +26,7 @@ const applications = [
 export default function ConsoleHome() {
 
   return (
-    <main className="p-10">
+    <main className="p-10 container mx-auto">
       <section className="mt-12">
         <header className="mb-8">
           <h2 className="text-2xl font-bold">

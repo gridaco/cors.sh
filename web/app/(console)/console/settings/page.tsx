@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function SettingsPage() {
   return (
-    <main className="p-10">
+    <main className="p-10 container mx-auto">
       <header className="mt-20 flex flex-row items-center justify-between">
         <h1 className="text-4xl font-bold">
           Settings
@@ -20,7 +20,7 @@ export default function SettingsPage() {
       <section className="mt-12">
         <Link href="/signout">
           <Button
-            className="px-5 py-3 rounded-md text-red-500 bg-red-50"
+            variant="danger"
           >
             Sign out
           </Button>

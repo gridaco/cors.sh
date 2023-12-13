@@ -14,7 +14,7 @@ export default async function AppsPage() {
   const applications = await client.listApplications()
 
   return (
-    <main className="p-10">
+    <main className="p-10 container mx-auto">
       <header className="mt-20 flex flex-row items-center justify-between">
         <h1 className="text-4xl font-bold">
           Applications

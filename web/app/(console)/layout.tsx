@@ -45,7 +45,7 @@ export default function RootLayout({
               <main className='flex flex-col flex-1 w-full overflow-y-auto' style={{
                 height: '100vh'
               }}>
-                <div className='flex max-h-full'>
+                <div className='flex max-h-full min-h-full'>
                   <Sidebar />
                   <div className='flex flex-1 flex-col'>
                     <TopBar />
