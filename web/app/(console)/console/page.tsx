@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import type { Metadata } from 'next'
-import { ApplicationItem } from "@/components/console/application-item";
+import { ApplicationItem } from "@/console/application-item";
 import BarChart from "@/components/charts/bar-chart";
 import { Prism } from "@/components/prism";
 import { examples } from "@/k";

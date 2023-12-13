@@ -1,14 +1,9 @@
 'use client'
 
 import React, { useEffect } from "react";
-import {
-  // Button,
-  TextFormField
-} from "@editor-ui/console";
+import { TextFormField } from "@editor-ui/console";
 import client from "@cors.sh/service-api";
 import { useRouter } from "next/navigation";
-import { FormPageLayout } from "@app/ui/layouts";
-import { Button } from "@radix-ui/themes"
 
 export default function NewApplicationPage() {
   const router = useRouter();
@@ -54,10 +49,10 @@ export default function NewApplicationPage() {
     <main className="p-4 container mx-auto">
       <header className="mt-20 flex flex-row items-center justify-between">
         <h1 className="text-4xl font-bold">
-          Create new application
+          New Application
         </h1>
       </header>
-      <form className="mt-20 flex flex-col gap-4 max-w-screen-sm">
+      <form className="mt-20 flex flex-col gap-4 max-w-screen-sm" method="POST" action="/api/applications">
         <TextFormField
           label="Project Name"
           placeholder="my-portfolio-website"
@@ -70,14 +65,13 @@ export default function NewApplicationPage() {
           onChange={setAllowedOrigins}
         />
         <div style={{ height: 16 }} />
-        <Button
+        <button
           className="rounded px-4 py-3 cursor-pointer bg-black text-white dark:bg-white dark:text-black"
           disabled={!isValid || isBusy}
           onClick={onCreateNewClick}
-        // height={"32px"}
         >
           Create Project
-        </Button>
+        </button>
       </form>
     </main>
   );
