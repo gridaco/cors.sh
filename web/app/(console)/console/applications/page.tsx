@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import type { Metadata } from 'next'
-import { ApplicationItem } from "@/console/application-item";
+import { ApplicationItem } from "@/components/console/application-item";
 import { Client } from "@cors.sh/service-api";
 import { Button, Form, FormHeader, FormRow } from "@/console";
 

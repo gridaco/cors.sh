@@ -99,16 +99,14 @@ function CreateApplicationForm() {
         />
       </FormRow>
       <FormFooter >
-        <div className="flex items-center justify-between">
-          <Button variant="secondary">
-            Cancel
+        <Button variant="secondary">
+          Cancel
+        </Button>
+        <div className="flex items-center gap-4">
+          <p className="text-xs opacity-50">You can rename your project later</p>
+          <Button>
+            Create Project
           </Button>
-          <div className="flex items-center gap-4">
-            <p className="text-xs opacity-50">You can rename your project later</p>
-            <Button>
-              Create Project
-            </Button>
-          </div>
         </div>
       </FormFooter>
     </Form>

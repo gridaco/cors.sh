@@ -1,6 +1,6 @@
 export function Form({ children }: React.FormHTMLAttributes<HTMLFormElement>) {
   return (
-    <form className="flex flex-col bg-neutral-50 dark:bg-neutral-900 shadow-lg border rounded-md">
+    <form className="flex flex-col bg-white dark:bg-neutral-900 shadow-lg border rounded-md">
       {children}
     </form>
   )
@@ -19,7 +19,7 @@ export function FormHeader({ children }: React.PropsWithChildren<{}>) {
 
 export function FormFooter({ children }: React.PropsWithChildren<{}>) {
   return (
-    <footer className="px-6 py-4 border-t">
+    <footer className="px-6 py-4 border-t flex justify-between items-center">
       {children}
     </footer>
   )

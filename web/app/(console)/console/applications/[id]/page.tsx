@@ -6,9 +6,8 @@ import client, { ApplicationWithApiKey } from "@cors.sh/service-api";
 import { FormPageLayout, PageCloseButton } from "@app/ui/layouts";
 import { TextFormField } from "@editor-ui/console";
 import { Logo } from "@/components/logo";
-import { UnderlineButton } from "@app/ui/components";
 import { ApiKeyReveal } from "@app/ui/components";
-import { Button } from "@/console";
+import { Button, Form, FormFooter, FormHeader, FormRow } from "@/console";
 
 export default function ApplicationDetailPage({ params }: {
   params: {
@@ -25,40 +24,50 @@ export default function ApplicationDetailPage({ params }: {
   }
 
   return (
-    <FormPageLayout>
-      <PageCloseButton />
-      <Logo />
-      <div style={{ height: 80 }} />
-      <EditableTitle initialValue={application.name} />
+    <main className="p-4 container mx-auto">
+      <Form>
+        <FormHeader>
+          {application.name}
+        </FormHeader>
+        <FormRow>
+          <ApiKeyReveal
+            keys={{
+              test: application.apikey_test,
+              prod: application.apikey_live,
+            }}
+          />
+        </FormRow>
+        <FormRow>
+
+
+          <TextFormField
+            readonly
+            label="Application origin URL"
+            placeholder="http://localhost:3000, https://my-site.com"
+            helpText="You can add up to 3 urls of your site"
+            value={application.allowedOrigins?.join(", ")}
+          // onChange={setAllowedOrigins}
+          />
+        </FormRow>
+        <FormRow>
+          <TextFormField
+            readonly
+            label="Restrict Targets (Optional)"
+            placeholder="http://localhost:3000, https://my-site.com"
+            helpText="You can restrict target urls for extra security"
+            value={application.allowedOrigins?.join(", ")}
+          // onChange={setAllowedOrigins}
+          />
+        </FormRow>
+        <FormFooter>
+          <Button variant="danger">Archive application</Button>
+          <Button>Save</Button>
+        </FormFooter>
+      </Form>
       <div className="form">
-        <ApiKeyReveal
-          keys={{
-            test: application.apikey_test,
-            prod: application.apikey_live,
-          }}
-        />
 
-        <TextFormField
-          readonly
-          label="Application origin URL"
-          placeholder="http://localhost:3000, https://my-site.com"
-          helpText="You can add up to 3 urls of your site"
-          value={application.allowedOrigins?.join(", ")}
-        // onChange={setAllowedOrigins}
-        />
-        <TextFormField
-          readonly
-          label="Restrict Targets (Optional)"
-          placeholder="http://localhost:3000, https://my-site.com"
-          helpText="You can restrict target urls for extra security"
-          value={application.allowedOrigins?.join(", ")}
-        // onChange={setAllowedOrigins}
-        />
-
-        <Button>Save</Button>
-        <UnderlineButton>Archive application</UnderlineButton>
       </div>
-    </FormPageLayout>
+    </main>
   );
 }
 
