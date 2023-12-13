@@ -102,15 +102,13 @@ function QuickStartCard({
   description: string;
 }) {
   return (
-    <Card>
-      <button className="p-4 flex flex-col items-start justify-start text-start">
-        <h5 className="text-lg font-bold">
-          {title}
-        </h5>
-        <p className="text-sm mt-2">
-          {description}
-        </p>
-      </button>
-    </Card>
+    <button className="p-4 flex flex-col items-start justify-start text-start">
+      <h5 className="text-lg font-bold">
+        {title}
+      </h5>
+      <p className="text-sm mt-2">
+        {description}
+      </p>
+    </button>
   )
 }

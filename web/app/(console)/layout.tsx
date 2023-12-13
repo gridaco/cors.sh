@@ -38,19 +38,26 @@ export default function RootLayout({
             {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
         ) : null}
         <ChatwootWidget />
-        <div className='selection:bg-amber-500 selection:text-amber-900'>
-          <div suppressHydrationWarning>
-            <Toaster position="bottom-center" />
-          </div>
-          <Theme hasBackground={false}>
-            <div className="w-screen h-screen flex flex-row">
-              <Sidebar />
-              <ContentArea>
-                {children}
-              </ContentArea>
+        <Toaster position="bottom-center" />
+        <Theme hasBackground={false}>
+          <div className='min-h-full flex flex-col'>
+            <div className="flex h-full">
+              <main className='flex flex-col flex-1 w-full overflow-y-auto' style={{
+                height: '100vh'
+              }}>
+                <div className='flex max-h-full'>
+                  <Sidebar />
+                  <div className='flex flex-1 flex-col'>
+                    <TopBar />
+                    <div className='flex-1 flex-grow overflow-auto'>
+                      {children}
+                    </div>
+                  </div>
+                </div>
+              </main>
             </div>
-          </Theme>
-        </div>
+          </div>
+        </Theme>
       </body>
     </html>
   )
@@ -58,17 +65,15 @@ export default function RootLayout({
 
 
 function Sidebar() {
-  return <div className="border-r border-black/5">
-    <header className="p-4 hover:bg-gray-500/10">
-      <div className='h-10'>
-        <Link href='/console'>
-          <Image
-            src="/logo.svg"
-            alt="CORS.SH"
-            width={100}
-            height={32} />
-        </Link>
-      </div>
+  return <div className="h-full bg-background hide-scrollbar w-64 overflow-auto border-r border-default">
+    <header className="flex h-12 max-h-12 items-center border-b px-6 border-default">
+      <Link href='/console'>
+        <Image
+          src="/logo.svg"
+          alt="CORS.SH"
+          width={100}
+          height={32} />
+      </Link>
     </header>
     <div className="flex-1 p-4 flex flex-col gap-2 min-w-[240px]">
       <NavItem href="/console">
@@ -115,9 +120,10 @@ function NavItem({ children, ...props }: React.PropsWithChildren<React.Component
 }
 
 
-function ContentArea({ children }: React.PropsWithChildren<{}>) {
-  return <div className="flex-1 flex flex-col">
-    {children}
-  </div>
-
+function TopBar() {
+  return (
+    <header className="flex h-12 max-h-12 items-center justify-between py-2 px-5 border-b border-default">
+      <div>CORS</div>
+    </header>
+  )
 }
