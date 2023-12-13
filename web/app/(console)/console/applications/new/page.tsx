@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { TextFormField } from "@editor-ui/console";
 import client from "@cors.sh/service-api";
 import { useRouter } from "next/navigation";
-import { Form, FormButton, FormFooter, FormHeader, FormRow } from "@/console/form";
+import { Form, FormFooter, FormHeader, FormRow, Button } from "@/console";
 
 export default function NewApplicationPage() {
   const router = useRouter();
@@ -100,14 +100,14 @@ function CreateApplicationForm() {
       </FormRow>
       <FormFooter >
         <div className="flex items-center justify-between">
-          <FormButton variant="secondary">
+          <Button variant="secondary">
             Cancel
-          </FormButton>
+          </Button>
           <div className="flex items-center gap-4">
             <p className="text-xs opacity-50">You can rename your project later</p>
-            <FormButton>
+            <Button>
               Create Project
-            </FormButton>
+            </Button>
           </div>
         </div>
       </FormFooter>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from 'next'
 import { ApplicationItem } from "@/console/application-item";
 import { Client } from "@cors.sh/service-api";
+import { Button, Form, FormHeader, FormRow } from "@/console";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -19,9 +20,9 @@ export default async function AppsPage() {
           Applications
         </h1>
         <Link href="/console/applications/new">
-          <button className="px-5 py-3 rounded-md bg-black dark:bg-white text-white dark:text-white">
+          <Button>
             New Application
-          </button>
+          </Button>
         </Link>
       </header>
       <div className="mt-20">
@@ -48,15 +49,17 @@ export default async function AppsPage() {
 
 function Empty() {
   return (
-    <div className="flex flex-col items-center justify-center">
-      <h1 className="text-4xl font-bold">
+    <Form>
+      <FormHeader>
         You don&apos;t have any applications yet
-      </h1>
-      <Link href="/console/applications/new">
-        <button className="mt-10 px-5 py-3 rounded-md bg-black dark:bg-white text-white dark:text-white">
-          New Application
-        </button>
-      </Link>
-    </div>
+      </FormHeader>
+      <FormRow noborder>
+        <Link href="/console/applications/new">
+          <Button>
+            New Application
+          </Button>
+        </Link>
+      </FormRow>
+    </Form>
   )
 }

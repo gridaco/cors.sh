@@ -1,3 +1,4 @@
+import { Button } from "@/console";
 import Link from "next/link";
 
 export default function SettingsPage() {
@@ -18,11 +19,11 @@ export default function SettingsPage() {
       </section>
       <section className="mt-12">
         <Link href="/signout">
-          <button
+          <Button
             className="px-5 py-3 rounded-md text-red-500 bg-red-50"
           >
             Sign out
-          </button>
+          </Button>
         </Link>
       </section>
     </main>

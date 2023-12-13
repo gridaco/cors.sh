@@ -6,6 +6,7 @@ import BarChart from "@/components/charts/bar-chart";
 import { Prism } from "@/components/prism";
 import { examples } from "@/k";
 import { ChartCard } from "@/components/charts/cart-card";
+import { Button } from "@/console";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -31,9 +32,9 @@ export default function ConsoleHome() {
           Dashboard
         </h1>
         <Link href="/console/applications/new">
-          <button className="px-5 py-3 rounded-md bg-black dark:bg-white text-white dark:text-white">
+          <Button>
             New Application
-          </button>
+          </Button>
         </Link>
       </header>
       <section className="mt-12">

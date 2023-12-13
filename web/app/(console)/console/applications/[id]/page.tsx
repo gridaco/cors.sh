@@ -4,10 +4,11 @@ import styled from "@emotion/styled";
 import { Pencil1Icon } from "@radix-ui/react-icons";
 import client, { ApplicationWithApiKey } from "@cors.sh/service-api";
 import { FormPageLayout, PageCloseButton } from "@app/ui/layouts";
-import { Button, TextFormField } from "@editor-ui/console";
+import { TextFormField } from "@editor-ui/console";
 import { Logo } from "@/components/logo";
 import { UnderlineButton } from "@app/ui/components";
 import { ApiKeyReveal } from "@app/ui/components";
+import { Button } from "@/console";
 
 export default function ApplicationDetailPage({ params }: {
   params: {
@@ -54,7 +55,7 @@ export default function ApplicationDetailPage({ params }: {
         // onChange={setAllowedOrigins}
         />
 
-        <Button height={36}>Save</Button>
+        <Button>Save</Button>
         <UnderlineButton>Archive application</UnderlineButton>
       </div>
     </FormPageLayout>
@@ -95,7 +96,7 @@ function EditableTitle({ initialValue = "" }: { initialValue?: string }) {
         }}
         value={text}
       />
-      <button
+      <Button
         className="edit-button"
         style={{
           visibility: editing ? "hidden" : "visible",
@@ -103,7 +104,7 @@ function EditableTitle({ initialValue = "" }: { initialValue?: string }) {
         onClick={() => setEditing(true)}
       >
         <Pencil1Icon />
-      </button>
+      </Button>
     </TitleInputWrapper>
   );
 }
