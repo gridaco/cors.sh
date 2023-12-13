@@ -75,7 +75,7 @@ function Sidebar() {
         <HomeIcon />
         Dashboard
       </NavItem>
-      <NavItem href="/console/apps">
+      <NavItem href="/console/applications">
         <LayersIcon />
         Applications
       </NavItem>

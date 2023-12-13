@@ -28,7 +28,7 @@ export default function AppsPage() {
         <h1 className="text-4xl font-bold">
           Applications
         </h1>
-        <Link href="/console/apps/new">
+        <Link href="/console/applications/new">
           <button className="px-5 py-3 rounded-md bg-black dark:bg-white text-white dark:text-white">
             New Application
           </button>
@@ -39,7 +39,7 @@ export default function AppsPage() {
           className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
         >
           {applications.map((application) => (
-            <Link key={application.id} href={`/console/apps/${application.id}`}>
+            <Link key={application.id} href={`/console/applications/${application.id}`}>
               <ApplicationItem {...application} />
             </Link>
           ))}
