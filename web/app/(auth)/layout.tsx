@@ -26,10 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className + " "
-        // make it dark
-        + "bg-black"
-      }>
+      <body className={inter.className}>
         {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
           <GoogleAnalytics gaid=
             {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
