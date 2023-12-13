@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { Header } from '@/components/header'
 import { Toaster } from "react-hot-toast";
 import GoogleAnalytics from '@/components/ga';
 import ChatwootWidget from "@/components/chatwoot";
