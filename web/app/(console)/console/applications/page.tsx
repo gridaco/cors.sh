@@ -10,8 +10,9 @@ export const metadata: Metadata = {
 }
 
 export default async function AppsPage() {
-  const client = new Client({});
-  const applications = await client.listApplications()
+  // const client = new Client({});
+  // const applications = await client.listApplications()
+  const applications: any[] = []
 
   return (
     <main className="p-10 container mx-auto">
