@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const dir = path.join(__dirname, "../../mail.cors.sh", "render");
+const dir = path.join(__dirname, "../../../.archives/mail.cors.sh", "render");
 const templates = fs
   .readdirSync(dir)
   // list files ending with .template.html

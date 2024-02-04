@@ -6,6 +6,7 @@ import { logNewOnboardingProc, logNewApplication } from "./_telemetry";
 import { Application, OnboardingApplication } from "@/types/app";
 import { supabase } from "../supabase";
 import { OnboardingEmailTemplate, subject as onboarding_email_template_subject } from "@/components/emails/onboarding";
+import { PaymentSuccessEmailTemplate, subject as payment_success_email_template_subject} from "@/components/emails/payment-success"
 import { resend } from "../clients/resend";
 
 type CreateOnboardingApplicationBody =
@@ -350,20 +351,26 @@ export async function convertApplication({
 
   // send email to the user
   try {
-    await emailWithTemplate(
-      customer!.email!,
-      `mail_cors_sh_onboarding_with_payment_success_${process.env.STAGE}`,
-      {
-        APPLICATIONNAME: tmp!.name,
-        CODE_LIVE: signed.apikey_live,
-        CODE_TEST: signed.apikey_test,
-      }
-    );
-    console.log("email sent", true);
-    //   // set email verified to true?
-  } catch (e) {
-    console.error("email failed", e);
+    const response = await resend.emails.send({
+      from: "CORS.SH <no-reply@cors.sh>",
+      to: [customer!.email!],
+      subject: payment_success_email_template_subject,
+      react: PaymentSuccessEmailTemplate({
+        applicationName: tmp!.name || "Untitled",
+        codeLive: signed.apikey_live,
+        codeTest: signed.apikey_test,
+      }) as React.ReactElement,
+    });
+
+    if (response.error) {
+      console.error("email failed", response.error);
+    }
+
+    console.log("email sent", response);
+  } catch (error) {
+    console.error("email failed", error);
   }
+  
 
   // log event to slack
   try {
