@@ -5,6 +5,8 @@ import { nanoid } from "nanoid";
 import { logNewOnboardingProc, logNewApplication } from "./_telemetry";
 import { Application, OnboardingApplication } from "@/types/app";
 import { supabase } from "../supabase";
+import { OnboardingEmailTemplate, subject as onboarding_email_template_subject } from "@/components/emails/onboarding";
+import { resend } from "../clients/resend";
 
 type CreateOnboardingApplicationBody =
   | {
@@ -162,16 +164,38 @@ async function sendOnboardingEmail(
     }
   }
 
-  // sls stage
+  // send email with resend api
+  try {
+    const response = await resend.emails.send({
+      from: "CORS.SH <no-reply@cors.sh>",
+      to: [email],
+      subject: onboarding_email_template_subject,
+      react: OnboardingEmailTemplate({
+        code: key as string,
+        onboarding_url: `https://cors.sh/onboarding/${application.id}`
+      }) as React.ReactElement,
+    });
 
-  await emailWithTemplate(
-    email,
-    `mail_cors_sh_onboarding_${process.env.STAGE}`,
-    {
-      CODE: key,
-      ONBOARDINGLINK: `https://cors.sh/onboarding/${application.id}`,
+    if (response.error) {
+      console.error("email failed", response.error);
+      return false;
     }
-  );
+
+    console.log("email sent", response);
+  } catch (error) {
+    console.error("email failed", error);
+    return false;
+  }
+
+
+  // await emailWithTemplate(
+  //   email,
+  //   `mail_cors_sh_onboarding_${process.env.STAGE}`,
+  //   {
+  //     CODE: key,
+  //     ONBOARDINGLINK: `https://cors.sh/onboarding/${application.id}`,
+  //   }
+  // );
 
   // update the tmp app
   await supabase
