@@ -1,10 +1,12 @@
-
-import AWS from "aws-sdk";
+import { DynamoDBClient, PutItemCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import * as keygen from "./keygen";
 import day from "dayjs";
 import { Application } from "@/types/app";
 
-const db = new AWS.DynamoDB.DocumentClient();
+const client = new DynamoDBClient();
+
+// TODO: replace me
+const TABLE = process.env.DYNAMODB_TABLE_SERVICE_KEYS!
 
 export default async function sync(application: Application) {
   const {
@@ -38,7 +40,7 @@ export default async function sync(application: Application) {
   sync_record(signature_live, "live", String(billing_group), expires_at, data);
 }
 
-function sync_record(
+async function sync_record(
   signature: string,
   type: "live" | "test",
   billing_group: string,
@@ -63,28 +65,70 @@ function sync_record(
   };
 
   // write to db
-  return db
-    .put({
-      TableName: process.env.DYNAMODB_TABLE_SERVICE_KEYS!,
-      Item: record,
-    })
-    .promise();
+  // return client
+  //   .put({
+  //     TableName: process.env.DYNAMODB_TABLE_SERVICE_KEYS!,
+  //     Item: record,
+  //   })
+  //   .promise();
+  const command = new PutItemCommand({
+    TableName: TABLE,
+    Item: {
+      key: {
+        S: record.key,
+      },
+      plan: {
+        S: record.plan,
+      },
+      config: {
+        M: {
+          allowed_origins: {
+            SS: record.config.allowed_origins ?? [],
+          },
+          allowed_targets: {
+            SS: record.config.allowed_targets ?? [],
+          },
+        },
+      },
+      active: {
+        BOOL: record.active,
+      },
+      billing_group: {
+        S: record.billing_group,
+      },
+      expires_at: {
+        N: String(record.expires_at),
+      },
+      synced_at: {
+        N: String(record.synced_at),
+      },
+    },
+  });
+
+  return await client.send(command);
 }
+
 
 export async function activate(id: string, active: boolean) {
   // update "active" field of the key
   // write to db
 
-  return db.update({
-    TableName: process.env.DYNAMODB_TABLE_SERVICE_KEYS!,
+  const command = new UpdateItemCommand({
+    TableName: TABLE,
     Key: {
-      id,
+      id: {
+        S: id,
+      },
     },
     UpdateExpression: "set active = :active",
     ExpressionAttributeValues: {
-      ":active": active,
+      ":active": {
+        BOOL: active,
+      },
     },
   });
+
+  return await client.send(command);
 }
 
 // shared db

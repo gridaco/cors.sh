@@ -1,4 +1,4 @@
-import { stripe, emailWithTemplate } from "../clients";
+import { stripe, resend } from "../clients";
 import { sign_live_key, sign_temporary_key, sign_test_key } from "../keygen";
 import { nanoid } from "nanoid";
 // import sync from "../sync";
@@ -7,7 +7,6 @@ import { Application, OnboardingApplication } from "@/types/app";
 import { supabase } from "../supabase";
 import { OnboardingEmailTemplate, subject as onboarding_email_template_subject } from "@/components/emails/onboarding";
 import { PaymentSuccessEmailTemplate, subject as payment_success_email_template_subject} from "@/components/emails/payment-success"
-import { resend } from "../clients/resend";
 
 type CreateOnboardingApplicationBody =
   | {

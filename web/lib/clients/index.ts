@@ -1,2 +1,2 @@
 export * from "./stripe";
-export * from "./ses";
+export * from "./resend"
