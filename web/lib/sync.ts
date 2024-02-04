@@ -1,23 +1,6 @@
-// Follow this setup guide to integrate the Deno language server with your editor:
-// https://deno.land/manual/getting_started/setup_your_environment
-// This enables autocomplete, go to definition, etc.
-
-console.log("Hello from Functions!");
-
-Deno.serve(async (req) => {
-  const { name } = await req.json();
-  const data = {
-    message: `Hello ${name}!`,
-  };
-
-  return new Response(JSON.stringify(data), {
-    headers: { "Content-Type": "application/json" },
-  });
-});
 
 import AWS from "aws-sdk";
-import * as keygen from "../keygen";
-import type { KeyInfo } from "./type";
+import * as keygen from "./keygen";
 import day from "dayjs";
 import { Application } from "@/types/app";
 
@@ -62,8 +45,8 @@ function sync_record(
   expires_at: number,
   data: {
     plan: string;
-    allowedOrigins: string[];
-    allowedTargets: string[];
+    allowedOrigins: string[] | null;
+    allowedTargets: string[] | null;
   }
 ) {
   const record: KeyInfo = {
@@ -109,8 +92,8 @@ export interface KeyInfo {
   key: string;
   plan: string;
   config: {
-    allowed_origins: string[];
-    allowed_targets: string[];
+    allowed_origins: string[] | null;
+    allowed_targets: string[] | null;
   };
   active: boolean;
   billing_group: string;

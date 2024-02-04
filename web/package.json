@@ -22,6 +22,7 @@
     "@visx/mock-data": "^3.3.0",
     "@visx/shape": "^3.5.0",
     "add": "^2.0.6",
+    "aws-sdk": "^2.1550.0",
     "copy-to-clipboard": "^3.3.3",
     "dayjs": "^1.11.10",
     "framer-motion": "^10.16.4",
