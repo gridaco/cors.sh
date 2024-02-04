@@ -1,8 +1,8 @@
 import { stripe } from "@/lib/clients";
 import { NextRequest, NextResponse } from "next/server";
 
-const WEBHOST = process.env.WEBHOST;
-const WEBURL_CONSOLE = WEBHOST + "/console";
+const HOST = process.env.NEXT_PUBLIC_HOST ?? "http://localhost:8823";
+const WEBURL_CONSOLE = HOST + "/console";
 
 export async function POST(request: NextRequest) {
   // For demonstration purposes, we're using the Checkout session to retrieve the customer ID.

@@ -5,7 +5,7 @@ import { Customer } from "@/types/app";
 import { NextResponse, type NextRequest } from "next/server";
 
 
-const WEBHOST = process.env.WEBHOST;
+const HOST = process.env.NEXT_PUBLIC_HOST ?? "http://localhost:8823";
 
 
 export async function GET(request: NextRequest) {
@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
       application_id: String(tmp?.id),
     }
     const params = new URLSearchParams(_params);
-    const redirect_uri = `${WEBHOST}/onboarding/payment-success-with-issue?${params.toString()}`;
+    const redirect_uri = `${HOST}/onboarding/payment-success-with-issue?${params.toString()}`;
     return NextResponse.redirect(redirect_uri, { status: 303 });
   } else {
 
@@ -84,7 +84,7 @@ export async function GET(request: NextRequest) {
 
     const params = new URLSearchParams(_params);
 
-    const redirect_uri = `${WEBHOST}/onboarding/payment-success?${params.toString()}`;
+    const redirect_uri = `${HOST}/onboarding/payment-success?${params.toString()}`;
 
     return NextResponse.redirect(redirect_uri, { status: 303 });
   }
