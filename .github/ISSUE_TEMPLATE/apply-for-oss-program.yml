@@ -11,7 +11,7 @@ body:
     options:
     - label: My project is OSS licensed and open to public. (Must have LICENSE file)
       required: true
-    - label: My project has more than **5 ⭐️stars** on Github, which is the required for this program.
+    - label: My project has more than **10 ⭐️stars** on Github, which is the required for this program.
       required: true
 - type: textarea
   attributes:
