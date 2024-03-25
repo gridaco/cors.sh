@@ -2,14 +2,14 @@ import Axios, { AxiosInstance, AxiosError } from "axios";
 
 const HOST =
   process.env.NODE_ENV === "production"
-    ? "https://services.cors.sh"
-    : "http://localhost:4021";
+    ? "https://cors.sh"
+    : "http://localhost:8823";
 
 export class Client {
   private _client: AxiosInstance;
   constructor(credentials: { "x-cors-service-checkout-session-id"?: string }) {
     this._client = Axios.create({
-      baseURL: HOST,
+      baseURL: HOST + '/api',
       headers: {
         ...credentials,
       },

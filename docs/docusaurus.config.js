@@ -42,13 +42,6 @@ const config = {
           // Remove this to remove the "edit this page" links.
           editUrl: "https://github.com/gridaco/cors.sh/tree/main/docs/",
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
-        },
         // tracking
         googleAnalytics: {
           trackingID: "G-XG051N1VS3",
@@ -77,7 +70,6 @@ const config = {
             position: "left",
             label: "Tutorial",
           },
-          { to: "/blog", label: "Blog", position: "left" },
           {
             href: "https://github.com/facebook/docusaurus",
             label: "GitHub",
@@ -114,17 +106,13 @@ const config = {
             title: "More",
             items: [
               {
-                label: "Blog",
-                to: "/blog",
-              },
-              {
                 label: "GitHub",
                 href: "https://github.com/gridaco/cors.sh",
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Grida, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Grida, Inc.`,
       },
       prism: {
         theme: lightCodeTheme,

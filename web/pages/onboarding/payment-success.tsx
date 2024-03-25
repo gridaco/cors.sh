@@ -36,7 +36,7 @@ export default function PaymentSuccessPage({
       currency: "USD",
       //
     });
-  }, []);
+  }, [session]);
 
   const onNext = () => {
     setBusy(true);

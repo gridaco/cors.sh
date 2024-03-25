@@ -1,11 +1,14 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Toaster } from "react-hot-toast";
-import '../globals.css'
 import GoogleAnalytics from '@/components/ga';
 import ChatwootWidget from "@/components/chatwoot";
 import { Heading, Link, Theme } from '@radix-ui/themes';
-import { GearIcon, GitHubLogoIcon, MagnifyingGlassIcon, OpenInNewWindowIcon } from '@radix-ui/react-icons';
+import { FileTextIcon, GearIcon, GitHubLogoIcon, HomeIcon, LayersIcon, LightningBoltIcon, MagnifyingGlassIcon, OpenInNewWindowIcon, QuestionMarkCircledIcon, RocketIcon } from '@radix-ui/react-icons';
+import '../globals.console.css'
+
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -35,19 +38,26 @@ export default function RootLayout({
             {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
         ) : null}
         <ChatwootWidget />
-        <div className='selection:bg-amber-500 selection:text-amber-900'>
-          <div suppressHydrationWarning>
-            <Toaster position="bottom-center" />
-          </div>
-          <Theme hasBackground={false}>
-            <div className="w-screen h-screen flex flex-row">
-              <Sidebar />
-              <ContentArea>
-                {children}
-              </ContentArea>
+        <Toaster position="bottom-center" />
+        <Theme hasBackground={false}>
+          <div className='min-h-full flex flex-col'>
+            <div className="flex h-full">
+              <main className='flex flex-col flex-1 w-full overflow-y-auto' style={{
+                height: '100vh'
+              }}>
+                <div className='flex max-h-full min-h-full'>
+                  <Sidebar />
+                  <div className='flex flex-1 flex-col'>
+                    <TopBar />
+                    <div className='flex-1 flex-grow overflow-auto'>
+                      {children}
+                    </div>
+                  </div>
+                </div>
+              </main>
             </div>
-          </Theme>
-        </div>
+          </div>
+        </Theme>
       </body>
     </html>
   )
@@ -55,22 +65,40 @@ export default function RootLayout({
 
 
 function Sidebar() {
-  return <div className="border-r border-black/5">
-    <Heading className="p-4">
-      CORS.SH
-    </Heading>
+  return <div className="h-full bg-background hide-scrollbar w-64 overflow-auto border-r border-default">
+    <header className="flex h-12 max-h-12 items-center border-b px-6 border-default">
+      <Link href='/console'>
+        <Image
+          src="/logo.svg"
+          alt="CORS.SH"
+          width={100}
+          height={32} />
+      </Link>
+    </header>
     <div className="flex-1 p-4 flex flex-col gap-2 min-w-[240px]">
       <NavItem href="/console">
-        <GearIcon />
+        <HomeIcon />
         Dashboard
       </NavItem>
-      <NavItem href="/console/apps">
-        <GearIcon />
-        Apps
+      <NavItem href="/console/applications">
+        <LayersIcon />
+        Applications
       </NavItem>
-      <NavItem href="/console/events">
+      <NavItem href="/console/usage">
+        <LightningBoltIcon />
+        Usage & Plans
+      </NavItem>
+      <NavItem href="/docs" target="_blank">
+        <FileTextIcon />
+        Docs
+      </NavItem>
+      <NavItem href="/docs/faq" target="_blank">
+        <QuestionMarkCircledIcon />
+        FAQ
+      </NavItem>
+      <NavItem href="/console/settings">
         <GearIcon />
-        Events
+        Settings
       </NavItem>
       <NavItem href="https://github.com/gridaco/cors.sh" target="_blank">
         <GitHubLogoIcon />
@@ -83,7 +111,7 @@ function Sidebar() {
 function NavItem({ children, ...props }: React.PropsWithChildren<React.ComponentProps<typeof Link>>) {
   return (
     <Link
-      className="flex flex-row items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-md transition-colors"
+      className="flex flex-row items-center gap-2 px-4 py-2 hover:bg-gray-500/10 rounded-md transition-colors"
       {...props}
     >
       {children}
@@ -92,9 +120,10 @@ function NavItem({ children, ...props }: React.PropsWithChildren<React.Component
 }
 
 
-function ContentArea({ children }: React.PropsWithChildren<{}>) {
-  return <div className="flex-1 flex flex-col">
-    {children}
-  </div>
-
+function TopBar() {
+  return (
+    <header className="flex h-12 max-h-12 items-center justify-between py-2 px-5 border-b border-default">
+      <div>CORS</div>
+    </header>
+  )
 }
