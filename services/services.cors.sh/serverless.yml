@@ -23,9 +23,8 @@ custom:
     lambdaPort: 3021
     noPrependStageInUrl: true
   webpack:
-    includeModules:
-      forceExclude:
-        - aws-sdk
+    includeModules: true
+      
 
 provider:
   name: aws

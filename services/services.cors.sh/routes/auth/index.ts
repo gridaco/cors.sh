@@ -29,6 +29,7 @@ router.post("signin", async (req, res) => {
   });
 
   const customer = await prisma.customer.findUnique({
+    // @ts-ignore
     where: {
       // workspaceId: data.id,
     },

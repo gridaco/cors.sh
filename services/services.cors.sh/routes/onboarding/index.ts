@@ -7,6 +7,19 @@ import {
 
 const router = express.Router();
 
+const blacklist = [
+  "nqmo.com",
+  "mailinator.com",
+  "10minutemail.com",
+  "guerrillamail.com",
+  "temp-mail.org",
+  "yopmail.com",
+  "throwawaymail.com",
+  "dispostable.com",
+  "getnada.com",
+  "maildrop.cc",
+];
+
 // create
 router.post("/with-email", async (req, res) => {
   // create new temporary application bind to the email (form is optional)
@@ -16,6 +29,11 @@ router.post("/with-email", async (req, res) => {
   // @requires: email
   if (!email) {
     return res.status(400).json({ error: "email is required" });
+  }
+
+  //
+  if (blacklist.some((d) => email.includes(d))) {
+    return res.status(400).json({ error: "bad email - do not hack us." });
   }
 
   const d = await createOnboardingApplication({
