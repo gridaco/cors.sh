@@ -1,5 +1,6 @@
 const blacklist = [
   "nqmo.com",
+  "qabq.com",
   "mailinator.com",
   "10minutemail.com",
   "guerrillamail.com",
