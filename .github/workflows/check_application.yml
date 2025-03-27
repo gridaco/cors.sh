@@ -1,0 +1,140 @@
+name: Check Application Issue
+
+on:
+  issues:
+    types: [opened, labeled]
+
+jobs:
+  check-application:
+    if: contains(github.event.issue.labels.*.name, 'application')
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup GitHub CLI
+        run: |
+          gh --version
+
+      - name: Check repository stars
+        id: check-stars
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          # Function to extract repository URL from text
+          extract_repo_url() {
+            if [[ -z "$1" ]]; then
+              return 1
+            fi
+
+            # Look for the repository URL pattern
+            REPO_URL=$(echo "$1" | grep -oP "Repository URL to your project\s*\n\s*(https://github\.com/[^\s/]+/[^\s/]+)" | grep -oP "https://github\.com/[^\s/]+/[^\s/]+")
+
+            if [[ -n "$REPO_URL" ]]; then
+              echo "$REPO_URL"
+              return 0
+            else
+              return 1
+            fi
+          }
+
+          # Function to get repository stars
+          get_repo_stars() {
+            REPO_URL="$1"
+            if [[ -z "$REPO_URL" ]]; then
+              return 1
+            fi
+
+            # Extract owner and repo name from URL
+            OWNER=$(echo "$REPO_URL" | sed -E 's|https://github.com/([^/]+)/.*|\1|')
+            REPO=$(echo "$REPO_URL" | sed -E 's|https://github.com/[^/]+/([^/]+).*|\1|')
+
+            # Get repository info
+            REPO_INFO=$(gh api "repos/$OWNER/$REPO" 2>/dev/null)
+            if [[ $? -ne 0 ]]; then
+              echo "Repository not found"
+              return 1
+            fi
+
+            # Extract star count
+            STARS=$(echo "$REPO_INFO" | jq '.stargazers_count')
+            echo "$STARS"
+            return 0
+          }
+
+          echo "Checking issue #$ISSUE_NUMBER: $ISSUE_TITLE"
+
+          # First try to find repo URL in issue body
+          REPO_URL=$(extract_repo_url "$ISSUE_BODY")
+
+          # Set default status
+          VALID="false"
+          REASON="No repository URL found"
+
+          # Check if we found a repository URL
+          if [[ -n "$REPO_URL" ]]; then
+            echo "Found repository URL: $REPO_URL"
+
+            # Get star count
+            STARS=$(get_repo_stars "$REPO_URL")
+
+            if [[ "$STARS" == "Repository not found" ]]; then
+              REASON="Repository not found"
+            elif [[ "$STARS" =~ ^[0-9]+$ ]]; then
+              if [[ $STARS -ge 10 ]]; then
+                VALID="true"
+                REASON="$STARS stars (valid)"
+              else
+                REASON="Only $STARS stars (need 10+)"
+              fi
+            else
+              REASON="Unknown star count"
+            fi
+          fi
+
+          # Output results for next steps
+          echo "repo_url=$REPO_URL" >> $GITHUB_OUTPUT
+          echo "valid=$VALID" >> $GITHUB_OUTPUT
+          echo "reason=$REASON" >> $GITHUB_OUTPUT
+          echo "stars=$STARS" >> $GITHUB_OUTPUT
+
+      - name: Comment on valid application
+        if: steps.check-stars.outputs.valid == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment $ISSUE_NUMBER --body "✅ **Application Validated**
+
+          Your application has been automatically checked and appears to be valid:
+
+          - Repository: ${{ steps.check-stars.outputs.repo_url }}
+          - Stars: ${{ steps.check-stars.outputs.stars }}
+
+          A team member will review your application soon. Thank you for your interest in CORS.sh!"
+
+      - name: Close invalid application
+        if: steps.check-stars.outputs.valid != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          COMMENT="❌ **Application Invalid**
+
+          This application is being closed because: ${{ steps.check-stars.outputs.reason }}."
+
+          if [[ "${{ steps.check-stars.outputs.reason }}" == *"need 10+"* ]]; then
+            COMMENT="$COMMENT Please reapply when your repository has at least 10 stars."
+          elif [[ "${{ steps.check-stars.outputs.reason }}" == *"Repository not found"* ]]; then
+            COMMENT="$COMMENT The repository URL provided is not accessible or does not exist."
+          elif [[ "${{ steps.check-stars.outputs.reason }}" == *"No repository URL found"* ]]; then
+            COMMENT="$COMMENT No valid GitHub repository URL was found in the issue or comments."
+          fi
+
+          gh issue close $ISSUE_NUMBER --comment "$COMMENT"
