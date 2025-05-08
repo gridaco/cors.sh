@@ -1,37 +1,42 @@
-'use client'
+"use client";
 
 import React, { useCallback, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { FormPageLayout } from "@app/ui/layouts";
-import { validateUrls } from "@app/ui/utils";
 import {
-  Button,
-  FormFieldBase,
-  FormFieldLabel,
-  TextFormField,
-} from "@editor-ui/console";
-import Select from "react-select";
+  FormPageLayout,
+  FormPageTitle,
+  FormPageDescription,
+  FormPageForm,
+} from "@/components/layouts/form-page-layout";
+import { validateUrls } from "@/utils/validate-urls";
+import { Button } from "@workspace/ui/components/button";
+import { Input } from "@workspace/ui/components/input";
+import { Label } from "@workspace/ui/components/label";
 import client from "@cors.sh/service-api";
-import * as k from "@/k";
-import { toast } from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
 import { MiniPlanSelect } from "@/components/pricing/mini";
+import { motion } from "motion/react";
+import { toast } from "sonner";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import * as k from "@/k";
 
-// eslint-disable-next-line @next/next/no-async-client-component
 export default function GetstartedPage() {
-  const searchParams = useSearchParams()
-  const _q_price = searchParams?.get("price") as string
+  return (
+    <React.Suspense>
+      <_Page />
+    </React.Suspense>
+  );
+}
+
+function _Page() {
+  const searchParams = useSearchParams();
+  const _q_price = searchParams?.get("price") as string;
 
   const validate_price_id = (price_id: string | undefined): boolean => {
     return price_id?.startsWith("price_") || false;
   };
 
-  const _price = validate_price_id(_q_price)
-    ? _q_price
-    : k.plans.pro.id;
-
+  const _price = validate_price_id(_q_price) ? _q_price : k.plans.pro.id;
 
   const [name, setName] = React.useState("");
   const [price, setPrice] = React.useState(_price);
@@ -50,7 +55,6 @@ export default function GetstartedPage() {
   };
 
   const onEnter = () => {
-    // this is required because onEnter can also be invoked from input's callback
     if (valid) {
       onNextClick();
     }
@@ -64,7 +68,6 @@ export default function GetstartedPage() {
     setIsBusy(true);
 
     try {
-      // log begin_checkout event
       const pricedata = (k.plans as any)[price];
 
       // @ts-ignore
@@ -78,10 +81,9 @@ export default function GetstartedPage() {
           },
         ],
       });
-    } catch (e) { }
+    } catch (e) {}
 
     try {
-      // create onboarding application
       const form = {
         name: name ? name : undefined,
         allowedOrigins: allowedOrigins
@@ -92,23 +94,10 @@ export default function GetstartedPage() {
       };
 
       const application = await client.onboardingWithForm(form);
-
       const onboarding_id = application.id;
 
-      // switch (stateRef.current) {
-      //   case k.PRICE_FREE_MONTHLY: {
-      //     // the free plan does not require payments, so we can skip to create new project right away.
-      //     redirect =
-      //       window.location.protocol + window.location.host + "/console/new";
-      //     break;
-      //   }
-      // }
-
-      // redirect user to payment page
       let params = new URLSearchParams();
       params.append("onboarding_id", onboarding_id);
-      // TODO: multiple search params not supported by accounts.grida.co?redirect_uri=x
-
       const redirect = k.SERVER_URL + "/payments/checkout/new" + "?" + params;
 
       router.replace(redirect);
@@ -120,36 +109,41 @@ export default function GetstartedPage() {
 
   return (
     <FormPageLayout>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 8,
-        }}
-      >
-        <h1 className="text-3xl font-bold">Get started</h1>
-        <p className="text-sm font-normal">
-          Ready to use cors.sh? select your plan and let’s create your first
-          project. <br />
-        </p>
-        <p className="text-xs font-normal opacity-50">*you can update the fields later</p>
-      </div>
-      <div className="form">
-        <TextFormField
-          label="Application name"
-          autoFocus
-          placeholder="my-portfolio-website"
-          onEnter={onEnter}
-          onChange={setName}
-        />
-        <TextFormField
-          label="Application origin URL"
-          placeholder="http://localhost:3000, https://my-site.com"
-          helpText="Add up to 3 urls of your site"
-          onEnter={onEnter}
-          onChange={setAllowedOrigins}
-        />
-        {/* pricing plan select */}
+      <FormPageTitle className="text-3xl font-bold">Get started</FormPageTitle>
+      <FormPageDescription className="text-sm text-muted-foreground font-normal">
+        Ready to use cors.sh? select your plan and let's create your first
+        project.
+      </FormPageDescription>
+      <FormPageDescription className="text-xs text-muted-foreground font-normal">
+        *you can update the fields later
+      </FormPageDescription>
+
+      <FormPageForm>
+        <div className="space-y-2">
+          <Label htmlFor="name">Application name</Label>
+          <Input
+            id="name"
+            autoFocus
+            placeholder="my-portfolio-website"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && onEnter()}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="origins">Application origin URL</Label>
+          <Input
+            id="origins"
+            placeholder="http://localhost:3000, https://my-site.com"
+            value={allowedOrigins}
+            onChange={(e) => setAllowedOrigins(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && onEnter()}
+          />
+          <p className="text-xs text-muted-foreground">
+            Add up to 3 urls of your site
+          </p>
+        </div>
 
         <motion.div
           style={{
@@ -163,42 +157,56 @@ export default function GetstartedPage() {
           animate={isValid ? "visible" : "hidden"}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          <FormFieldBase style={{ width: "100%" }}>
-            <div className="flex items-center justify-between self-stretch">
-              <FormFieldLabel>Plan</FormFieldLabel>
-              <Link className="underline text-xs" target="_blank" href="/pricing">View Pricing</Link>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <Label>Plan</Label>
+              <Link
+                className="text-xs text-primary hover:underline"
+                target="_blank"
+                href="/pricing"
+              >
+                View Pricing
+              </Link>
             </div>
-            <div style={{ flex: 1, alignSelf: "stretch" }}>
-              <MiniPlanSelect
-                onChange={(id) => {
-                  onPriceChange(id);
-                }}
-                value={price}
-                options={[
-                  {
-                    id: k.plans.pro.id,
-                    label: <span>$3 / Mo<br />Annual Billing</span>,
-                    content: <>Save 25% with annual billing</>
-                  },
-                  {
-                    id: k.plans.pro2.id,
-                    label: <span>$4 / Mo<br />Monthly Billing</span>,
-                    content: <>-</>
-                  }
-                ]} />
-            </div>
-          </FormFieldBase>
+            <MiniPlanSelect
+              onChange={(id) => onPriceChange(id)}
+              value={price}
+              options={[
+                {
+                  id: k.plans.pro.id,
+                  label: (
+                    <span>
+                      $3 / Mo
+                      <br />
+                      Annual Billing
+                    </span>
+                  ),
+                  content: <>Save 25% with annual billing</>,
+                },
+                {
+                  id: k.plans.pro2.id,
+                  label: (
+                    <span>
+                      $4 / Mo
+                      <br />
+                      Monthly Billing
+                    </span>
+                  ),
+                  content: <>-</>,
+                },
+              ]}
+            />
+          </div>
         </motion.div>
-        <div style={{ height: 16 }} />
+
         <Button
-          color="white"
+          className="w-full"
           disabled={!isValid || isBusy}
           onClick={onNextClick}
-          height={"32px"}
         >
           Continue
         </Button>
-      </div>
-    </FormPageLayout >
+      </FormPageForm>
+    </FormPageLayout>
   );
 }

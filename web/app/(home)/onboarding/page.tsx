@@ -1,22 +1,29 @@
-'use client'
+"use client";
 import React, { useEffect } from "react";
+import { Button } from "@workspace/ui/components/button";
+import { Input } from "@workspace/ui/components/input";
+import { Label } from "@workspace/ui/components/label";
 import {
-  Button,
-  FormFieldBase,
-  FormFieldLabel,
-  TextFormField,
-} from "@editor-ui/console";
-import Select from "react-select";
-import client from "@cors.sh/service-api";
-import { redirect, useRouter } from "next/navigation";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@workspace/ui/components/select";
 import { Cross2Icon } from "@radix-ui/react-icons";
+import { motion } from "motion/react";
+import { useRouter } from "next/navigation";
+import { validateUrls } from "@/utils/validate-urls";
+import {
+  FormPageLayout,
+  FormPageTitle,
+  FormPageDescription,
+  FormPageForm,
+  FormPageCloseButton,
+} from "@/components/layouts/form-page-layout";
 import Head from "next/head";
-import { FormPageLayout } from "@app/ui/layouts";
-import { validateUrls } from "@app/ui/utils";
-import { motion } from "framer-motion";
 
 export default function NewApplicationPage() {
-  redirect("/")
   const router = useRouter();
   const [step, setStep] = React.useState<"signin" | "setup">("signin");
 
@@ -41,14 +48,9 @@ export default function NewApplicationPage() {
         <title>CORS.SH - First App</title>
       </Head>
       <FormPageLayout>
-        <button
-          className="close"
-          onClick={() => {
-            router.replace("/");
-          }}
-        >
-          <Cross2Icon />
-        </button>
+        <FormPageCloseButton onClick={() => router.replace("/")}>
+          <Cross2Icon className="h-4 w-4" />
+        </FormPageCloseButton>
         <Body />
       </FormPageLayout>
     </>
@@ -65,7 +67,6 @@ function SigninForm({ onComplete }: { onComplete: () => void }) {
   };
 
   const onEnter = () => {
-    // this is required because onEnter can also be invoked from input's callback
     if (valid) {
       onComplete();
     }
@@ -73,19 +74,32 @@ function SigninForm({ onComplete }: { onComplete: () => void }) {
 
   return (
     <>
-      <h1>Enter your API key from your inbox to get started</h1>
-      <div className="form">
-        <TextFormField
-          label="API Key"
-          placeholder="text_xxxx-xxxx-xxxx"
-          onEnter={onEnter}
-          onChange={onTypeKey}
-        />
-      </div>
-      <div style={{ height: 16 }} />
-      <Button disabled={!valid} onClick={onEnter} height={"32px"}>
-        Continue
-      </Button>
+      <FormPageTitle>
+        Enter your API key from your inbox to get started
+      </FormPageTitle>
+      <FormPageForm>
+        <div className="space-y-2">
+          <Label htmlFor="api-key">API Key</Label>
+          <Input
+            id="api-key"
+            placeholder="text_xxxx-xxxx-xxxx"
+            value={tmpkey}
+            onChange={(e) => {
+              setTmpkey(e.target.value);
+              onTypeKey(e.target.value);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                onEnter();
+              }
+            }}
+          />
+        </div>
+        <div className="h-4" />
+        <Button disabled={!valid} onClick={onEnter}>
+          Continue
+        </Button>
+      </FormPageForm>
     </>
   );
 }
@@ -97,25 +111,27 @@ function SetupForm() {
   const [isBusy, setIsBusy] = React.useState(false);
   const [isValid, setIsValid] = React.useState(false);
   const [isPricingVisible, setIsPricingVisible] = React.useState(false);
+  const [selectedPlan, setSelectedPlan] = React.useState("pro-monthly");
 
   const onEnter = () => {
     if (!isValid) {
       return;
     }
     setIsBusy(true);
-    client
-      .createApplication({
-        name: name,
-        allowedOrigins: allowedOrigins
-          .split(",")
-          .map((origin) => origin.trim()),
-      })
-      .then((r) => {
-        router.push(`/console/${r.id}`,);
-      })
-      .finally(() => {
-        setIsBusy(false);
-      });
+    // TODO: Replace with your API client
+    // client
+    //   .createApplication({
+    //     name: name,
+    //     allowedOrigins: allowedOrigins
+    //       .split(",")
+    //       .map((origin) => origin.trim()),
+    //   })
+    //   .then((r) => {
+    //     router.push(`/console/${r.id}`);
+    //   })
+    //   .finally(() => {
+    //     setIsBusy(false);
+    //   });
   };
 
   useEffect(() => {
@@ -132,60 +148,75 @@ function SetupForm() {
 
   return (
     <>
-      <h1>Now, Let&apos;s configure your first application</h1>
-      <div className="form">
-        <TextFormField
-          label="Application name"
-          placeholder="my-portfolio-website"
-          onEnter={onEnter}
-          onChange={setName}
-        />
-        <TextFormField
-          label="Application origin URL"
-          placeholder="http://localhost:3000, https://my-site.com"
-          helpText="You can add up to 3 urls of your site"
-          onEnter={onEnter}
-          onChange={setAllowedOrigins}
-        />
-        {/* pricing plan select */}
+      <FormPageTitle>
+        Now, Let&apos;s configure your first application
+      </FormPageTitle>
+      <FormPageForm>
+        <div className="space-y-2">
+          <Label htmlFor="app-name">Application name</Label>
+          <Input
+            id="app-name"
+            placeholder="my-portfolio-website"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                onEnter();
+              }
+            }}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="app-origin">Application origin URL</Label>
+          <Input
+            id="app-origin"
+            placeholder="http://localhost:3000, https://my-site.com"
+            value={allowedOrigins}
+            onChange={(e) => setAllowedOrigins(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                onEnter();
+              }
+            }}
+          />
+          <p className="text-sm text-muted-foreground">
+            You can add up to 3 urls of your site
+          </p>
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={
             isPricingVisible
               ? {
-                opacity: 1,
-                y: 0,
-              }
+                  opacity: 1,
+                  y: 0,
+                }
               : {}
           }
           transition={{ duration: 0.3, ease: "easeOut" }}
+          className="space-y-2"
         >
-          <FormFieldBase style={{ width: "100%" }}>
-            <FormFieldLabel>Plan</FormFieldLabel>
-            <div style={{ flex: 1, alignSelf: "stretch" }}>
-              <Select
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    onEnter();
-                  }
-                }}
-                options={[
-                  { value: "pro-monthly", label: "Pro - $4/Mo" },
-                  {
-                    value: "pro-yearly",
-                    label: "Pro - $3/Mo (Pay annualy, save $12)",
-                  },
-                ]}
-                defaultValue={{ value: "pro", label: "Pro - $4/Mo" }}
-              />
-            </div>
-          </FormFieldBase>
+          <Label htmlFor="plan">Plan</Label>
+          <Select value={selectedPlan} onValueChange={setSelectedPlan}>
+            <SelectTrigger id="plan">
+              <SelectValue placeholder="Select a plan" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="pro-monthly">Pro - $4/Mo</SelectItem>
+              <SelectItem value="pro-yearly">
+                Pro - $3/Mo (Pay annually, save $12)
+              </SelectItem>
+            </SelectContent>
+          </Select>
         </motion.div>
-        <div style={{ height: 16 }} />
-        <Button disabled={!isValid || isBusy} onClick={onEnter} height={"32px"}>
+
+        <div className="h-4" />
+        <Button disabled={!isValid || isBusy} onClick={onEnter}>
           Continue
         </Button>
-      </div>
+      </FormPageForm>
     </>
   );
 }

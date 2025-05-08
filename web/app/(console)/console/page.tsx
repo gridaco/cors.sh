@@ -1,14 +1,20 @@
 import React from "react";
 import Link from "next/link";
-import type { Metadata } from 'next'
-import { ApplicationItem, ApplicationList } from "@/components/console/application-list";
-import { FormPageLayout } from "@app/ui/layouts";
-import { UnderlineButton } from "@app/ui/components";
-
+import type { Metadata } from "next";
+import {
+  ApplicationItem,
+  ApplicationList,
+} from "./_components/application-list";
+import {
+  FormPageLayout,
+  FormPageTitle,
+  FormPageForm,
+} from "@/components/layouts/form-page-layout";
+import { Button } from "@workspace/ui/components/button";
 
 export const metadata: Metadata = {
   title: "Dashboard",
-}
+};
 
 export default function ConsoleIndex() {
   const applications = [
@@ -20,38 +26,28 @@ export default function ConsoleIndex() {
       id: "2",
       name: "My app 2",
     },
-  ]
+  ];
 
   return (
-    <>
-      <FormPageLayout>
-        {/* <Logo /> */}
-        <div style={{ height: 80 }} />
-        <ApplicationList>
-          {applications.map((application) => (
-            <ApplicationItem key={application.id} {...application} />
-          ))}
-        </ApplicationList>
-        <div style={{ height: 80 }} />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 8,
-          }}
-        >
-          <Link href="/new">
-            {/* <UnderlineButton> */}
-            Create new application
-            {/* </UnderlineButton> */}
-          </Link>
-          <Link href="/subscriptions">
-            {/* <UnderlineButton> */}
-            Manage subscription
-            {/* </UnderlineButton> */}
-          </Link>
+    <FormPageLayout>
+      <FormPageTitle>Dashboard</FormPageTitle>
+      <div className="h-20" />
+      <ApplicationList>
+        {applications.map((application) => (
+          <ApplicationItem key={application.id} {...application} />
+        ))}
+      </ApplicationList>
+      <div className="h-20" />
+      <FormPageForm>
+        <div className="flex flex-col gap-2">
+          <Button asChild variant="link" className="justify-start">
+            <Link href="/new">Create new application</Link>
+          </Button>
+          <Button asChild variant="link" className="justify-start">
+            <Link href="/subscriptions">Manage subscription</Link>
+          </Button>
         </div>
-      </FormPageLayout>
-    </>
+      </FormPageForm>
+    </FormPageLayout>
   );
 }

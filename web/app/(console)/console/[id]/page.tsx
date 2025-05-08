@@ -1,35 +1,42 @@
-'use client'
-import React, { useEffect } from "react";
-import styled from "@emotion/styled";
-import { Pencil1Icon } from "@radix-ui/react-icons";
-import client, { ApplicationWithApiKey } from "@cors.sh/service-api";
-import { FormPageLayout, PageCloseButton } from "@app/ui/layouts";
-import { Button, TextFormField } from "@editor-ui/console";
+import React from "react";
+import { ApplicationWithApiKey } from "@cors.sh/service-api";
+import {
+  FormPageLayout,
+  FormPageForm,
+  FormPageCloseButton,
+} from "@/components/layouts/form-page-layout";
+import { Button } from "@workspace/ui/components/button";
+import { Input } from "@workspace/ui/components/input";
+import { Label } from "@workspace/ui/components/label";
 import { Logo } from "@/components/logo";
-import { UnderlineButton } from "@app/ui/components";
-import { ApiKeyReveal } from "@app/ui/components";
+import { ApiKeyReveal } from "@/components/api-key-reveal";
+import { EditableTitle } from "./_components/title";
 
-export default function ApplicationDetailPage({ params }: {
-  params: {
-    id: string;
-  }
+type Params = {
+  id: string;
+};
+
+export default async function ApplicationDetailPage({
+  params,
+}: {
+  params: Promise<Params>;
 }) {
-
+  const { id } = await params;
   const application: ApplicationWithApiKey = {
-    id: params.id,
+    id: id,
     name: "my-portfolio-website",
     apikey_live: "prod_1223-xasx-xxe2",
     apikey_test: "test_xxasdj-xxd9-x2hx",
-    allowedOrigins: []
-  }
+    allowedOrigins: [],
+  };
 
   return (
     <FormPageLayout>
-      <PageCloseButton />
+      <FormPageCloseButton />
       <Logo />
-      <div style={{ height: 80 }} />
+      <div className="h-20" />
       <EditableTitle initialValue={application.name} />
-      <div className="form">
+      <FormPageForm>
         <ApiKeyReveal
           keys={{
             test: application.apikey_test,
@@ -37,111 +44,35 @@ export default function ApplicationDetailPage({ params }: {
           }}
         />
 
-        <TextFormField
-          readonly
-          label="Application origin URL"
-          placeholder="http://localhost:3000, https://my-site.com"
-          helpText="You can add up to 3 urls of your site"
-          value={application.allowedOrigins?.join(", ")}
-        // onChange={setAllowedOrigins}
-        />
-        <TextFormField
-          readonly
-          label="Restrict Targets (Optional)"
-          placeholder="http://localhost:3000, https://my-site.com"
-          helpText="You can restrict target urls for extra security"
-          value={application.allowedOrigins?.join(", ")}
-        // onChange={setAllowedOrigins}
-        />
+        <div className="space-y-2">
+          <Label htmlFor="origins">Application origin URL</Label>
+          <Input
+            id="origins"
+            readOnly
+            placeholder="http://localhost:3000, https://my-site.com"
+            value={application.allowedOrigins?.join(", ")}
+          />
+          <p className="text-xs text-muted-foreground">
+            You can add up to 3 urls of your site
+          </p>
+        </div>
 
-        <Button height={36}>Save</Button>
-        <UnderlineButton>Archive application</UnderlineButton>
-      </div>
+        <div className="space-y-2">
+          <Label htmlFor="targets">Restrict Targets (Optional)</Label>
+          <Input
+            id="targets"
+            readOnly
+            placeholder="http://localhost:3000, https://my-site.com"
+            value={application.allowedOrigins?.join(", ")}
+          />
+          <p className="text-xs text-muted-foreground">
+            You can restrict target urls for extra security
+          </p>
+        </div>
+
+        <Button className="w-full">Save</Button>
+        <Button variant="link">Archive application</Button>
+      </FormPageForm>
     </FormPageLayout>
   );
 }
-
-function EditableTitle({ initialValue = "" }: { initialValue?: string }) {
-  const [editing, setEditing] = React.useState(false);
-  const [text, setText] = React.useState(initialValue);
-  const ref = React.useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (editing) {
-      // select all
-      ref.current?.focus();
-      ref.current?.setSelectionRange(0, text.length);
-    }
-  }, [editing]);
-
-  return (
-    <TitleInputWrapper>
-      <input
-        style={{
-          cursor: editing ? "text" : "pointer",
-        }}
-        onDoubleClick={() => setEditing(true)}
-        onBlur={() => setEditing(false)}
-        ref={ref}
-        readOnly={!editing}
-        contentEditable
-        onChange={(e) => {
-          setText(e.target.value);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            setEditing(false);
-          }
-        }}
-        value={text}
-      />
-      <button
-        className="edit-button"
-        style={{
-          visibility: editing ? "hidden" : "visible",
-        }}
-        onClick={() => setEditing(true)}
-      >
-        <Pencil1Icon />
-      </button>
-    </TitleInputWrapper>
-  );
-}
-
-const TitleInputWrapper = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-
-  input {
-    width: 100%;
-    box-sizing: border-box;
-    font-size: 24px;
-    font-weight: bold;
-    border: none;
-    text-align: center;
-    outline: none;
-  }
-
-  .edit-button {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    opacity: 0;
-    cursor: pointer;
-    border: none;
-    background: none;
-    outline: none;
-    transition: opacity 0.2s ease;
-  }
-
-  &:hover {
-    .edit-button {
-      opacity: 1;
-    }
-  }
-`;

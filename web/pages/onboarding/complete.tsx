@@ -1,14 +1,27 @@
-import React, { useEffect } from "react";
-import styled from "@emotion/styled";
+import React from "react";
 import { Client, ApplicationWithApiKey } from "@cors.sh/service-api";
-import Head from "next/head";
-import { FormPageLayout } from "@app/ui/layouts";
-import { CollapsibleInfoCard } from "@/components/collapsible-info-card";
-import { UnderlineButton } from "@app/ui/components";
+import {
+  FormPageLayout,
+  FormPageTitle,
+  FormPageDescription,
+  FormPageForm,
+} from "@/components/layouts/form-page-layout";
+import { Button } from "@workspace/ui/components/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@workspace/ui/components/card";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { examples } from "@/k";
-import { ApiKeyReveal } from "@app/ui/components";
 import Link from "next/link";
+import { ApiKeyReveal } from "@/components/api-key-reveal";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "CORS.SH - Complete",
+};
 
 export default function InitialOnboardingFinalPage({
   application,
@@ -19,104 +32,112 @@ export default function InitialOnboardingFinalPage({
     application.allowedOrigins[0] ?? "https://example.com";
 
   return (
-    <>
-      <Head>
-        <title>CORS.SH - Complete</title>
-      </Head>
-      <FormPageLayout>
-        <>
-          <h1>
-            Extend your api call with <u>proxy.cors.sh</u>
-          </h1>
-          <p className="description">
-            <small
-              style={{
-                opacity: 0.5,
-              }}
-            >
-              We&apos;ve sent you an email with the api key.
-              <br />
-              Please check your inbox :)
-            </small>
-            <br />
-            <br />
-            Let’s get rid of the cors errors with proxy.cors.sh like below.
-          </p>
-          <div style={{ height: 16 }} />
-          <div className="body">
-            {/* <VideoDemo /> */}
+    <FormPageLayout>
+      <FormPageTitle>
+        Extend your api call with{" "}
+        <span className="underline">proxy.cors.sh</span>
+      </FormPageTitle>
 
-            <CodeExamples
-              apikey={application.apikey_test}
-              target={demo_target_url}
-            />
-            <ApiKeyReveal
-              keys={{
-                test: application.apikey_test,
-                prod: application.apikey_live,
-              }}
-            />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 8,
-              }}
-            >
-              <CollapsibleInfoCard title="View more examples">
+      <FormPageDescription>
+        <span className="text-sm text-muted-foreground">
+          We've sent you an email with the api key.
+          <br />
+          Please check your inbox :)
+        </span>
+        <br />
+        <br />
+        Let's get rid of the cors errors with proxy.cors.sh like below.
+      </FormPageDescription>
+
+      <div className="h-4" />
+
+      <FormPageForm>
+        <div className="space-y-6">
+          <CodeExamples
+            apikey={application.apikey_test}
+            target={demo_target_url}
+          />
+
+          <ApiKeyReveal
+            keys={{
+              test: application.apikey_test,
+              prod: application.apikey_live,
+            }}
+          />
+
+          <div className="space-y-2">
+            <Card>
+              <CardHeader>
+                <CardTitle>View more examples</CardTitle>
+              </CardHeader>
+              <CardContent>
                 <MoreCodeExamples
                   apikey={application.apikey_test}
                   target={demo_target_url}
                 />
-              </CollapsibleInfoCard>
-              <CollapsibleInfoCard title="What's Next?">
-                <h5>Useful resources</h5>
-                <ul>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>What's Next?</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <h5 className="font-medium mb-2">Useful resources</h5>
+                <ul className="space-y-2">
                   <li>
-                    <a href="https://cors.sh/docs">
-                      <u>Learn how to secure your api key</u>
-                    </a>
+                    <Link
+                      href="https://cors.sh/docs"
+                      className="text-primary hover:underline"
+                    >
+                      Learn how to secure your api key
+                    </Link>
                   </li>
                   <li>
-                    <a href="https://cors.sh/docs">
-                      <u>Before publishing your website to production</u>
-                    </a>
+                    <Link
+                      href="https://cors.sh/docs"
+                      className="text-primary hover:underline"
+                    >
+                      Before publishing your website to production
+                    </Link>
                   </li>
                   <li>
-                    <a href="https://cors.sh/docs">
-                      <u>Create new application on console</u>
-                    </a>
+                    <Link
+                      href="https://cors.sh/docs"
+                      className="text-primary hover:underline"
+                    >
+                      Create new application on console
+                    </Link>
                   </li>
                 </ul>
-              </CollapsibleInfoCard>
-            </div>
+              </CardContent>
+            </Card>
           </div>
-          <div style={{ height: 30 }} />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 8,
-            }}
-          >
-            <i style={{ opacity: 0.5 }}>Thank you for using cors.sh 🙏</i>
+        </div>
 
-            {/* <UnderlineButton>Move to dashboard</UnderlineButton> */}
-            <Link href="/contact">
-              <UnderlineButton>
-                I need help
-              </UnderlineButton>
-            </Link>
-          </div>
-        </>
-      </FormPageLayout>
-    </>
+        <div className="h-8" />
+
+        <div className="space-y-2">
+          <p className="text-sm text-muted-foreground italic">
+            Thank you for using cors.sh 🙏
+          </p>
+
+          <Button asChild variant="link" className="p-0">
+            <Link href="/contact">I need help</Link>
+          </Button>
+        </div>
+      </FormPageForm>
+    </FormPageLayout>
   );
 }
 
 function CodeExamples({ target, apikey }: { target: string; apikey: string }) {
   return (
-    <CodeBlock language="js">{examples.simplest(target, apikey)}</CodeBlock>
+    <div className="max-h-[240px] text-xs">
+      <SyntaxHighlighter language="js">
+        {examples.simplest(target, apikey)}
+      </SyntaxHighlighter>
+    </div>
   );
 }
 
@@ -127,57 +148,11 @@ function MoreCodeExamples({
   target: string;
   apikey: string;
 }) {
-  return <CodeBlock language="js">{examples.axios(target, apikey)}</CodeBlock>;
-}
-
-const CodeBlock = styled(SyntaxHighlighter as any)`
-  max-height: 240px;
-  font-size: 12px !important;
-`;
-
-// <CodeBlock>
-//   <pre>
-//     GET https://proxy.corsh.sh/https://instragram.com/posts/123
-//     <br />
-//     -h x-cors-api-key {apikey}
-//   </pre>
-// </CodeBlock>
-// const CodeBlock = styled.code`
-//   background: black;
-//   color: white;
-//   border-radius: 4px;
-//   padding: 20px;
-//   display: block;
-//   font-size: 12px;
-//   line-height: 1.5;
-//   font-family: monospace;
-//   overflow: scroll;
-
-//   pre {
-//     margin: 0;
-//   }
-// `;
-
-function VideoDemo() {
   return (
-    <div className="video-demo">
-      <video
-        style={{
-          borderRadius: "4px",
-          overflow: "hidden",
-        }}
-        autoPlay
-        loop
-        muted
-        playsInline
-        width="100%"
-        height="100%"
-      >
-        <source
-          src="/console/demo-of-initial-api-key-configuration.mp4"
-          type="video/mp4"
-        />
-      </video>
+    <div className="max-h-[240px] text-xs">
+      <SyntaxHighlighter language="js">
+        {examples.axios(target, apikey)}
+      </SyntaxHighlighter>
     </div>
   );
 }

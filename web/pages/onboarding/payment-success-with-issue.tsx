@@ -1,12 +1,12 @@
 import React from "react";
-import type { Metadata } from 'next'
+import type { Metadata } from "next";
+import { Button } from "@workspace/ui/components/button";
 import client from "@cors.sh/service-api";
-import { Button } from "@editor-ui/console";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "CORS.SH - Problem with your subscription"
-}
+  title: "CORS.SH - Problem with your subscription",
+};
 
 export default function PaymentSuccessButThereWasAProblem({
   error,
@@ -23,9 +23,11 @@ export default function PaymentSuccessButThereWasAProblem({
   };
 }) {
   return (
-    <main style={{
-      fontFamily: "Inter, sans-serif",
-    }}>
+    <main
+      style={{
+        fontFamily: "Inter, sans-serif",
+      }}
+    >
       <div
         style={{
           display: "flex",
@@ -37,7 +39,9 @@ export default function PaymentSuccessButThereWasAProblem({
           textAlign: "center",
         }}
       >
-        <h1>There was a problem with your subscription - &quot;{error}&quot;</h1>
+        <h1>
+          There was a problem with your subscription - &quot;{error}&quot;
+        </h1>
 
         <div style={{ height: 40 }} />
         <p>{message}</p>

@@ -1,45 +1,44 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import { Header } from '@/components/header'
-import { Toaster } from "react-hot-toast";
-import GoogleAnalytics from '@/components/ga';
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { Header } from "./_home/header";
+import { Toaster } from "@workspace/ui/components/sonner";
 import ChatwootWidget from "@/components/chatwoot";
-import '../globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+import "@workspace/ui/globals.css";
+import { Providers } from "@/components/providers";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'CORS.SH - A Fast & Reliable CORS Proxy for your websites',
+  title: "CORS.SH - A Fast & Reliable CORS Proxy for your websites",
   description: "One CORS Proxy you'll ever need",
-  metadataBase: new URL('https://cors.sh'),
+  metadataBase: new URL("https://cors.sh"),
   openGraph: {
-    images: [
-      "/og-image-01.jpg",
-    ]
-  }
-}
+    images: ["/og-image-01.jpg"],
+  },
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${inter.className} font-sans antialiased selection:bg-amber-500 selection:text-amber-900`}
+      >
         {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
-          <GoogleAnalytics gaid=
-            {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
         ) : null}
         <ChatwootWidget />
-        <div className='selection:bg-amber-500 selection:text-amber-900'>
-          <div suppressHydrationWarning>
-            <Toaster position="bottom-center" />
-          </div>
+        <Providers>
+          <Toaster position="bottom-center" />
           <Header />
           {children}
-        </div>
+        </Providers>
       </body>
     </html>
-  )
+  );
 }
