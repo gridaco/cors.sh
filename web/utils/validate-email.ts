@@ -10,6 +10,13 @@ const blacklist = [
   "dispostable.com",
   "getnada.com",
   "maildrop.cc",
+  "pastryofistanbul.com",
+  "litepax.com",
+  "raleigh-construction.com",
+  "questtechsystems.com",
+  "teihu.com",
+  "oakon.com",
+  "namestal.com"
 ];
 
 const pattern =
