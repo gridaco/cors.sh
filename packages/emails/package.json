@@ -7,7 +7,8 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "email:dev": "email dev --dir emails"
+    "email:dev": "email dev --dir emails",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@react-email/components": "^0.5.6",

@@ -9,6 +9,7 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
+    "check-types": "turbo check-types",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "stack:up": "bash scripts/stack.sh up",
