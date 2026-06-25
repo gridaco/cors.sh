@@ -1,0 +1,64 @@
+name: deploy
+
+# Deploys cors.sh to Cloudflare: the web app (Next 16 via OpenNext) + the proxy worker.
+#
+# Manual-trigger by default so it never fires before the account is configured. To enable
+# auto-deploy on merge to main, uncomment the `push:` block below.
+#
+# Required GitHub repo secrets:
+#   CLOUDFLARE_API_TOKEN   — token with Workers Scripts:Edit, D1:Edit, KV:Edit, Workers Routes:Edit
+#   CLOUDFLARE_ACCOUNT_ID  — the Cloudflare account id
+#
+# Worker RUNTIME secrets (AUTH_SECRET, RESEND_API_KEY, STRIPE_*, INTERNAL_SECRET, …) are set ONCE
+# per worker with `wrangler secret put` — NOT here. See docs/cloudflare/infra-setup.md.
+
+on:
+  workflow_dispatch:
+    inputs:
+      migrate:
+        description: "Apply remote D1 migrations before deploying"
+        type: boolean
+        default: true
+  # push:
+  #   branches: [main]
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      WRANGLER_SEND_METRICS: "false"
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.4.1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install workspace deps
+        run: pnpm install --frozen-lockfile
+
+      # Idempotent: applies only not-yet-applied migrations. Forward-only.
+      - name: Apply D1 migrations (remote)
+        if: ${{ inputs.migrate }}
+        run: pnpm exec wrangler d1 migrations apply DB --remote
+        working-directory: web
+
+      - name: Deploy proxy worker
+        run: pnpm exec wrangler deploy
+        working-directory: workers/proxy
+
+      - name: Deploy web (OpenNext)
+        run: pnpm --filter web cf:deploy
