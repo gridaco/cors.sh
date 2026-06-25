@@ -31,11 +31,7 @@ export function CopyButton({
     setTimeout(() => setCopied(false), 1500);
   };
 
-  const icon = copied ? (
-    <Check className="size-4 text-emerald-500" />
-  ) : (
-    <Copy className="size-4" />
-  );
+  const icon = copied ? <Check className="size-4 text-emerald-500" /> : <Copy className="size-4" />;
 
   return (
     <Button

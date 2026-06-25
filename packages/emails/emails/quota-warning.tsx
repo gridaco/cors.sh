@@ -19,7 +19,9 @@ export default function QuotaWarningEmail({
 }: QuotaWarningProps) {
   return (
     <EmailLayout preview={`You've used ${usedPct}% of your monthly ${metric}`}>
-      <Heading style={styles.heading}>You&apos;re at {usedPct}% of your {metric} quota</Heading>
+      <Heading style={styles.heading}>
+        You&apos;re at {usedPct}% of your {metric} quota
+      </Heading>
       <Text style={styles.text}>
         You&apos;ve used <strong>{used}</strong> of your <strong>{limit}</strong> monthly {metric}.
         When you hit the limit, further requests are rejected with a 429 until the next period.
@@ -29,9 +31,7 @@ export default function QuotaWarningEmail({
           Upgrade for higher limits
         </Button>
       </Section>
-      <Text style={styles.muted}>
-        You can turn off these warnings in Account &amp; billing.
-      </Text>
+      <Text style={styles.muted}>You can turn off these warnings in Account &amp; billing.</Text>
     </EmailLayout>
   );
 }

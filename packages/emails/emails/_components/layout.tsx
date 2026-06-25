@@ -13,8 +13,7 @@ import * as React from "react";
 
 const main: React.CSSProperties = {
   backgroundColor: "#f6f6f7",
-  fontFamily:
-    "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif",
+  fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif",
   margin: 0,
   padding: "24px 0",
 };
@@ -48,13 +47,7 @@ const footer: React.CSSProperties = {
 const footerLink: React.CSSProperties = { color: "#8a8a8a", textDecoration: "underline" };
 
 /** Shared brand shell for every transactional email. `preview` is the inbox snippet. */
-export function EmailLayout({
-  preview,
-  children,
-}: {
-  preview: string;
-  children: React.ReactNode;
-}) {
+export function EmailLayout({ preview, children }: { preview: string; children: React.ReactNode }) {
   return (
     <Html>
       <Head />

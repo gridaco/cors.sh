@@ -28,14 +28,11 @@ Prefix your target URL with `https://proxy.cors.sh/` and send your key in the
 `x-cors-api-key` header.
 
 ```ts
-const res = await fetch(
-  "https://proxy.cors.sh/https://api.example.com/data",
-  {
-    headers: {
-      "x-cors-api-key": "test_xxxxxxxx",
-    },
+const res = await fetch("https://proxy.cors.sh/https://api.example.com/data", {
+  headers: {
+    "x-cors-api-key": "test_xxxxxxxx",
   },
-);
+});
 
 const data = await res.json();
 ```

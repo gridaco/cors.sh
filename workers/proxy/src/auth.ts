@@ -44,7 +44,8 @@ export function enforceOrigin(request: Request, record: KeyRecord): AuthError | 
   if (record.keyType === "test") return null;
 
   const origin = request.headers.get("origin");
-  if (!origin || origin === "null") return { status: 403, body: "Live key requires a browser Origin." };
+  if (!origin || origin === "null")
+    return { status: 403, body: "Live key requires a browser Origin." };
   if (record.allowedOrigins.length > 0 && !record.allowedOrigins.includes(origin)) {
     return { status: 403, body: "Origin not allowed for this key." };
   }
@@ -60,6 +61,7 @@ export function enforceTarget(target: string, record: KeyRecord): AuthError | nu
   } catch {
     return { status: 400, body: "Invalid target URL." };
   }
-  if (!record.allowedTargets.includes(host)) return { status: 403, body: "Target not allowed for this key." };
+  if (!record.allowedTargets.includes(host))
+    return { status: 403, body: "Target not allowed for this key." };
   return null;
 }

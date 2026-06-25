@@ -9,7 +9,7 @@ export default {
     const json = (status: number, headers: Record<string, string>) =>
       new Response(
         JSON.stringify({ ok: true, route: url.pathname, origin: request.headers.get("origin") }),
-        { status, headers: { "content-type": "application/json", ...headers } }
+        { status, headers: { "content-type": "application/json", ...headers } },
       );
 
     switch (url.pathname) {
@@ -31,7 +31,9 @@ export default {
         return json(200, { "access-control-allow-origin": "*" });
 
       default:
-        return new Response("mock routes: /no-cors /wrong-origin /needs-preflight /allow-all", { status: 404 });
+        return new Response("mock routes: /no-cors /wrong-origin /needs-preflight /allow-all", {
+          status: 404,
+        });
     }
   },
 };

@@ -15,12 +15,17 @@ function fetchInPage(page: Page, url: string, opts: RequestInit = {}): Promise<F
     async ({ url, opts }) => {
       try {
         const r = await fetch(url, opts as RequestInit);
-        return { ok: true as const, status: r.status, acao: r.headers.get("access-control-allow-origin"), body: await r.text() };
+        return {
+          ok: true as const,
+          status: r.status,
+          acao: r.headers.get("access-control-allow-origin"),
+          body: await r.text(),
+        };
       } catch (e: any) {
         return { ok: false as const, name: e?.name ?? "Error", message: String(e?.message ?? e) };
       }
     },
-    { url, opts }
+    { url, opts },
   );
 }
 
@@ -34,8 +39,12 @@ test("A. direct fetch to a no-CORS endpoint is BLOCKED by the browser", async ({
   if (!r.ok) expect(r.name).toBe("TypeError"); // "Failed to fetch"
 });
 
-test("B. the SAME request via cors.sh is ALLOWED (body readable, ACAO present)", async ({ page }) => {
-  const r = await fetchInPage(page, `${PROXY}/${MOCK}/no-cors`, { headers: { "x-cors-api-key": KEY } });
+test("B. the SAME request via cors.sh is ALLOWED (body readable, ACAO present)", async ({
+  page,
+}) => {
+  const r = await fetchInPage(page, `${PROXY}/${MOCK}/no-cors`, {
+    headers: { "x-cors-api-key": KEY },
+  });
   expect(r.ok).toBe(true);
   if (r.ok) {
     expect(r.status).toBe(200);
@@ -58,12 +67,17 @@ test("D. control: an ACAO:* endpoint succeeds directly (harness self-check)", as
 test("E. a preflighted (non-simple DELETE) request succeeds via the proxy", async ({ page }) => {
   // DELETE is a non-simple method → the browser MUST preflight. Success proves the proxy
   // answered the OPTIONS (reflecting Allow-Methods) and forwarded the real DELETE.
-  const r = await fetchInPage(page, `${PROXY}/${MOCK}/no-cors`, { method: "DELETE", headers: { "x-cors-api-key": KEY } });
+  const r = await fetchInPage(page, `${PROXY}/${MOCK}/no-cors`, {
+    method: "DELETE",
+    headers: { "x-cors-api-key": KEY },
+  });
   expect(r.ok).toBe(true);
   if (r.ok) expect(r.status).toBe(200);
 });
 
-test("F. a credentialed request against ACAO:* stays BLOCKED (documented limitation)", async ({ page }) => {
+test("F. a credentialed request against ACAO:* stays BLOCKED (documented limitation)", async ({
+  page,
+}) => {
   const r = await fetchInPage(page, `${PROXY}/${MOCK}/allow-all`, {
     credentials: "include",
     headers: { "x-cors-api-key": KEY },
@@ -71,7 +85,9 @@ test("F. a credentialed request against ACAO:* stays BLOCKED (documented limitat
   expect(r.ok).toBe(false);
 });
 
-test("G. a keyless (anonymous) request via the proxy is ALLOWED (legacy compat, IP-capped)", async ({ page }) => {
+test("G. a keyless (anonymous) request via the proxy is ALLOWED (legacy compat, IP-capped)", async ({
+  page,
+}) => {
   // No x-cors-api-key → the anonymous tier serves it (rate-limited per IP), with CORS rewritten.
   const r = await fetchInPage(page, `${PROXY}/${MOCK}/no-cors`);
   expect(r.ok).toBe(true);

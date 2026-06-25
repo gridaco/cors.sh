@@ -50,7 +50,9 @@ export default {
         const q = record.quota;
         if (usage.requests >= q.requests || usage.bytes >= q.bytes) {
           ctx.waitUntil(notifyQuota(env, record.account));
-          return new Response("Monthly quota exceeded. Upgrade your plan to continue.", { status: 429 });
+          return new Response("Monthly quota exceeded. Upgrade your plan to continue.", {
+            status: 429,
+          });
         }
         if (usage.requests >= q.requests * 0.8 || usage.bytes >= q.bytes * 0.8) {
           ctx.waitUntil(notifyQuota(env, record.account));
@@ -89,7 +91,9 @@ export default {
     const headers = applyCors(request, sanitizeResponseHeaders(upstream));
     if (!upstream.body) return new Response(null, { status: upstream.status, headers });
 
-    const body = meteredBody(upstream.body, (bytes) => ctx.waitUntil(recordUsage(env, account, bytes)));
+    const body = meteredBody(upstream.body, (bytes) =>
+      ctx.waitUntil(recordUsage(env, account, bytes)),
+    );
     return new Response(body, { status: upstream.status, headers });
   },
 };

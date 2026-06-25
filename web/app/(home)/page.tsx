@@ -1,14 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
-import {
-  ArrowRight,
-  Gauge,
-  Globe,
-  KeyRound,
-  PlugZap,
-  ShieldCheck,
-  Waves,
-} from "lucide-react";
+import { ArrowRight, Gauge, Globe, KeyRound, PlugZap, ShieldCheck, Waves } from "lucide-react";
 import { Button } from "@workspace/ui/components/button";
 import { Badge } from "@workspace/ui/components/badge";
 import { HomeBackground } from "@/components/home-background";
@@ -79,12 +71,14 @@ export default function HomePage() {
               Now running on Cloudflare&apos;s edge
             </Badge>
             <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-              The CORS proxy you&apos;ll{" "}
-              <span className="text-muted-foreground">actually</span> trust.
+              The CORS proxy you&apos;ll <span className="text-muted-foreground">
+                actually
+              </span>{" "}
+              trust.
             </h1>
             <p className="max-w-md text-lg text-muted-foreground">
-              Sick of CORS errors? Prefix your URL, add one header, and call any
-              API from the browser — fast, secure, and serverless.
+              Sick of CORS errors? Prefix your URL, add one header, and call any API from the
+              browser — fast, secure, and serverless.
             </p>
             <div className="flex flex-wrap items-center gap-3">
               <Button asChild size="lg" className="h-11 rounded-lg px-6 text-sm">
@@ -92,12 +86,7 @@ export default function HomePage() {
                   Get your API key <ArrowRight className="size-4" />
                 </Link>
               </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="h-11 rounded-lg px-6 text-sm"
-              >
+              <Button asChild size="lg" variant="outline" className="h-11 rounded-lg px-6 text-sm">
                 <Link href="/docs">Read the docs</Link>
               </Button>
             </div>
@@ -115,12 +104,10 @@ export default function HomePage() {
       {/* Features */}
       <section className="mx-auto max-w-6xl px-6 py-20">
         <div className="mb-12 max-w-2xl">
-          <h2 className="text-3xl font-semibold tracking-tight">
-            Everything a frontend dev needs
-          </h2>
+          <h2 className="text-3xl font-semibold tracking-tight">Everything a frontend dev needs</h2>
           <p className="mt-3 text-muted-foreground">
-            Built for the developer who doesn&apos;t want to run a server just to
-            dodge a CORS error.
+            Built for the developer who doesn&apos;t want to run a server just to dodge a CORS
+            error.
           </p>
         </div>
         <div className="grid gap-px overflow-hidden rounded-2xl border bg-border sm:grid-cols-2 lg:grid-cols-3">
@@ -130,9 +117,7 @@ export default function HomePage() {
                 <f.icon className="size-5" />
               </div>
               <h3 className="font-medium">{f.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {f.body}
-              </p>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.body}</p>
             </div>
           ))}
         </div>
@@ -141,19 +126,13 @@ export default function HomePage() {
       {/* How it works */}
       <section className="border-y border-border/60 bg-muted/30">
         <div className="mx-auto max-w-6xl px-6 py-20">
-          <h2 className="mb-12 text-3xl font-semibold tracking-tight">
-            Live in under a minute
-          </h2>
+          <h2 className="mb-12 text-3xl font-semibold tracking-tight">Live in under a minute</h2>
           <div className="grid gap-8 md:grid-cols-3">
             {STEPS.map((s) => (
               <div key={s.n} className="space-y-3">
-                <div className="font-mono text-sm text-muted-foreground">
-                  {s.n}
-                </div>
+                <div className="font-mono text-sm text-muted-foreground">{s.n}</div>
                 <h3 className="text-lg font-medium">{s.title}</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {s.body}
-                </p>
+                <p className="text-sm leading-relaxed text-muted-foreground">{s.body}</p>
               </div>
             ))}
           </div>
@@ -171,8 +150,8 @@ export default function HomePage() {
             Stop fighting CORS. Start shipping.
           </h2>
           <p className="mx-auto mt-4 max-w-md text-muted-foreground">
-            Create a project, grab your key, and make your first proxied request
-            in the next sixty seconds.
+            Create a project, grab your key, and make your first proxied request in the next sixty
+            seconds.
           </p>
           <div className="mt-8 flex justify-center gap-3">
             <Button asChild size="lg" className="h-11 rounded-lg px-6 text-sm">
@@ -180,12 +159,7 @@ export default function HomePage() {
                 Get started <ArrowRight className="size-4" />
               </Link>
             </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="h-11 rounded-lg px-6 text-sm"
-            >
+            <Button asChild size="lg" variant="outline" className="h-11 rounded-lg px-6 text-sm">
               <Link href="/pricing">View pricing</Link>
             </Button>
           </div>

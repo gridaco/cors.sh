@@ -22,7 +22,8 @@ export default function QuotaExceededEmail({
       <Heading style={styles.heading}>You&apos;ve hit your {metric} limit</Heading>
       <Text style={styles.text}>
         You&apos;ve used <strong>{used}</strong> of your <strong>{limit}</strong> monthly {metric}.
-        Requests are now being rejected with a 429{resetDate ? ` until ${resetDate}` : " until your quota resets"}.
+        Requests are now being rejected with a 429
+        {resetDate ? ` until ${resetDate}` : " until your quota resets"}.
       </Text>
       <Section style={{ margin: "8px 0 20px" }}>
         <Button href={upgradeUrl} style={styles.button}>

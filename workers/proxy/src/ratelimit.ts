@@ -13,7 +13,10 @@ import type { Env } from "./types";
  * already bounded by origin pinning + the monthly quota.
  */
 interface DOState {
-  storage: { get<T = unknown>(k: string): Promise<T | undefined>; put(k: string, v: unknown): Promise<void> };
+  storage: {
+    get<T = unknown>(k: string): Promise<T | undefined>;
+    put(k: string, v: unknown): Promise<void>;
+  };
 }
 
 export class RateLimiterDO {
@@ -26,7 +29,11 @@ export class RateLimiterDO {
     const periodMs = Number(url.searchParams.get("period") ?? 10) * 1000;
     const now = Date.now();
 
-    if (!this.window) this.window = (await this.state.storage.get<{ start: number; count: number }>("w")) ?? { start: 0, count: 0 };
+    if (!this.window)
+      this.window = (await this.state.storage.get<{ start: number; count: number }>("w")) ?? {
+        start: 0,
+        count: 0,
+      };
     if (now - this.window.start >= periodMs) this.window = { start: now, count: 0 };
     // synchronous check+increment — atomic within the single-threaded DO
     this.window.count++;
@@ -40,9 +47,16 @@ export class RateLimiterDO {
 }
 
 /** True if this request is within `limit` per `periodSec` for `key`. */
-export async function withinRateLimit(env: Env, key: string, limit: number, periodSec: number): Promise<boolean> {
+export async function withinRateLimit(
+  env: Env,
+  key: string,
+  limit: number,
+  periodSec: number,
+): Promise<boolean> {
   const id = env.RATE_LIMITER.idFromName(key);
-  const res = await env.RATE_LIMITER.get(id).fetch(`https://rl/?limit=${limit}&period=${periodSec}`);
+  const res = await env.RATE_LIMITER.get(id).fetch(
+    `https://rl/?limit=${limit}&period=${periodSec}`,
+  );
   const { allowed } = (await res.json()) as { allowed: boolean };
   return allowed;
 }

@@ -14,7 +14,9 @@ test("dashboard lists real projects from the control API", async ({ page }) => {
   await expect(page.getByText("My App", { exact: false }).first()).toBeVisible({ timeout: 30000 });
 });
 
-test("MVP full loop: dashboard creates a project, and its key works through the proxy", async ({ page }) => {
+test("MVP full loop: dashboard creates a project, and its key works through the proxy", async ({
+  page,
+}) => {
   // 1. Create a project in the dashboard UI, pinned to the test origin.
   await page.goto(`${WEB}/console/new`);
   await page.fill("#name", "E2E Project");
@@ -32,12 +34,16 @@ test("MVP full loop: dashboard creates a project, and its key works through the 
     async ({ proxy, mock, key }) => {
       try {
         const r = await fetch(`${proxy}/${mock}/no-cors`, { headers: { "x-cors-api-key": key } });
-        return { ok: true as const, status: r.status, acao: r.headers.get("access-control-allow-origin") };
+        return {
+          ok: true as const,
+          status: r.status,
+          acao: r.headers.get("access-control-allow-origin"),
+        };
       } catch (e: any) {
         return { ok: false as const, name: e?.name };
       }
     },
-    { proxy: PROXY, mock: MOCK, key: liveKey }
+    { proxy: PROXY, mock: MOCK, key: liveKey },
   );
   expect(res.ok).toBe(true);
   if (res.ok) {

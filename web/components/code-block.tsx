@@ -22,7 +22,7 @@ export function CodeBlock({
     <div
       className={cn(
         "group relative overflow-hidden rounded-xl border bg-muted/40 text-left",
-        className
+        className,
       )}
     >
       <div className="flex items-center justify-between border-b bg-muted/60 px-4 py-2">
@@ -31,9 +31,7 @@ export function CodeBlock({
           <span className="size-2.5 rounded-full bg-amber-400/70" />
           <span className="size-2.5 rounded-full bg-emerald-400/70" />
           {filename && (
-            <span className="ml-3 font-mono text-xs text-muted-foreground">
-              {filename}
-            </span>
+            <span className="ml-3 font-mono text-xs text-muted-foreground">{filename}</span>
           )}
         </div>
         {copy && (

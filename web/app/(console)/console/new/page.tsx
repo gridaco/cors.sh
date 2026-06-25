@@ -57,9 +57,7 @@ export default function NewProjectPage() {
             <KeyRound className="size-5" />
           </div>
           <div>
-            <h1 className="text-xl font-semibold tracking-tight">
-              Project created
-            </h1>
+            <h1 className="text-xl font-semibold tracking-tight">Project created</h1>
             <p className="text-sm text-muted-foreground">{created.name}</p>
           </div>
         </div>
@@ -68,8 +66,8 @@ export default function NewProjectPage() {
           <TriangleAlert className="size-4" />
           <AlertTitle>Save these keys now</AlertTitle>
           <AlertDescription>
-            They&apos;re shown only once. You can reveal and copy them here, then
-            from the project page later.
+            They&apos;re shown only once. You can reveal and copy them here, then from the project
+            page later.
           </AlertDescription>
         </Alert>
 
@@ -77,8 +75,7 @@ export default function NewProjectPage() {
           <CardHeader>
             <CardTitle className="text-base">API keys</CardTitle>
             <CardDescription>
-              Use the live key in production (origin-pinned) and the test key
-              locally.
+              Use the live key in production (origin-pinned) and the test key locally.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -101,12 +98,7 @@ export default function NewProjectPage() {
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
-      <Button
-        asChild
-        variant="ghost"
-        size="sm"
-        className="-ml-2 text-muted-foreground"
-      >
+      <Button asChild variant="ghost" size="sm" className="-ml-2 text-muted-foreground">
         <Link href="/console">
           <ArrowLeft className="size-4" /> Back
         </Link>
@@ -143,9 +135,8 @@ export default function NewProjectPage() {
               className="font-mono text-xs"
             />
             <p className="text-xs text-muted-foreground">
-              Comma or newline separated. Your{" "}
-              <span className="font-mono">live_</span> key only works from these
-              origins. Leave empty to decide later.
+              Comma or newline separated. Your <span className="font-mono">live_</span> key only
+              works from these origins. Leave empty to decide later.
             </p>
             {!originsValid && (
               <p className="text-xs text-destructive">
@@ -156,8 +147,7 @@ export default function NewProjectPage() {
 
           <div className="space-y-2">
             <Label htmlFor="targets">
-              Allowed targets{" "}
-              <span className="text-muted-foreground">(optional)</span>
+              Allowed targets <span className="text-muted-foreground">(optional)</span>
             </Label>
             <Textarea
               id="targets"
@@ -172,11 +162,7 @@ export default function NewProjectPage() {
             </p>
           </div>
 
-          <Button
-            className="h-9 w-full text-sm"
-            disabled={!valid || busy}
-            onClick={onCreate}
-          >
+          <Button className="h-9 w-full text-sm" disabled={!valid || busy} onClick={onCreate}>
             {busy ? "Creating…" : "Create Project"}
           </Button>
         </CardContent>

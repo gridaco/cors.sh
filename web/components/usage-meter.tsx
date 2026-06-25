@@ -30,7 +30,7 @@ export function UsageMeter({
         <div
           className={cn(
             "h-full rounded-full transition-all",
-            danger ? "bg-destructive" : warn ? "bg-amber-500" : "bg-foreground"
+            danger ? "bg-destructive" : warn ? "bg-amber-500" : "bg-foreground",
           )}
           style={{ width: `${Math.max(pct, 1.5)}%` }}
         />

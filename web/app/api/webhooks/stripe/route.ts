@@ -132,7 +132,17 @@ async function applySubscriptionState(
        cancel_at_period_end = excluded.cancel_at_period_end,
        updated_at = excluded.updated_at`,
   )
-    .bind(userId, customerId, sub.id, status, priceId, periodStart, periodEnd, cancelAtPeriodEnd, Date.now())
+    .bind(
+      userId,
+      customerId,
+      sub.id,
+      status,
+      priceId,
+      periodStart,
+      periodEnd,
+      cancelAtPeriodEnd,
+      Date.now(),
+    )
     .run();
 
   const newTier = deleted ? "free" : resolveTier(status, priceId, cfg);

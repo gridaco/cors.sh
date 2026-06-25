@@ -27,7 +27,11 @@ export async function GET(_req: Request, { params }: Ctx) {
   const keys = await DB.prepare("SELECT key,key_type,active FROM keys WHERE project_id=?")
     .bind(id)
     .all<{ key: string; key_type: string; active: number }>();
-  return Response.json({ ...serializeProject(proj), keys: keys.results, usage: await getUsage(DB, account) });
+  return Response.json({
+    ...serializeProject(proj),
+    keys: keys.results,
+    usage: await getUsage(DB, account),
+  });
 }
 
 // PATCH /api/v1/projects/:id — rename / change origins+targets, re-project keys to KV.
@@ -71,7 +75,9 @@ export async function DELETE(_req: Request, { params }: Ctx) {
   const proj = await loadProject(DB, id, account);
   if (!proj) return Response.json({ error: "not found" }, { status: 404 });
 
-  const keys = await DB.prepare("SELECT key FROM keys WHERE project_id=?").bind(id).all<{ key: string }>();
+  const keys = await DB.prepare("SELECT key FROM keys WHERE project_id=?")
+    .bind(id)
+    .all<{ key: string }>();
   await Promise.all(keys.results.map((k) => KEYS.delete(k.key)));
   await DB.batch([
     DB.prepare("DELETE FROM keys WHERE project_id=?").bind(id),

@@ -15,8 +15,9 @@ export default function PaymentFailedEmail({
     <EmailLayout preview="Payment failed — action needed">
       <Heading style={styles.heading}>We couldn&apos;t process your payment</Heading>
       <Text style={styles.text}>
-        Your most recent payment{amountDue ? ` of ${amountDue}` : ""} didn&apos;t go through. We&apos;ll
-        retry automatically, but to avoid any interruption please update your payment method.
+        Your most recent payment{amountDue ? ` of ${amountDue}` : ""} didn&apos;t go through.
+        We&apos;ll retry automatically, but to avoid any interruption please update your payment
+        method.
       </Text>
       <Section style={{ margin: "8px 0 20px" }}>
         <Button href={updatePaymentUrl} style={styles.button}>

@@ -11,8 +11,13 @@ export function currentPeriod(): string {
  * NOTE: production moves this to a KV usage snapshot carried in the key record (PRD §4.3,
  * already spiked) so the hot path stays KV-only — this D1 read is an MVP shortcut.
  */
-export async function getUsage(env: Env, account: string): Promise<{ requests: number; bytes: number }> {
-  const row = await env.DB.prepare("SELECT requests, bytes FROM usage WHERE account_id=? AND period=?")
+export async function getUsage(
+  env: Env,
+  account: string,
+): Promise<{ requests: number; bytes: number }> {
+  const row = await env.DB.prepare(
+    "SELECT requests, bytes FROM usage WHERE account_id=? AND period=?",
+  )
     .bind(account, currentPeriod())
     .first<{ requests: number; bytes: number }>();
   return { requests: row?.requests ?? 0, bytes: row?.bytes ?? 0 };
@@ -22,7 +27,7 @@ export async function getUsage(env: Env, account: string): Promise<{ requests: n
 export async function recordUsage(env: Env, account: string, bytes: number): Promise<void> {
   await env.DB.prepare(
     "INSERT INTO usage (account_id, period, requests, bytes) VALUES (?, ?, 1, ?) " +
-      "ON CONFLICT(account_id, period) DO UPDATE SET requests = requests + 1, bytes = bytes + ?"
+      "ON CONFLICT(account_id, period) DO UPDATE SET requests = requests + 1, bytes = bytes + ?",
   )
     .bind(account, currentPeriod(), bytes, bytes)
     .run();

@@ -17,8 +17,8 @@ export default function MagicLinkEmail({
     <EmailLayout preview={`Sign in to ${host}`}>
       <Heading style={styles.heading}>Sign in to cors.sh</Heading>
       <Text style={styles.text}>
-        Click the button below to sign in. This link expires in {expiresMinutes} minutes and
-        can only be used once.
+        Click the button below to sign in. This link expires in {expiresMinutes} minutes and can
+        only be used once.
       </Text>
       <Section style={{ margin: "8px 0 20px" }}>
         <Button href={url} style={styles.button}>

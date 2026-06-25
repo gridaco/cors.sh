@@ -7,12 +7,7 @@ import { Button } from "@workspace/ui/components/button";
 import { Card, CardContent } from "@workspace/ui/components/card";
 import { Badge } from "@workspace/ui/components/badge";
 import { Skeleton } from "@workspace/ui/components/skeleton";
-import {
-  listProjects,
-  getUsage,
-  type Project,
-  type Usage,
-} from "@/lib/control";
+import { listProjects, getUsage, type Project, type Usage } from "@/lib/control";
 import { formatNumber, humanizeBytes, formatRelative } from "@/lib/format";
 import { UsageMeter } from "@/components/usage-meter";
 
@@ -89,9 +84,7 @@ export default function DashboardPage() {
       {/* Projects */}
       {error && (
         <Card className="border-destructive/40">
-          <CardContent className="py-6 text-sm text-destructive">
-            {error}
-          </CardContent>
+          <CardContent className="py-6 text-sm text-destructive">{error}</CardContent>
         </Card>
       )}
 

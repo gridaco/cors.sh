@@ -84,10 +84,7 @@ export class ControlApiError extends Error {
   }
 }
 
-async function request<T>(
-  path: string,
-  init?: RequestInit & { json?: unknown }
-): Promise<T> {
+async function request<T>(path: string, init?: RequestInit & { json?: unknown }): Promise<T> {
   const { json, headers, ...rest } = init ?? {};
   const res = await fetch(`${CONTROL_API_URL}${path}`, {
     ...rest,
@@ -103,8 +100,7 @@ async function request<T>(
 
   if (!res.ok) {
     const message =
-      (parsed && (parsed.error || parsed.message)) ||
-      `Control API request failed (${res.status})`;
+      (parsed && (parsed.error || parsed.message)) || `Control API request failed (${res.status})`;
     throw new ControlApiError(res.status, message, parsed);
   }
 
@@ -115,9 +111,7 @@ export function listProjects(): Promise<{ projects: Project[] }> {
   return request<{ projects: Project[] }>("/v1/projects");
 }
 
-export function createProject(
-  input: CreateProjectInput
-): Promise<CreatedProject> {
+export function createProject(input: CreateProjectInput): Promise<CreatedProject> {
   return request<CreatedProject>("/v1/projects", {
     method: "POST",
     json: input,
@@ -128,10 +122,7 @@ export function getProject(id: string): Promise<ProjectDetail> {
   return request<ProjectDetail>(`/v1/projects/${encodeURIComponent(id)}`);
 }
 
-export function updateProject(
-  id: string,
-  input: UpdateProjectInput
-): Promise<UpdatedProject> {
+export function updateProject(id: string, input: UpdateProjectInput): Promise<UpdatedProject> {
   return request<UpdatedProject>(`/v1/projects/${encodeURIComponent(id)}`, {
     method: "PATCH",
     json: input,
@@ -139,10 +130,9 @@ export function updateProject(
 }
 
 export function deleteProject(id: string): Promise<{ deleted: string }> {
-  return request<{ deleted: string }>(
-    `/v1/projects/${encodeURIComponent(id)}`,
-    { method: "DELETE" }
-  );
+  return request<{ deleted: string }>(`/v1/projects/${encodeURIComponent(id)}`, {
+    method: "DELETE",
+  });
 }
 
 export function getUsage(): Promise<Usage> {

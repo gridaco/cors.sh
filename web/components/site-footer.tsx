@@ -33,8 +33,7 @@ export function SiteFooter() {
         <div className="col-span-2 space-y-3 md:col-span-2">
           <Logo className="h-3.5 w-auto text-foreground" />
           <p className="max-w-xs text-sm text-muted-foreground">
-            A fast, reliable CORS proxy for your frontend. Drop the server,
-            keep shipping.
+            A fast, reliable CORS proxy for your frontend. Drop the server, keep shipping.
           </p>
         </div>
         {GROUPS.map((group) => (

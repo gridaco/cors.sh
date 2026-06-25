@@ -36,8 +36,10 @@ export async function POST(req: Request) {
   // Report on whichever metric is closer to the limit.
   const metric = bytePct > reqPct ? "bandwidth" : "requests";
   const fmt = (n: number) => n.toLocaleString("en-US");
-  const used = metric === "bandwidth" ? `${(usage.bytes / 1024 ** 3).toFixed(1)} GB` : fmt(usage.requests);
-  const limit = metric === "bandwidth" ? `${(quota.bytes / 1024 ** 3).toFixed(0)} GB` : fmt(quota.requests);
+  const used =
+    metric === "bandwidth" ? `${(usage.bytes / 1024 ** 3).toFixed(1)} GB` : fmt(usage.requests);
+  const limit =
+    metric === "bandwidth" ? `${(quota.bytes / 1024 ** 3).toFixed(0)} GB` : fmt(quota.requests);
   const upgradeUrl = `${env.NEXT_PUBLIC_APP_URL ?? "https://cors.sh"}/console/settings`;
   const sent: string[] = [];
 

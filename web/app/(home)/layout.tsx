@@ -24,11 +24,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomeLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function HomeLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"

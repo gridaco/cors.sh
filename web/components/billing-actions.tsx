@@ -52,7 +52,11 @@ export function BillingActions({ tier }: { tier: string }) {
   }
 
   return (
-    <Button variant="outline" onClick={() => go("portal", "/api/billing/portal")} disabled={busy !== null}>
+    <Button
+      variant="outline"
+      onClick={() => go("portal", "/api/billing/portal")}
+      disabled={busy !== null}
+    >
       {busy === "portal" ? "Opening…" : "Manage billing"}
     </Button>
   );

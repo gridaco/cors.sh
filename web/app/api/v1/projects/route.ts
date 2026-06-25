@@ -43,20 +43,12 @@ export async function POST(req: Request) {
     DB.prepare(
       "INSERT INTO projects (id,account_id,name,allowed_origins,allowed_targets,created_at) VALUES (?,?,?,?,?,?)",
     ).bind(id, account, name, JSON.stringify(origins), JSON.stringify(targets), now),
-    DB.prepare("INSERT INTO keys (key,project_id,account_id,key_type,active,created_at) VALUES (?,?,?,?,1,?)").bind(
-      liveKey,
-      id,
-      account,
-      "live",
-      now,
-    ),
-    DB.prepare("INSERT INTO keys (key,project_id,account_id,key_type,active,created_at) VALUES (?,?,?,?,1,?)").bind(
-      testKey,
-      id,
-      account,
-      "test",
-      now,
-    ),
+    DB.prepare(
+      "INSERT INTO keys (key,project_id,account_id,key_type,active,created_at) VALUES (?,?,?,?,1,?)",
+    ).bind(liveKey, id, account, "live", now),
+    DB.prepare(
+      "INSERT INTO keys (key,project_id,account_id,key_type,active,created_at) VALUES (?,?,?,?,1,?)",
+    ).bind(testKey, id, account, "test", now),
   ]);
 
   await projectKeysToKV(
@@ -69,7 +61,13 @@ export async function POST(req: Request) {
   );
 
   return Response.json(
-    { id, name, allowedOrigins: origins, allowedTargets: targets, keys: { live: liveKey, test: testKey } },
+    {
+      id,
+      name,
+      allowedOrigins: origins,
+      allowedTargets: targets,
+      keys: { live: liveKey, test: testKey },
+    },
     { status: 201 },
   );
 }

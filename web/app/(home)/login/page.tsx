@@ -52,8 +52,8 @@ function LoginForm() {
           {sent ? (
             <div className="space-y-3 text-sm text-muted-foreground" data-testid="login-sent">
               <p>
-                A sign-in link is on its way to <strong className="text-foreground">{email}</strong>.
-                The link expires in 60 minutes.
+                A sign-in link is on its way to <strong className="text-foreground">{email}</strong>
+                . The link expires in 60 minutes.
               </p>
               <Button variant="ghost" size="sm" onClick={() => setSent(false)}>
                 Use a different email

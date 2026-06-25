@@ -9,10 +9,7 @@ import Link from "next/link";
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h1: (props: React.ComponentPropsWithoutRef<"h1">) => (
-      <h1
-        className="scroll-m-20 text-3xl font-semibold tracking-tight"
-        {...props}
-      />
+      <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight" {...props} />
     ),
     h2: (props: React.ComponentPropsWithoutRef<"h2">) => (
       <h2
@@ -21,10 +18,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       />
     ),
     h3: (props: React.ComponentPropsWithoutRef<"h3">) => (
-      <h3
-        className="mt-8 scroll-m-20 text-lg font-semibold tracking-tight"
-        {...props}
-      />
+      <h3 className="mt-8 scroll-m-20 text-lg font-semibold tracking-tight" {...props} />
     ),
     p: (props: React.ComponentPropsWithoutRef<"p">) => (
       <p className="mt-4 leading-7 text-muted-foreground" {...props} />
@@ -36,13 +30,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       return internal ? (
         <Link href={href} className={className} {...props} />
       ) : (
-        <a
-          href={href}
-          target="_blank"
-          rel="noreferrer"
-          className={className}
-          {...props}
-        />
+        <a href={href} target="_blank" rel="noreferrer" className={className} {...props} />
       );
     },
     ul: (props: React.ComponentPropsWithoutRef<"ul">) => (
@@ -52,19 +40,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       />
     ),
     ol: (props: React.ComponentPropsWithoutRef<"ol">) => (
-      <ol
-        className="mt-4 ml-6 list-decimal space-y-2 text-muted-foreground"
-        {...props}
-      />
+      <ol className="mt-4 ml-6 list-decimal space-y-2 text-muted-foreground" {...props} />
     ),
-    li: (props: React.ComponentPropsWithoutRef<"li">) => (
-      <li className="leading-7" {...props} />
-    ),
+    li: (props: React.ComponentPropsWithoutRef<"li">) => <li className="leading-7" {...props} />,
     code: (props: React.ComponentPropsWithoutRef<"code">) => (
-      <code
-        className="rounded bg-muted px-1.5 py-0.5 font-mono text-[0.85em]"
-        {...props}
-      />
+      <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[0.85em]" {...props} />
     ),
     pre: (props: React.ComponentPropsWithoutRef<"pre">) => (
       <pre

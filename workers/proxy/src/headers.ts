@@ -1,12 +1,23 @@
 /** Request headers dropped before forwarding to the upstream. */
 const STRIP_REQUEST = new Set([
   // hop-by-hop + runtime-managed
-  "connection", "keep-alive", "proxy-authenticate", "proxy-authorization",
-  "te", "trailer", "transfer-encoding", "upgrade", "content-length", "host",
+  "connection",
+  "keep-alive",
+  "proxy-authenticate",
+  "proxy-authorization",
+  "te",
+  "trailer",
+  "transfer-encoding",
+  "upgrade",
+  "content-length",
+  "host",
   // legacy strips
-  "cookie", "cookie2",
+  "cookie",
+  "cookie2",
   // never leak our auth/control headers upstream (fixes a legacy leak — recon §1)
-  "x-cors-api-key", "x-cors-grida-api-key", "x-strict-request-url",
+  "x-cors-api-key",
+  "x-cors-grida-api-key",
+  "x-strict-request-url",
 ]);
 
 export function buildForwardHeaders(request: Request): Headers {

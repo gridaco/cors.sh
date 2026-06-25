@@ -16,7 +16,9 @@ export default function SubscriptionCanceledEmail({
   reactivateUrl = "https://cors.sh/console/settings",
 }: SubscriptionCanceledProps) {
   return (
-    <EmailLayout preview={isFinal ? "Your cors.sh subscription has ended" : "Your cors.sh plan will end"}>
+    <EmailLayout
+      preview={isFinal ? "Your cors.sh subscription has ended" : "Your cors.sh plan will end"}
+    >
       <Heading style={styles.heading}>
         {isFinal ? "Your subscription has ended" : `Your ${planName} plan is scheduled to end`}
       </Heading>
@@ -27,8 +29,9 @@ export default function SubscriptionCanceledEmail({
         </Text>
       ) : (
         <Text style={styles.text}>
-          Your {planName} plan is set to cancel{effectiveDate ? ` on ${effectiveDate}` : " at the end of the current period"}.
-          You keep {planName} access until then.
+          Your {planName} plan is set to cancel
+          {effectiveDate ? ` on ${effectiveDate}` : " at the end of the current period"}. You keep{" "}
+          {planName} access until then.
         </Text>
       )}
       <Section style={{ margin: "8px 0 20px" }}>

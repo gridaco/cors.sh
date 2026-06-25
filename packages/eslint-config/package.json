@@ -1,8 +1,8 @@
 {
   "name": "@workspace/eslint-config",
   "version": "0.0.0",
-  "type": "module",
   "private": true,
+  "type": "module",
   "exports": {
     "./base": "./base.js",
     "./next-js": "./next.js",

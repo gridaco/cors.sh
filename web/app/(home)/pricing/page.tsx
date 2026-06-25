@@ -104,8 +104,7 @@ export default function PricingPage() {
           Simple, generous pricing
         </h1>
         <p className="mt-4 text-lg text-muted-foreground">
-          Start free. Upgrade when your traffic does. No per-hour throttling,
-          no surprises.
+          Start free. Upgrade when your traffic does. No per-hour throttling, no surprises.
         </p>
       </div>
 
@@ -115,22 +114,16 @@ export default function PricingPage() {
             key={tier.name}
             className={cn(
               "relative flex flex-col rounded-2xl border bg-background p-8",
-              tier.featured && "border-foreground/20 shadow-lg ring-1 ring-foreground/10"
+              tier.featured && "border-foreground/20 shadow-lg ring-1 ring-foreground/10",
             )}
           >
-            {tier.featured && (
-              <Badge className="absolute -top-3 left-8">Most popular</Badge>
-            )}
+            {tier.featured && <Badge className="absolute -top-3 left-8">Most popular</Badge>}
             <h2 className="text-lg font-medium">{tier.name}</h2>
             <p className="mt-1 text-sm text-muted-foreground">{tier.blurb}</p>
             <div className="mt-6 flex items-baseline gap-1">
-              <span className="text-4xl font-semibold tracking-tight">
-                {tier.price}
-              </span>
+              <span className="text-4xl font-semibold tracking-tight">{tier.price}</span>
               {tier.cadence && (
-                <span className="text-sm text-muted-foreground">
-                  {tier.cadence}
-                </span>
+                <span className="text-sm text-muted-foreground">{tier.cadence}</span>
               )}
             </div>
             <Button

@@ -61,7 +61,11 @@ async function sendEmail(
   return { id: data?.id };
 }
 
-export function sendMagicLink(env: EmailEnv, to: string, props: MagicLinkProps): Promise<SendResult> {
+export function sendMagicLink(
+  env: EmailEnv,
+  to: string,
+  props: MagicLinkProps,
+): Promise<SendResult> {
   return sendEmail(env, {
     to,
     subject: "Sign in to cors.sh",
@@ -69,7 +73,11 @@ export function sendMagicLink(env: EmailEnv, to: string, props: MagicLinkProps):
   });
 }
 
-export function sendWelcome(env: EmailEnv, to: string, props: WelcomeProps = {}): Promise<SendResult> {
+export function sendWelcome(
+  env: EmailEnv,
+  to: string,
+  props: WelcomeProps = {},
+): Promise<SendResult> {
   return sendEmail(env, {
     to,
     subject: "Welcome to cors.sh",

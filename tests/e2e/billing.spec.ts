@@ -66,12 +66,20 @@ function invoiceEvent(id: string, type: string): string {
     object: "event",
     type,
     data: {
-      object: { id: "in_e2e", object: "invoice", customer: CUSTOMER, amount_due: 400, currency: "usd" },
+      object: {
+        id: "in_e2e",
+        object: "invoice",
+        customer: CUSTOMER,
+        amount_due: 400,
+        currency: "usd",
+      },
     },
   });
 }
 
-test("subscription lifecycle: create → fail → cancel-at-end → delete, with quota + emails", async ({ page }) => {
+test("subscription lifecycle: create → fail → cancel-at-end → delete, with quota + emails", async ({
+  page,
+}) => {
   const email = "billing-e2e@cors.sh";
   await signIn(page, email);
   const ctx = page.context();
@@ -94,7 +102,8 @@ test("subscription lifecycle: create → fail → cancel-at-end → delete, with
       headers: { "stripe-signature": stripeSig(payload, SECRET) },
       data: payload,
     });
-  const quota = async () => (await (await ctx.request.get(`${WEB}/api/v1/usage`)).json()).quota.requests;
+  const quota = async () =>
+    (await (await ctx.request.get(`${WEB}/api/v1/usage`)).json()).quota.requests;
 
   // 0. baseline: free
   expect(await quota()).toBe(10_000);
@@ -103,7 +112,9 @@ test("subscription lifecycle: create → fail → cancel-at-end → delete, with
   expect((await post(checkoutEvent("evt_checkout", userId))).status()).toBe(200);
 
   // 2. subscription.created (active, monthly) → Pro quota + confirmation email
-  expect((await post(subEvent("evt_created", "customer.subscription.created", userId))).status()).toBe(200);
+  expect(
+    (await post(subEvent("evt_created", "customer.subscription.created", userId))).status(),
+  ).toBe(200);
   expect(await quota()).toBe(500_000);
   expect(await waitForLog(`to=${email} subject="You're on cors.sh Pro"`)).toBe(true);
 
@@ -114,21 +125,41 @@ test("subscription lifecycle: create → fail → cancel-at-end → delete, with
 
   // 4. subscription.updated with cancel_at_period_end → STAYS Pro until period end
   expect(
-    (await post(subEvent("evt_cancel_sched", "customer.subscription.updated", userId, { cancelAtPeriodEnd: true }))).status(),
+    (
+      await post(
+        subEvent("evt_cancel_sched", "customer.subscription.updated", userId, {
+          cancelAtPeriodEnd: true,
+        }),
+      )
+    ).status(),
   ).toBe(200);
   expect(await quota()).toBe(500_000);
 
   // 5. subscription.deleted → back to Free + cancellation email
-  expect((await post(subEvent("evt_deleted", "customer.subscription.deleted", userId, { status: "canceled" }))).status()).toBe(200);
+  expect(
+    (
+      await post(
+        subEvent("evt_deleted", "customer.subscription.deleted", userId, { status: "canceled" }),
+      )
+    ).status(),
+  ).toBe(200);
   expect(await quota()).toBe(10_000);
   expect(await waitForLog(`to=${email} subject="Your cors.sh subscription has ended"`)).toBe(true);
 
   // 6. idempotency: re-deliver the create event id → no-op, stays Free (not flipped back to Pro)
-  expect((await post(subEvent("evt_created", "customer.subscription.updated", userId))).status()).toBe(200);
+  expect(
+    (await post(subEvent("evt_created", "customer.subscription.updated", userId))).status(),
+  ).toBe(200);
   expect(await quota()).toBe(10_000);
 
   // 7. annual price also resolves to Pro
-  expect((await post(subEvent("evt_annual", "customer.subscription.updated", userId, { price: PRICE_ANNUAL }))).status()).toBe(200);
+  expect(
+    (
+      await post(
+        subEvent("evt_annual", "customer.subscription.updated", userId, { price: PRICE_ANNUAL }),
+      )
+    ).status(),
+  ).toBe(200);
   expect(await quota()).toBe(500_000);
 
   // 8. bad signature → 400
@@ -153,7 +184,16 @@ test("webhook for an unknown customer is a safe no-op (200, no crash)", async ({
         status: "active",
         cancel_at_period_end: false,
         metadata: {},
-        items: { data: [{ id: "si", price: { id: PRICE_MONTHLY }, current_period_start: 1, current_period_end: 2 }] },
+        items: {
+          data: [
+            {
+              id: "si",
+              price: { id: PRICE_MONTHLY },
+              current_period_start: 1,
+              current_period_end: 2,
+            },
+          ],
+        },
       },
     },
   });

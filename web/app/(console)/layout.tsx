@@ -24,11 +24,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function ConsoleLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function ConsoleLayout({ children }: { children: React.ReactNode }) {
   // Gate the whole console. No session → /login (with a return path back here).
   const session = await auth();
   if (!session?.user) redirect("/login?callbackUrl=/console");

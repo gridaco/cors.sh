@@ -26,13 +26,11 @@ export function HomeDemoCard() {
       style={{ willChange: "transform" }}
       initial={{
         opacity: 0,
-        transform:
-          "perspective(1000px) translateY(40px) rotateX(0deg) rotateY(0deg)",
+        transform: "perspective(1000px) translateY(40px) rotateX(0deg) rotateY(0deg)",
       }}
       animate={{
         opacity: 1,
-        transform:
-          "perspective(1000px) translateY(0) rotateX(5deg) rotateY(-5deg)",
+        transform: "perspective(1000px) translateY(0) rotateX(5deg) rotateY(-5deg)",
       }}
       whileHover={{ transform: "perspective(600px) rotateX(0deg) rotateY(0deg)" }}
       transition={{ duration: 0.6, ease: "easeOut" }}

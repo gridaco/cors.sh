@@ -15,11 +15,15 @@ import { WEB, signIn } from "./helpers";
 //   ( cd tests/e2e && npx playwright test billing-live.spec.ts --project=billing-live )
 const LIVE = !!process.env.RUN_STRIPE_LIVE;
 
-test("checkout endpoint creates a real Stripe Checkout session (monthly + annual)", async ({ page }) => {
+test("checkout endpoint creates a real Stripe Checkout session (monthly + annual)", async ({
+  page,
+}) => {
   test.skip(!LIVE, "set RUN_STRIPE_LIVE + a real Stripe test key on the worker");
   await signIn(page, "billing-live@cors.sh");
   const ctx = page.context();
-  await ctx.request.post(`${WEB}/api/v1/projects`, { data: { name: "Live checkout", allowedOrigins: [] } });
+  await ctx.request.post(`${WEB}/api/v1/projects`, {
+    data: { name: "Live checkout", allowedOrigins: [] },
+  });
 
   for (const interval of ["monthly", "annual"]) {
     const res = await ctx.request.post(`${WEB}/api/billing/checkout`, { data: { interval } });

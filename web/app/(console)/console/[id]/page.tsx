@@ -28,12 +28,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@workspace/ui/components/alert-dialog";
-import {
-  getProject,
-  updateProject,
-  deleteProject,
-  type ProjectDetail,
-} from "@/lib/control";
+import { getProject, updateProject, deleteProject, type ProjectDetail } from "@/lib/control";
 import { formatNumber, humanizeBytes, formatDate } from "@/lib/format";
 import { ApiKeyField } from "@/components/api-key-field";
 import { CopyButton } from "@/components/copy-button";
@@ -100,7 +95,7 @@ export default function ProjectDetailPage() {
                 allowedOrigins: r.allowedOrigins,
                 allowedTargets: r.allowedTargets,
               }
-            : prev
+            : prev,
         );
         toast.success("Saved");
       })
@@ -125,9 +120,7 @@ export default function ProjectDetailPage() {
     return (
       <div className="mx-auto max-w-2xl">
         <Card className="border-destructive/40">
-          <CardContent className="py-6 text-sm text-destructive">
-            {error}
-          </CardContent>
+          <CardContent className="py-6 text-sm text-destructive">{error}</CardContent>
         </Card>
       </div>
     );
@@ -135,12 +128,7 @@ export default function ProjectDetailPage() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-8">
-      <Button
-        asChild
-        variant="ghost"
-        size="sm"
-        className="-ml-2 text-muted-foreground"
-      >
+      <Button asChild variant="ghost" size="sm" className="-ml-2 text-muted-foreground">
         <Link href="/console">
           <ArrowLeft className="size-4" /> Projects
         </Link>
@@ -155,13 +143,9 @@ export default function ProjectDetailPage() {
       ) : (
         <>
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight">
-              {project.name}
-            </h1>
+            <h1 className="text-2xl font-semibold tracking-tight">{project.name}</h1>
             <div className="mt-1.5 flex items-center gap-1.5">
-              <span className="font-mono text-xs text-muted-foreground">
-                {project.id}
-              </span>
+              <span className="font-mono text-xs text-muted-foreground">{project.id}</span>
               <CopyButton
                 value={project.id}
                 size="icon"
@@ -177,24 +161,16 @@ export default function ProjectDetailPage() {
             <CardHeader>
               <CardTitle className="text-base">API keys</CardTitle>
               <CardDescription>
-                <span className="font-mono">live_</span> is origin-pinned for
-                production; <span className="font-mono">test_</span> works
-                anywhere but is rate-capped.
+                <span className="font-mono">live_</span> is origin-pinned for production;{" "}
+                <span className="font-mono">test_</span> works anywhere but is rate-capped.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               {project.keys.length === 0 && (
-                <p className="text-sm text-muted-foreground">
-                  No keys found for this project.
-                </p>
+                <p className="text-sm text-muted-foreground">No keys found for this project.</p>
               )}
               {project.keys.map((k) => (
-                <ApiKeyField
-                  key={k.key}
-                  value={k.key}
-                  keyType={k.key_type}
-                  inactive={!k.active}
-                />
+                <ApiKeyField key={k.key} value={k.key} keyType={k.key_type} inactive={!k.active} />
               ))}
             </CardContent>
           </Card>
@@ -210,11 +186,7 @@ export default function ProjectDetailPage() {
             <CardContent className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="name">Project name</Label>
-                <Input
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
+                <Input id="name" value={name} onChange={(e) => setName(e.target.value)} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="origins">Allowed origins</Label>
@@ -227,14 +199,12 @@ export default function ProjectDetailPage() {
                   className="font-mono text-xs"
                 />
                 <p className="text-xs text-muted-foreground">
-                  Comma or newline separated. The live key rejects any other
-                  origin.
+                  Comma or newline separated. The live key rejects any other origin.
                 </p>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="targets">
-                  Allowed targets{" "}
-                  <span className="text-muted-foreground">(optional)</span>
+                  Allowed targets <span className="text-muted-foreground">(optional)</span>
                 </Label>
                 <Textarea
                   id="targets"
@@ -297,12 +267,10 @@ export default function ProjectDetailPage() {
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Delete &ldquo;{project.name}&rdquo;?
-                    </AlertDialogTitle>
+                    <AlertDialogTitle>Delete &ldquo;{project.name}&rdquo;?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      This permanently deletes the project and revokes its live
-                      and test keys. This cannot be undone.
+                      This permanently deletes the project and revokes its live and test keys. This
+                      cannot be undone.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
