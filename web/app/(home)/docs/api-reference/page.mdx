@@ -1,0 +1,71 @@
+export const metadata = {
+  title: "Proxy API",
+  description:
+    "The CORS.SH proxy URL format, required headers, supported methods, preflight handling, and response behavior.",
+};
+
+# Proxy API
+
+The proxy has one endpoint: prefix any target URL with the proxy base.
+
+```
+https://proxy.cors.sh/<target-url>
+```
+
+`<target-url>` is the full, absolute URL you want to reach, including its scheme:
+
+```
+https://proxy.cors.sh/https://api.example.com/v1/users?limit=10
+```
+
+## Request headers
+
+- **`x-cors-api-key`** _(required)_ — your `live_` or `test_` key.
+- **`Origin`** — set automatically by the browser; it's what authorizes a
+  `live_` key. You can't set it from JavaScript.
+
+Any other request headers (including `Authorization` for the upstream API) are
+forwarded to the target as-is. The `x-cors-api-key` header is stripped and never
+forwarded upstream.
+
+## Methods
+
+All HTTP methods are supported — `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, and so
+on. Request and response bodies stream through, so large or chunked payloads
+work without buffering.
+
+```ts
+await fetch("https://proxy.cors.sh/https://api.example.com/items", {
+  method: "POST",
+  headers: {
+    "x-cors-api-key": "live_xxxxxxxx",
+    "content-type": "application/json",
+    authorization: "Bearer <upstream-token>",
+  },
+  body: JSON.stringify({ name: "Widget" }),
+});
+```
+
+## Preflight
+
+For "non-simple" requests (custom headers, methods like `DELETE`, JSON bodies),
+the browser sends a `OPTIONS` preflight first. The proxy answers preflight
+directly with permissive CORS headers and an `Access-Control-Max-Age`, so the
+browser caches the result and your real request goes through.
+
+## Response behavior
+
+- The upstream **status code** is passed through unchanged.
+- `Access-Control-Allow-Origin` is set so the browser accepts the response, and
+  response headers are exposed to your script.
+- `Set-Cookie` from the upstream is stripped — credentialed cross-origin flows
+  via `*` are not supported by design.
+- Compressed upstream bodies (gzip/brotli) are decompressed in transit, so
+  bandwidth is metered on the **decompressed** size.
+
+## A note on credentials
+
+Because responses use `Access-Control-Allow-Origin: *`, requests that rely on
+credentials (`fetch(..., { credentials: "include" })`) stay blocked by the
+browser — that's the CORS spec, not a proxy limitation. Pass auth via headers
+(e.g. `Authorization`) instead of cookies.

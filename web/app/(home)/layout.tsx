@@ -1,42 +1,51 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Geist_Mono, Inter } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { Header } from "./_home/header";
+
+const fontSans = Inter({ subsets: ["latin"], variable: "--font-sans" });
+const fontMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 import { Toaster } from "@workspace/ui/components/sonner";
-import ChatwootWidget from "@/components/chatwoot";
 
 import "@workspace/ui/globals.css";
 import { Providers } from "@/components/providers";
-
-const inter = Inter({ subsets: ["latin"] });
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 
 export const metadata: Metadata = {
-  title: "CORS.SH - A Fast & Reliable CORS Proxy for your websites",
-  description: "One CORS Proxy you'll ever need",
+  title: {
+    default: "CORS.SH — A fast & reliable CORS proxy for your frontend",
+    template: "%s — CORS.SH",
+  },
+  description:
+    "Drop the CORS errors. CORS.SH is a fast, reliable CORS proxy running on Cloudflare's edge — origin-pinned API keys, generous quotas, zero server required.",
   metadataBase: new URL("https://cors.sh"),
   openGraph: {
     images: ["/og-image-01.jpg"],
   },
 };
 
-export default function RootLayout({
+export default function HomeLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${inter.className} font-sans antialiased selection:bg-amber-500 selection:text-amber-900`}
-      >
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${fontSans.variable} ${fontMono.variable}`}
+    >
+      <body className="min-h-screen bg-background font-sans antialiased">
         {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
         ) : null}
-        <ChatwootWidget />
         <Providers>
           <Toaster position="bottom-center" />
-          <Header />
-          {children}
+          <div className="flex min-h-screen flex-col">
+            <SiteHeader />
+            <div className="flex-1">{children}</div>
+            <SiteFooter />
+          </div>
         </Providers>
       </body>
     </html>

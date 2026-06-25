@@ -1,24 +1,31 @@
-"use client";
-
-import React from "react";
+import * as React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
+import { Button } from "@workspace/ui/components/button";
 
-export default function TooMayRequestsPage() {
+export const metadata: Metadata = {
+  title: "Too many requests",
+};
+
+export default function TooManyRequestsPage() {
   return (
-    <main className="max-w-screen-xl m-auto flex min-h-screen flex-col items-center justify-center p-10 text-center md:text-start">
-      <div className="flex flex-col gap-6 items-center text-center">
-        <h1 className="text-4xl lg:text-7xl font-black">Too many requests.</h1>
-        <p className="max-w-screen-sm opacity-80">
-          We’re sorry to tell you that you’ve reached your hourly request limit
-          for free-tier. Upgrade your plan to remove this limit.
-        </p>
+    <div className="mx-auto flex min-h-[60vh] max-w-xl flex-col items-center justify-center px-6 text-center">
+      <span className="font-mono text-sm text-muted-foreground">429</span>
+      <h1 className="mt-3 text-4xl font-semibold tracking-tight">
+        Too many requests
+      </h1>
+      <p className="mt-4 text-muted-foreground">
+        You&apos;ve reached your plan&apos;s request limit for this period.
+        Upgrade to raise your quota and remove hourly throttling.
+      </p>
+      <div className="mt-8 flex gap-3">
+        <Button asChild>
+          <Link href="/pricing">View plans</Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link href="/console">Go to console</Link>
+        </Button>
       </div>
-      <div className="h-20" />
-      <Link href="/console">
-        <button className="bg-neutral-50 text-neutral-950 p-5 rounded-sm">
-          Sign-in to continue
-        </button>
-      </Link>
-    </main>
+    </div>
   );
 }

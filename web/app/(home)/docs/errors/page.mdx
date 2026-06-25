@@ -1,0 +1,46 @@
+export const metadata = {
+  title: "Errors & troubleshooting",
+  description:
+    "What each CORS.SH error status means and how to fix the most common issues.",
+};
+
+# Errors & troubleshooting
+
+When the proxy rejects a request it returns a status code that tells you why.
+
+## Status codes
+
+**`400 Bad Request`** — the target URL is missing or malformed. Make sure you
+prefixed a full absolute URL: `https://proxy.cors.sh/https://api.example.com/...`.
+
+**`401 Unauthorized`** — the `x-cors-api-key` header is missing, unknown, or the
+key has been revoked. Check the header name and that the key exists in your
+[console](/console).
+
+**`403 Forbidden`** — the key is valid but the request isn't allowed from this
+origin. Your `live_` key's request came from an origin that isn't in the
+project's allowed origins (or the origin is missing/`null`). Add the origin, or
+use a `test_` key in development.
+
+**`429 Too Many Requests`** — you've hit your plan's quota for the period, or a
+`test_` key hit its rate cap. See [Limits & quotas](/docs/limits), or upgrade to
+raise your limits.
+
+## Common issues
+
+**"It works with `curl` but not in the browser."** `curl` doesn't enforce CORS
+and can send any `Origin`. In the browser, a `live_` key requires a matching
+allowed origin — add your site's exact origin (scheme + host + port).
+
+**"My request is still blocked by CORS."** Confirm you actually prefixed the URL
+with `https://proxy.cors.sh/` and that the request reached the proxy (check the
+Network tab). A blocked direct request shows as a CORS error with no proxy
+response.
+
+**"Cookies aren't being sent."** Credentialed requests stay blocked under
+`Access-Control-Allow-Origin: *`. Send auth in an `Authorization` header instead
+of relying on cookies. See the [Proxy API](/docs/api-reference#a-note-on-credentials).
+
+**"`localhost` works but production doesn't."** You're likely shipping a `test_`
+key (not origin-pinned) locally but need a `live_` key with your production
+origin allowlisted. Add the production origin and use the `live_` key.

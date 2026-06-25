@@ -1,0 +1,69 @@
+export const metadata = {
+  title: "Authentication",
+  description:
+    "How CORS.SH keys work: the public-key + origin-pinning model, live vs test keys, and allowed targets.",
+};
+
+# Authentication
+
+CORS.SH uses a model designed for the reality of frontend code: **the API key is
+public**, and the **`Origin` header is the real authenticator**.
+
+## Why the key is public
+
+Anything in your frontend bundle is visible to anyone who opens dev tools. A
+secret you ship to the browser isn't secret. So instead of pretending the key is
+private, CORS.SH treats it as a **public identifier** and authorizes requests by
+the browser's `Origin` header — which is a
+[forbidden header](https://developer.mozilla.org/docs/Glossary/Forbidden_header_name)
+that JavaScript cannot set or spoof.
+
+## Two key types
+
+**`live_` — production.** Origin-pinned. A request is only authorized if its
+`Origin` matches one of your project's **allowed origins**. Requests with a
+missing, `null`, or non-allowlisted origin are rejected. Safe to ship publicly.
+
+**`test_` — development.** Not origin-pinned, so it works from `localhost`,
+`curl`, Postman, and CI. It carries a tighter rate cap and is meant to be
+"safe to leak" during development. Don't use it in production.
+
+## Allowed origins
+
+Set the exact origins your site runs on, scheme and port included:
+
+```
+https://your-site.com
+https://www.your-site.com
+http://localhost:3000
+```
+
+An origin is the scheme + host + port — `https://your-site.com` and
+`https://www.your-site.com` are different origins, so list each one you use.
+
+## Allowed targets (optional)
+
+You can also restrict which **upstream hosts** a project may proxy to. Leave it
+empty to allow any target, or list specific hosts to cap what a key can reach:
+
+```
+https://api.example.com
+https://api.stripe.com
+```
+
+This bounds the blast radius if a key is misused — even an attacker who replays
+an allowed origin can only reach your declared upstreams.
+
+## Rotating a key
+
+If a `live_` key is being abused, rotate it from the project page. Rotation is
+the recovery path for the public-key model: the old key stops working and a new
+one is issued. Update your frontend with the new key and redeploy.
+
+## What's the worst case?
+
+A non-browser client (like `curl`) can forge an `Origin` header. The practical
+ceiling on that is **quota drain** — there's no data to steal, and abuse is
+bounded by your allowed targets, per-key quota, and the ability to rotate. There
+is intentionally no per-request server secret, because the target user is a
+frontend developer with no backend.

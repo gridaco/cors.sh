@@ -1,9 +1,9 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion, type Variants } from "motion/react";
 
 const LineAnimation = () => {
   // Define the motion variant for the moving light effect
-  const motionVariant = {
+  const motionVariant: Variants = {
     animate: {
       backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
       transition: {

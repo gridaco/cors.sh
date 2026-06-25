@@ -1,0 +1,51 @@
+export const metadata = {
+  title: "Limits & quotas",
+  description:
+    "Monthly request and bandwidth quotas per plan, and how quota enforcement works.",
+};
+
+# Limits & quotas
+
+Each plan includes a monthly allowance of requests and bandwidth. Usage resets
+at the start of each billing period.
+
+## Plans
+
+**Free** — for side projects and trying things out.
+
+- 10,000 requests / month
+- 5 GB bandwidth / month
+- Unlimited projects
+
+**Pro** — for production frontends with real traffic.
+
+- 500,000 requests / month
+- 500 GB bandwidth / month
+- No hourly request limit
+- Up to 6 MB per request
+
+**Team** — for high-volume apps and businesses.
+
+- 5,000,000+ requests / month
+- 1 TB+ bandwidth / month
+- Priority routing and support
+
+See [pricing](/pricing) for the full comparison.
+
+## How quota works
+
+- **Requests** are counted per proxied call.
+- **Bandwidth** is metered on the response body size. Because the proxy
+  decompresses gzip/brotli responses in transit, bandwidth reflects the
+  **decompressed** (logical) size, not the compressed wire size.
+- When you exceed a quota, further requests return
+  [`429 Too Many Requests`](/docs/errors) until the next period.
+- `test_` keys carry an additional rate cap and aren't meant for production
+  traffic.
+
+Track your current usage any time in the [console](/console).
+
+## Raising your limits
+
+Upgrade your plan to raise quotas instantly — no need to rotate keys or change
+code. Reach out via the [contact page](/contact) for Team and custom volumes.

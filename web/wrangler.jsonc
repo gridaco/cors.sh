@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cors-web-dev",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-09-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "routes": [
+    { "pattern": "cors.sh", "custom_domain": true },
+    { "pattern": "www.cors.sh", "custom_domain": true }
+  ],
+  "assets": { "binding": "ASSETS", "directory": ".open-next/assets" },
+  "kv_namespaces": [{ "binding": "KEYS", "id": "19bba81a98be4f908610db3b765d0abd" }],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "cors-control",
+      "database_id": "2944d59f-0d10-4489-a822-e3716ae33a0c",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+export const metadata = {
+  title: "Quickstart",
+  description:
+    "Create a project, grab your API key, and make your first proxied request in under a minute.",
+};
+
+# Quickstart
+
+Get from zero to a working proxied request in three steps.
+
+## 1. Create a project
+
+Open the [console](/console/new) and create a project. Give it a name and add
+the **origins** your frontend runs on (for example `http://localhost:3000` and
+`https://your-site.com`).
+
+You'll immediately get two keys:
+
+- a **`live_`** key — origin-pinned, for production
+- a **`test_`** key — works anywhere, for local development
+
+> Copy your keys when they're shown. You can reveal and copy them again from the
+> project page at any time.
+
+## 2. Add the header
+
+Prefix your target URL with `https://proxy.cors.sh/` and send your key in the
+`x-cors-api-key` header.
+
+```ts
+const res = await fetch(
+  "https://proxy.cors.sh/https://api.example.com/data",
+  {
+    headers: {
+      "x-cors-api-key": "test_xxxxxxxx",
+    },
+  },
+);
+
+const data = await res.json();
+```
+
+During development use your `test_` key — it isn't tied to an origin, so it
+works from `localhost`, `curl`, and CI.
+
+## 3. Ship
+
+Swap in your `live_` key for production. Because it's pinned to the origins you
+configured, it's safe to ship in your frontend bundle — a request from any other
+origin is rejected.
+
+```ts
+const client = (url) =>
+  fetch(`https://proxy.cors.sh/${url}`, {
+    headers: { "x-cors-api-key": "live_xxxxxxxx" },
+  });
+
+await client("https://api.example.com/data");
+```
+
+That's it — CORS errors gone. Watch your requests and bandwidth in the
+[console](/console).
+
+## Next steps
+
+- [Authentication](/docs/authentication) — live vs. test keys and origin pinning.
+- [Errors & troubleshooting](/docs/errors) — what to do when a request is rejected.

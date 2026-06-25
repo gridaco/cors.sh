@@ -1,6 +1,15 @@
+import createMDX from "@next/mdx";
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+
+// Makes getCloudflareContext() (D1 + KV bindings) work under `next dev`.
+// No-op for production builds / `opennextjs-cloudflare build`.
+initOpenNextCloudflareForDev();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["@workspace/ui"],
+  transpilePackages: ["@workspace/ui", "@workspace/emails"],
+  // Let .md / .mdx files under app/ become routes (docs live in-app, no separate project).
+  pageExtensions: ["ts", "tsx", "md", "mdx"],
   rewrites() {
     return [
       {
@@ -11,43 +20,23 @@ const nextConfig = {
         source: "/playground/:path*",
         destination: "https://playground.cors.sh/:path*",
       },
-      {
-        source: "/docs",
-        destination: "https://docs.cors.sh/intro",
-      },
-      {
-        source: "/docs/:path*",
-        destination: "https://docs.cors.sh/:path*",
-      },
     ];
   },
   redirects() {
     return [
+      // Note: legacy keyless proxy traffic to `cors.sh/<url>` is handled by a Cloudflare route
+      // (`cors.sh/http*` → proxy worker), NOT a Next redirect — a redirect breaks CORS preflight
+      // and mangles the `//` in the target. So no `/http(s)://` rule here.
       {
-        source: "/http\\://:path*",
-        destination: "https://proxy.cors.sh/http\\://:path*",
-        basePath: false,
-        permanent: true,
-      },
-      {
-        source: "/https\\://:path*",
-        destination: "https://proxy.cors.sh/https\\://:path*",
-        basePath: false,
-        permanent: true,
-      },
-      {
-        // if pyament is canceled, go back to get started page.
+        // if payment is canceled, go back to get started page.
         source: "/payments/canceled",
         destination: "/get-started",
-        permanent: true,
-      },
-      {
-        source: "/docs",
-        destination: "/docs/intro",
         permanent: true,
       },
     ];
   },
 };
 
-export default nextConfig;
+const withMDX = createMDX({ extension: /\.mdx?$/ });
+
+export default withMDX(nextConfig);
