@@ -41,6 +41,8 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+.pnp
+.pnp.js
 
 # TypeScript v1 declaration files
 typings/
@@ -69,9 +71,29 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
+# Local env files
 .env
-.env.test
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+
+# Testing
+coverage
+
+# Turbo
+.turbo
+
+# Vercel
+.vercel
+
+# Build Outputs
+.next/
+out/
+build
+dist
+
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -104,5 +126,27 @@ dist
 # TernJS port file
 .tern-port
 
-# .DS_Store
+# Misc
 .DS_Store
+*.pem
+
+# cors.sh Cloudflare rebuild — planning docs & throwaway spikes kept LOCAL-ONLY (not committed)
+docs/cloudflare/
+spikes/
+
+# Playwright e2e artifacts
+test-results/
+playwright-report/
+tests/e2e/.auth/
+.wrangler/
+.dev-state/
+
+# OpenNext build output (web on Cloudflare)
+.open-next/
+
+# wrangler local dev secrets
+.dev.vars
+.dev.vars.*
+
+# local agent / editor state
+.claude/

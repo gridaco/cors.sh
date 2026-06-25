@@ -1,27 +1,36 @@
 {
   "name": "cors.sh",
   "version": "0.0.0",
+  "private": true,
   "description": "The only cors proxy service all you'll ever need.",
+  "license": "MIT",
   "repository": "https://github.com/gridaco/cors.sh.git",
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "check-types": "turbo check-types",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "stack:up": "bash scripts/stack.sh up",
+    "stack:down": "bash scripts/stack.sh down",
+    "test:e2e": "bash scripts/e2e.sh"
+  },
+  "devDependencies": {
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
+    "oxfmt": "^0.56.0",
+    "turbo": "^2.9.18",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.104.0"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@10.4.1",
   "authors": [
     "Rob-W",
     "hoppscotch",
     "softmarshmallow"
-  ],
-  "license": "MIT",
-  "private": true,
-  "workspaces": [
-    "web",
-    "homepage",
-    "console",
-    "packages/*",
-    "packages/editor-ui/packages/*"
-  ],
-  "scripts": {
-    "homepage": "yarn workspace homepage run dev"
-  },
-  "resolutions": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0"
-  }
+  ]
 }

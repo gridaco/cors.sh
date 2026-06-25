@@ -1,1 +1,0 @@
-# Docs & Image resources directory

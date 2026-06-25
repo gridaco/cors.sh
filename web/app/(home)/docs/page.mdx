@@ -1,0 +1,52 @@
+export const metadata = {
+  title: "Introduction",
+  description:
+    "CORS.SH is a fast, reliable CORS proxy on Cloudflare's edge. Call any API from the browser without CORS errors.",
+};
+
+# Introduction
+
+**CORS.SH** is a fast, reliable CORS proxy that lets your frontend call any API
+directly from the browser — no CORS errors, no backend of your own.
+
+You prefix your request URL with `https://proxy.cors.sh/` and add a single
+header. The proxy fetches the target on your behalf and returns the response
+with the right CORS headers, so the browser accepts it.
+
+```ts
+// Blocked by CORS ❌
+fetch("https://api.example.com/data");
+
+// Proxied through CORS.SH ✅
+fetch("https://proxy.cors.sh/https://api.example.com/data", {
+  headers: { "x-cors-api-key": "live_xxxxxxxx" },
+});
+```
+
+## Why a proxy?
+
+CORS is enforced by the browser: if an API doesn't send back an
+`Access-Control-Allow-Origin` header that matches your site, the browser blocks
+the response — even though the request succeeded. You can't fix that from the
+frontend alone. CORS.SH sits in front of the API and adds the headers the
+browser needs.
+
+It runs on Cloudflare Workers across 300+ cities, streams responses
+byte-for-byte, and authorizes each request from a key resolved at the edge in a
+few milliseconds.
+
+## How it works
+
+- **Public, origin-pinned keys.** Your API key is meant to be visible in
+  frontend code. The real authenticator is the browser's unforgeable `Origin`
+  header — a `live_` key only works from the origins you've allowlisted.
+- **Two key types.** `live_` keys are origin-pinned for production; `test_` keys
+  work anywhere (localhost, curl, CI) but are rate-capped.
+- **Per-project controls.** Each project has its own keys, allowed origins, and
+  optional allowed upstream targets.
+
+## Next steps
+
+- [Quickstart](/docs/quickstart) — get a key and make your first request.
+- [Authentication](/docs/authentication) — how keys and origin pinning work.
+- [Proxy API](/docs/api-reference) — URL format, headers, and behavior.
