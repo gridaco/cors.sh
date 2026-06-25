@@ -35,12 +35,16 @@ fetch("https://proxy.cors.sh/https://example.com/");
 
 ## Contributing
 
+Monorepo on pnpm + turbo, hosted on Cloudflare Workers (own accounts + billing). Requires Node ≥ 22.
+
 ```bash
-# clone initially
-git clone --recurse-submodules https://github.com/gridaco/cors.sh
-# updating submodules (once required)
-git submodule update --init --recursive
+git clone https://github.com/gridaco/cors.sh
+cd cors.sh && nvm use && pnpm install
+pnpm stack:up      # run the full stack locally (web + proxy + mock)
+pnpm test:e2e      # run the test suite
 ```
+
+See [`DEVELOPMENT.md`](./DEVELOPMENT.md) for the full local setup, [`SPEC.md`](./SPEC.md) for how the service behaves (source of truth), and [`AGENTS.md`](./AGENTS.md) if you're working with an AI coding agent.
 
 ## Disclaimer
 
