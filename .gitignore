@@ -129,3 +129,24 @@ dist
 # Misc
 .DS_Store
 *.pem
+
+# cors.sh Cloudflare rebuild — planning docs & throwaway spikes kept LOCAL-ONLY (not committed)
+docs/cloudflare/
+spikes/
+
+# Playwright e2e artifacts
+test-results/
+playwright-report/
+tests/e2e/.auth/
+.wrangler/
+.dev-state/
+
+# OpenNext build output (web on Cloudflare)
+.open-next/
+
+# wrangler local dev secrets
+.dev.vars
+.dev.vars.*
+
+# local agent / editor state
+.claude/

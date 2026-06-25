@@ -27,6 +27,6 @@ export const config = [
     },
   },
   {
-    ignores: ["dist/**"],
+    ignores: ["dist/**", ".next/**", ".open-next/**", ".turbo/**", ".wrangler/**", "node_modules/**"],
   },
 ]
