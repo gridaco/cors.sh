@@ -1,6 +1,7 @@
 name: deploy
 
-# Deploys cors.sh to Cloudflare: the web app (Next 16 via OpenNext) + the proxy worker.
+# Deploys cors.sh to Cloudflare: the web app (Next 16 via OpenNext) + the proxy worker + the
+# mock test API (mock.cors.sh, the /playground default target).
 #
 # Manual-trigger by default so it never fires before the account is configured. To enable
 # auto-deploy on merge to main, uncomment the `push:` block below.
@@ -59,6 +60,10 @@ jobs:
       - name: Deploy proxy worker
         run: pnpm exec wrangler deploy
         working-directory: workers/proxy
+
+      - name: Deploy mock worker (mock.cors.sh — the /playground default test API)
+        run: pnpm exec wrangler deploy
+        working-directory: workers/mock
 
       - name: Deploy web (OpenNext)
         run: pnpm --filter web cf:deploy

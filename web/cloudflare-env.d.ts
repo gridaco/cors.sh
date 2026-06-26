@@ -20,6 +20,9 @@ declare global {
     NEXT_PUBLIC_APP_URL?: string;
     // Shared secret the proxy presents when pinging the quota-notification endpoint.
     INTERNAL_SECRET?: string;
+    // Proxy base for the /playground page. Defaults to https://proxy.cors.sh; e2e points it
+    // at the local proxy so the playground test is self-contained.
+    PLAYGROUND_PROXY_URL?: string;
   }
 }
 

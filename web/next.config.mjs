@@ -10,18 +10,6 @@ const nextConfig = {
   transpilePackages: ["@workspace/ui", "@workspace/emails"],
   // Let .md / .mdx files under app/ become routes (docs live in-app, no separate project).
   pageExtensions: ["ts", "tsx", "md", "mdx"],
-  rewrites() {
-    return [
-      {
-        source: "/playground",
-        destination: "https://playground.cors.sh",
-      },
-      {
-        source: "/playground/:path*",
-        destination: "https://playground.cors.sh/:path*",
-      },
-    ];
-  },
   redirects() {
     return [
       // Note: legacy keyless proxy traffic to `cors.sh/<url>` is handled by a Cloudflare route
