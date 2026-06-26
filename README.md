@@ -19,11 +19,11 @@ Add `proxy.cors.sh` to your request. For example,
 fetch("https://proxy.cors.sh/https://example.com/");
 ```
 
-## [`cors.sh/playground`](https://cors.sh/playground), The testing environment (forked from hoppscotch)
+## [Playground](https://cors.sh/playground)
 
-- [cors.sh/playground](https://cors.sh/playground)
-- [gridaco/playground.cors.sh](https://github.com/gridaco/playground.cors.sh)
-- [hoppscotch/hoppscotch](https://github.com/hoppscotch/hoppscotch)
+A built-in, in-browser CORS tester: paste any URL and watch the **direct** request get blocked by CORS, then watch the **same request through `proxy.cors.sh`** succeed — status, headers, and body, side by side. No API key required.
+
+It defaults to [`mock.cors.sh`](https://mock.cors.sh/no-cors) — our own CORS-reject test API (`/no-cors`, `/wrong-origin`, `/needs-preflight`, `/allow-all`), handy whenever you need an endpoint that reliably _fails_ CORS.
 
 ## Projects using CORS.SH
 
@@ -52,7 +52,7 @@ See [`DEVELOPMENT.md`](./DEVELOPMENT.md) for the full local setup, [`SPEC.md`](.
    Using a cors proxy service to connect to your own server is not a best practice.
    We'll consistently optimize our service infra to keep the paid version affordable as possible.
 
-2. The original code behind cors proxy is by Rob wu's cors-anywhere and the playground is forked from hoppscotch. both licensed under MIT, and our project cors.sh is also licensed under MIT License.
+2. cors.sh draws its lineage from Rob W's [cors-anywhere](https://github.com/Rob--W/cors-anywhere) (the proxy) and previously shipped a [Hoppscotch](https://github.com/hoppscotch/hoppscotch) fork as its playground — both MIT. The current service is a ground-up rebuild on Cloudflare Workers with its own built-in playground, also MIT-licensed.
 
 ## TODOs
 

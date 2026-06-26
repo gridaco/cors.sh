@@ -3,4 +3,7 @@
   "main": "src/index.ts",
   "compatibility_date": "2025-01-01",
   "workers_dev": true,
+  // Public CORS-reject test API used as the /playground default target. Must be a DIFFERENT
+  // origin than cors.sh so the browser actually enforces CORS on a direct request.
+  "routes": [{ "pattern": "mock.cors.sh", "custom_domain": true }],
 }

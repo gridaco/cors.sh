@@ -55,6 +55,8 @@ AUTH_URL=http://localhost:3000
 EMAIL_DRY_RUN=1
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 INTERNAL_SECRET=local_internal
+# The /playground page points its requests at the local proxy (prod default: proxy.cors.sh).
+PLAYGROUND_PROXY_URL=http://localhost:8786
 VARS
   # Stripe: dummy by default (webhook-signature tests sign their own events). Override via env
   # with a real Stripe TEST key + test price ids to exercise the live checkout/portal calls
@@ -79,6 +81,7 @@ VARS
 
   echo "[4/5] wait for readiness"
   wait_url http://127.0.0.1:3000/api/v1/usage
+  wait_url http://127.0.0.1:3000/playground
   wait_url http://127.0.0.1:8788/allow-all
   wait_url http://127.0.0.1:8090/
   curl -s -o /dev/null --retry 90 --retry-delay 1 --retry-connrefused http://127.0.0.1:8786/ && echo "  up: proxy 8786"
