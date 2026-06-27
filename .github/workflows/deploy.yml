@@ -3,8 +3,8 @@ name: deploy
 # Deploys cors.sh to Cloudflare: the web app (Next 16 via OpenNext) + the proxy worker + the
 # mock test API (mock.cors.sh, the /playground default target).
 #
-# Manual-trigger by default so it never fires before the account is configured. To enable
-# auto-deploy on merge to main, uncomment the `push:` block below.
+# Auto-deploys on merge to main; also runnable manually via workflow_dispatch (with a
+# migrate toggle). Auto-deploys always apply D1 migrations (forward-only, idempotent).
 #
 # Required GitHub repo secrets:
 #   CLOUDFLARE_API_TOKEN   — token with Workers Scripts:Edit, D1:Edit, KV:Edit, Workers Routes:Edit
@@ -20,8 +20,8 @@ on:
         description: "Apply remote D1 migrations before deploying"
         type: boolean
         default: true
-  # push:
-  #   branches: [main]
+  push:
+    branches: [main]
 
 concurrency:
   group: deploy-production
@@ -52,8 +52,9 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       # Idempotent: applies only not-yet-applied migrations. Forward-only.
+      # Runs on push (auto-deploy) always; on manual dispatch only when the migrate toggle is on.
       - name: Apply D1 migrations (remote)
-        if: ${{ inputs.migrate }}
+        if: ${{ github.event_name == 'push' || inputs.migrate }}
         run: pnpm exec wrangler d1 migrations apply DB --remote
         working-directory: web
 
