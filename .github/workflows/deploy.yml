@@ -66,5 +66,10 @@ jobs:
         run: pnpm exec wrangler deploy
         working-directory: workers/mock
 
+      # opennextjs-cloudflare deploy ships pre-built output only; build the OpenNext
+      # bundle (runs next build internally) before deploying.
+      - name: Build web (OpenNext)
+        run: pnpm --filter web cf:build
+
       - name: Deploy web (OpenNext)
         run: pnpm --filter web cf:deploy
